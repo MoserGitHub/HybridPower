@@ -1,10 +1,8 @@
-about
-usage
-non-inferiority-setting
+background
 aim
 a-timeline-of-selected-literature
-clinical-trial-setting
-clinical-trial-setting-1
+non-inferiority-setting
+binomial-outcome
 frequentist-sample-size
 frequentist-sample-size-1
 frequentist-sample-size-2

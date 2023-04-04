@@ -12,11 +12,27 @@ link-citations: yes
 github-repo: rstudio/bookdown-demo
 ---
 
-# About
+# Background
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+@Kunzmann2022
 
-## Usage 
+## Aim
+
+- Overview 'power' terminology
+- Focus on 'hybrid' approach (95%), 5% proper Bayesian 
+- Use of SAFE-SSPE trial as example
+
+**Definition 'hybrid'** (Spiegelhalter 2004, Section 6.5.2)
+
+*'[...] we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior [...]'*
+
+## A timeline of selected literature
+
+- Book of Spiegelhalter (2004): Bayesian Approaches to Clinical Trials and Health Care Evaluation
+- O'Hagan (2005): Assurance in Clincial Trials
+- Rufibach et al (2016): Bayesian predictive power: choice of prior [...]
+- **Kunzmann et al. (2021): A review of Bayesian Perspectives on Sample Size Derivations from Confirmatory Trials**
+- Book of Grieve (2022): Hybrid Frequentist/Bayesian Power and Bayesian Power in Planning Clinical Trials
 
 ```{r, eval=FALSE}
 bookdown::render_book()
