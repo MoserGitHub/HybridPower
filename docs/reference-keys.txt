@@ -1,13 +1,10 @@
 background
 aim
 a-timeline-of-selected-literature
-non-inferiority-setting
+two-arm-non-inferiority-setting
 binomial-outcome
 frequentist-sample-size
-frequentist-sample-size-1
-frequentist-sample-size-2
-frequentist-sample-size-3
-frequentist-sample-size-4
+frequentist-sample-size-calculation-in-r
 hybrid-approach
 hybrid-approach-1
 hybrid-approach-2

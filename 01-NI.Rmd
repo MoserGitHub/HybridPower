@@ -1,10 +1,8 @@
-# Non-inferiority setting
+# Two-arm non-inferiority setting
 
-## Binomial outcome
+We consider a non-inferiority clinical trial with $H_0: \delta > \delta^*$ and $H_a: \delta \leq \delta^*$, where $\delta^*>0$ is a fixed non-inferiority margin and a treatment effect $\delta$.
 
-We consider a non-inferiority clinical trial with $H_0: \delta > \delta^*$ and $H_a: \delta \leq \delta^*$, where $\delta^*>0$ is a fixed non-inferiority margin and a treatment effect $\delta=p_1-p_0$, where $p_i$, $i\in \{0,1\}$, are event probabilities for two groups.
-
-For example, $H_0$ is that clinical surveillance is inferior to an active treatment vs $H_a$ that clinical surveillance is non-inferior.
+For example, $H_0$ is 'clinical surveillance is inferior to an active treatment' versus $H_a$ 'clinical surveillance is non-inferior to an active treatment'. The primary outcome is a risk difference with an non-inferiority margin of 3.5%.
 
 ```{r}
 #| echo: false
@@ -15,36 +13,54 @@ library(ggplot2)
 data <- data.frame(x=0, y=1.5, x_min=-0.035, x_max=0.035)
 data <- rbind(data, data.frame(x=-0.04, y=0.5, x_min=-0.07, x_max=0))
 
-ggplot(data=data, aes(x=x, y=y))+geom_vline(xintercept=0.035, linetype="dashed")+geom_vline(xintercept=0)+theme_bw()+scale_x_continuous(limits=c(-0.1, 0.07), breaks=c(-0.1, 0, 0.035), labels=c(-0.1, 0, 0.035))+xlab("Risk difference=p1-p0 (<0: favors clinical surveillance)")+ylim(0,2)+theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), panel.grid = element_blank())+ylab("")+geom_rect(aes(ymax=2, ymin=0, xmin=0.035, xmax=0.05), alpha=0.3)+geom_text(aes(x=0.043, y=1, label="H0:\nClinical\nsurveillance\nis inferior"))+geom_rect(aes(ymax=2, ymin=0, xmin=-0.1, xmax=0.035), alpha=0.3, fill="lightblue")+geom_text(aes(x=-0.07, y=1.8, label="HA: Clinical surveillance\nis non-inferior"))+geom_rect(aes(ymax=1, ymin=0, xmin=-0.1, xmax=0), alpha=0.3, fill="blue")+geom_text(aes(x=-0.07, y=0.2, label="HA_0: Clinical surveillance\nis superior"))+geom_point(colour="red", size=2)+geom_linerange(aes(xmax=x_max, xmin=x_min), colour="red", linewidth=1)
+ggplot(data=data, aes(x=x, y=y))+geom_vline(xintercept=0.035, linetype="dashed")+geom_vline(xintercept=0)+theme_bw()+scale_x_continuous(limits=c(-0.1, 0.07), breaks=c(-0.1, 0, 0.035), labels=c(-0.1, 0, 0.035))+xlab("Treatment effect (<0: favors clinical surveillance)")+ylim(0,2)+theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), panel.grid = element_blank())+ylab("")+geom_rect(aes(ymax=2, ymin=0, xmin=0.035, xmax=0.07), alpha=0.3)+geom_text(aes(x=0.05, y=1, label="H0:\nClinical\nsurveillance\nis inferior"))+geom_rect(aes(ymax=2, ymin=0, xmin=-0.1, xmax=0.035), alpha=0.3, fill="lightblue")+geom_text(aes(x=-0.07, y=1.8, label="HA: Clinical surveillance\nis non-inferior"))+geom_rect(aes(ymax=1, ymin=0, xmin=-0.1, xmax=0), alpha=0.3, fill="blue")+geom_text(aes(x=-0.07, y=0.2, label="HA_0: Clinical surveillance\nis superior"))+geom_point(colour="red", size=2)+geom_linerange(aes(xmax=x_max, xmin=x_min), colour="red", linewidth=1)
 ```
 
+## Binomial outcome
+
+Here $\delta=p_1-p_0$, where $p_i$, $i\in \{0,1\}$, are event probabilities for two groups.
 
 ### Frequentist sample size
 
-Let $Y_{i,n_i} \sim^{iid} Binom(n_i, p_i)$. Then $\overline p_i=\frac{1}{n_i}\sum_i Y_{i,n_i}$ is a consistent and sufficient statistic for $p_i$, and thus $D=\overline p_1-\overline p_0$ is Gaussian distributed with $D \sim N\left(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)$, where $\sigma_i^2=p_i(1-p_i)$. We are interested whether the upper $(1-\alpha)\%$-confidence limit is smaller than the non-inferiority margin, that is,
+Let $Y_{i,k} \sim^{iid} Bernoulli(p_i)$, $k=1,\dots,n_i$, $i\in \{0,1\}$. Then $\overline p_i=\frac{1}{n_i}\sum_{k\leq n_i} Y_{i,k}$, $i\in {0,1}$, is a consistent and sufficient statistic for $p_i$, and thus $D=\overline p_1-\overline p_0$ is Gaussian distributed with $D \sim N\left(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)$, where $\sigma_i^2=p_i(1-p_i)$, $i\in \{0,1\}$.
+
+We are interested whether the upper $(1-\alpha)\%$-confidence limit is smaller than the non-inferiority margin, that is,
 $$
-D+z_{1-\alpha}\sqrt{\frac{n_1\sigma_1^2+n_0\sigma_0^2}{n_1n_0}}\leq \delta^*.
+D+z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}\leq \delta^*,
 $$
+where $z_{1-\alpha}=\Phi^{-1}(1-\alpha)$ with $\Phi^{-1}$, the quantile function of the standard Gaussian distribution function.
+
 Because
 $$
-D\leq -z_{1-\alpha}\sqrt{\frac{n_1\sigma_1^2+n_0\sigma_0^2}{n_1n_0}}+\delta^*
+D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*
 $$
-we have that
+we have that, for $\Phi$ being the probability distribution function of the standard Gaussian distribution,
 $$
-P(S^{F}|\delta)=P_{\delta}(Z\leq - z_{1-\alpha})= \Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_1\sigma_1^2+n_0\sigma_0^2}}(\delta-\delta^*)\right),
+P(S^{F}|\delta)=P_{\delta}(Z\leq - z_{1-\alpha})= \Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right),
 $$
 since
 $$
-Z=\sqrt{\frac{n_1n_0}{n_1\sigma_1^2+n_0\sigma_0^2}}(D-\delta) \rightarrow^{n \rightarrow \infty} N(0,1).
+Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{n \rightarrow \infty} N(0,1).
+$$
+For an alternative point difference $\delta_A$ we have that $P_{\delta_A}(Z\leq - z_{1-\alpha})=1-\beta$, which is known as the frequentist power (or the **probability of rejection given $\delta_A$**). From that we have that
+
+$$
+-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)=\Phi^{-1}(1-\beta)=z_{1-\beta}
+$$
+and so the frequentist sample size can then be derived as
+$$
+\frac{(z_{1-\beta}+z_{1-\alpha})^2}{(\delta-\delta^*)^2}=\frac{an_0^2}{n_0\sigma_1^2+an_0\sigma_0^2},
+$$
+where $a=n_1/n_0$ is an allocation ratio, such that
+$$
+n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)^2}, \quad n_1=an_0.
 $$
 
-The classical sample size can then be derived from $n=(z_{1-\beta}+z_{1-\alpha})^2\frac{\tilde\sigma^2}{(\delta-\delta^*)^2}$ (one arm), here $\sigma_i^2=p_i(1-p_i)$, $i\in {0,1}$.
+### Frequentist sample size: Calculation in R
 
-## Frequentist sample size
+The following $R$ function can be used to calculate the required sample size.
 
-Assumptions for sample size calculation specified in study protocol:
-
-- $p_1=0.01$, $p_0=0.01$, $\delta^*=0.035$, $1-\beta=0.8$, $\alpha=0.05$
+- $p_1=0.01$, $p_0=0.01$, $\delta^*=0.035$, $1-\beta=0.8$, $\alpha=0.05$, $a=1/1$
 
 ```{r}
 #| echo: true
@@ -56,18 +72,19 @@ p_0 <- 0.01
 p_1 <- 0.01
 delta <- p_1-p_0
 delta_star <- 0.035
-sd_formula <- sqrt(p_0*(1-p_0)+p_1*(1-p_1))
+sd_0 <- sqrt(p_0*(1-p_0))
+sd_1 <- sqrt(p_1*(1-p_1))
+a <- 1/1
 
-epi.ssninfb(treat=p_1, control=p_0, delta=delta_star, power=1-beta, alpha=alpha, n=NA)$n.total
+epi.ssninfb(treat=p_1, control=p_0, delta=delta_star, power=1-beta, r=a, alpha=alpha, n=NA)
 
-n <- 2*((qnorm(1-beta)+qnorm(1-alpha))^2)*((sd_formula^2)/(delta-delta_star)^2)
-n
+n_0 <- ((qnorm(1-beta)+qnorm(1-alpha))^2)*((sd_1^2+a*sd_0^2)/(a*(delta-delta_star)^2))
+n_0
+n_1 <- n_0*a
+n_1
 ```
 
-## Frequentist sample size
-
-- Choice of $\delta_A$ and $\delta^*$ in a frequentist setting assumed as fixed
-- At the same time of high importance, because all trial conclusions are based on the (point estimate) choices
+$\delta_A$ and $\delta^*$ in a frequentist setting are assumed as fixed constants. Their choices are of high importance, because all trial conclusions are based on those choices and affect the sample size calculation. The plot below shows how the sample size increase as $\delta^* \rightarrow \delta$.
 
 ```{r}
 #| echo: false
@@ -78,57 +95,93 @@ n_output <- c()
 
 for (i in delta_star_range) {
 
-n_output <- c(n_output, 2*((qnorm(1-beta)+qnorm(1-alpha))^2)*((2*sd_formula^2)/(delta-i)^2))
+n_output <- c(n_output, (qnorm(1-beta)+qnorm(1-alpha))^2*(sd_1^2+a*sd_0^2)/(a*(delta-i)^2))
 
 }
 
 data_output <- data.frame(delta_star_range, n_output)
 
-ggplot(data_output, aes(x=delta_star_range, y=n_output))+geom_line(linewidth=1)+theme_bw()+xlab("Delta star-Delta")+ylab("Sample size (both arms)")+geom_vline(aes(xintercept=0.035), linetype="dashed")+theme(panel.grid.minor = element_blank())+xlim(0, 0.075)
+ggplot(data_output, aes(x=delta_star_range, y=n_output))+geom_line(linewidth=1)+theme_bw()+xlab("Delta star")+ylab("Sample size (n0)")+geom_vline(aes(xintercept=0.035), linetype="dashed")+theme(panel.grid.minor = element_blank())+xlim(0, 0.075)+scale_x_continuous(breaks=c(0, 0.2, 0.035, 0.05))
 ```
 
-## Frequentist sample size
+### Hybrid approach
 
-What about **uncertainty** in those choices?
+A hybrid approach assumes that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ with prior probability density function $p(\delta)$. The prior is defined before data collection ('design prior'). If we assume that $\pi_i:=p_i(\delta)=Beta(a_i,b_i)$, then the posterior distribution is $Beta(a_i+\sum_{k\leq n_i}Y_{i,k},b_i+n_i-\sum_{k\leq n_i}Y_{i,k})$. The variance is given as
 
-From the study protocol:
-
-*'We believe that our non-inferiority margin is acceptable to most physicians and patients for the following reasons. First, our margin is within the range of the 3-month VTE recurrence proportion (0.5-5%) below which thrombosis specialists would not initiate anticoagulation for PE.'*
-
-- Very reasonable that $0.005\leq\delta^*<0.05$
-- Very reasonable that $\delta=0$ is not 'true', but has uncertainty 
-
-## Frequentist sample size
-
-- Choice of $\delta_A$ and $\delta^*$ in a frequentist setting assumed as fixed
-- At the same time of high importance, because all trial conclusions are based on the (point estimate) choices
+$$
+\frac{\left(a_i+\sum_{k\leq n_i}Y_{i,k}\right)\left(b_i+n_i-\sum_{k\leq n_i}Y_{i,k}\right)}{(a_i+b_i+n_i)^2(a_i+b_i+n_i+1)}
+$$
 
 ```{r}
 #| echo: false
+#| results: hide
+#| 
+a_0 <- 0.01
+b_0 <- (1-p_0)/p_0*a_0
+a_0/(a_0+b_0)
+a_0+b_0
+a_1 <- 0.01
+b_1 <- (1-p_1)/p_1*a_1
+a_1/(a_1+b_1)
 
-delta_star_range <- seq(from=0.005, to=0.075, 0.001)
+## Uniform
+a_0 <- 1
+b_0 <- 1
+a_0/(a_0+b_0)
+a_0+b_0
+a_1 <- 1
+b_1 <- 1
+a_1/(a_1+b_1)
 
-n_output <- c()
 
-for (i in delta_star_range) {
+## Uniform
+a_0 <- 100
+b_0 <- 1900
+a_0/(a_0+b_0)
+a_0+b_0
+a_1 <- 100
+b_1 <- 1900
+a_1/(a_1+b_1)
 
-n_output <- c(n_output, 2*((qnorm(1-beta)+qnorm(1-alpha))^2)*((2*sd_formula^2)/(delta-i)^2))
+a_1+b_1
 
-}
+x <- seq(0,1,0.01)
+prior_0 <- dbeta(x, a_0, b_0)
+prior_1 <- dbeta(x, a_1, b_1)
 
-data_output <- data.frame(delta_star_range, n_output)
+posterior_0 <- dbeta(x, a_0+n_0*p_0, b_0+n_0-n_0*p_0)
+posterior_1 <- dbeta(x, a_1+n_1*p_1, b_1+n_1-n_1*p_1)
 
-ggplot(data_output, aes(x=delta_star_range, y=n_output))+geom_line(linewidth=1)+theme_bw()+xlab("Delta star-Delta")+ylab("Sample size (both arms)")+geom_rect(aes(ymax=20000, ymin=0, xmin=0.005, xmax=0.05), alpha=0.01, fill="pink")+theme(panel.grid.minor = element_blank())+xlim(0, 0.075)
+var_posterior_0 <- ((a_0+n_0*p_0)*(b_0+n_0-n_0*p_0))/((a_0+b_0+n_0)^2*(a_0+b_0+n_0+1))
+var_posterior_1 <- ((a_1+n_1*p_1)*(b_1+n_1-n_1*p_1))/((a_1+b_1+n_1)^2*(a_1+b_1+n_1+1))
+sqrt(var_posterior_0+var_posterior_1)
+
+
+delta_range <- seq(from=-0.1, to=0.1, 0.001)
+
+data_output <- c()
+
+prior_mean <- 0
+
+data_output <- rbind(data_output, data.frame(delta_range, type="Enthusiastic", y=dnorm(delta_range, mean=prior_mean, sd=sqrt(var_posterior_0+var_posterior_1))))
+
+prior_mean <- delta_star
+
+data_output <- rbind(data_output, data.frame(delta_range, type="Skeptical", y=dnorm(delta_range, mean=prior_mean, sd=sqrt(var_posterior_0+var_posterior_1))))
+
+ggplot(data_output, aes(x=delta_range, y=y, colour=factor(type)))+geom_line(linewidth=1.2)+theme_bw()+xlab("delta=p1-p0")+ylab("Density")+scale_x_continuous(breaks=c(-0.1, 0, 0.035, 0.1))+theme(panel.grid = element_blank())+geom_vline(xintercept=delta_star, linetype="dotted")+geom_vline(xintercept=0, linetype="dashed")+scale_linetype("Prior type") + stat_function(fun = dnorm, args = list(mean = prior_mean_enthusiastic, sd = sd_formula/n_00), xlim = c(0.035,0.1), geom = "area", show.legend = F, fill="purple", alpha=0.3, colour=NA) + stat_function(fun = dnorm, args = list(mean = prior_mean_skeptical, sd = sd_formula/n_00), xlim = c(-0.1,0), geom = "area", show.legend = F, fill="darkred", alpha=0.3, colour=NA) +scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))
 ```
 
-## Hybrid approach
 
-- Suppose $\delta$ is a realization from a random variable $\Delta$ with Gaussian prior $\Delta \sim N\left(d, \frac{\tilde\sigma^2}{n_0}\right)$.
-- Prior is defined before data collection ('design prior').
-- **Enthusiastic** prior (favors non-inferiority): $d=0$, $n_0=6.6$, $P(\Delta>\delta^*)=0.05$.
-- **Skeptical** prior (favors inferiority): $d=\delta^*$, $n_0=6.6$, $P(\Delta>0)=0.05$.
-- **Informative** prior (clinical expert knowledge): $d=0$, with $n_0=25$.
-- **Noninformative** prior (please do not use in practice!): $d=0$, with $n_0=0.5$.
+
+with Gaussian prior $\Delta \sim N\left(d, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)$, where $\sigma_i^2=p_i(1-p_i)$, $i\in \{0,1\}$.  The prior can be thought as a 
+
+In the following we choose the following prior:
+
+- **Enthusiastic** prior (favors non-inferiority): $d=0$, $n_0=6.6$, $P(\Delta>\delta^*)=0.05$. This prior is centered on the treatment effect such that there is a low probability (here 5%) of inferiority.
+- **Skeptical** prior (favors inferiority): $d=\delta^*$, $n_0=6.6$, $P(\Delta>0)=0.05$. This prior is centered on the non-inferiority margin such that there is a low probability (here 5%) of superiority.
+- **Informative** prior (clinical expert knowledge): $d=0$ with $n_0=25$.
+- **Noninformative** prior (please do not use in practice!): $d=0$ with $n_0=0.5$.
 
 ## Hybrid approach
 
