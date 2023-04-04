@@ -1,7 +1,5 @@
 about
 usage
-render-book
-preview-book
 non-inferiority-setting
 aim
 a-timeline-of-selected-literature

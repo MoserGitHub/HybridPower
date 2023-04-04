@@ -133,14 +133,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Frequentist, Bayesian and hybrid approaches to sample size and power calculations</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="non-inferiority-setting.html"><a href="non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Non-inferiority setting</a>
 <ul>
@@ -223,12 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="clinical-trial-setting-1" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> Clinical trial setting<a href="non-inferiority-setting.html#clinical-trial-setting-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<pre><code>## 
-## Attaching package: &#39;ggplot2&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:emoji&#39;:
-## 
-##     arrow</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="frequentist-sample-size" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Frequentist sample size<a href="non-inferiority-setting.html#frequentist-sample-size" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -246,24 +239,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><span class="math inline">\(p_1=0.01\)</span>, <span class="math inline">\(p_0=0.01\)</span>, <span class="math inline">\(\delta^*=0.035\)</span>, <span class="math inline">\(1-\beta=0.8\)</span>, <span class="math inline">\(\alpha=0.05\)</span></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="non-inferiority-setting.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span></code></pre></div>
-<pre><code>## Loading required package: survival</code></pre>
-<pre><code>## Package epiR 2.0.58 is loaded</code></pre>
-<pre><code>## Type help(epi.about) for summary information</code></pre>
-<pre><code>## Type browseVignettes(package = &#39;epiR&#39;) to learn how to use epiR for applied epidemiological analyses</code></pre>
-<pre><code>## </code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="non-inferiority-setting.html#cb11-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb11-2"><a href="non-inferiority-setting.html#cb11-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb11-3"><a href="non-inferiority-setting.html#cb11-3" aria-hidden="true" tabindex="-1"></a>p_0 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
-<span id="cb11-4"><a href="non-inferiority-setting.html#cb11-4" aria-hidden="true" tabindex="-1"></a>p_1 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
-<span id="cb11-5"><a href="non-inferiority-setting.html#cb11-5" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> p_1<span class="sc">-</span>p_0</span>
-<span id="cb11-6"><a href="non-inferiority-setting.html#cb11-6" aria-hidden="true" tabindex="-1"></a>delta_star <span class="ot">&lt;-</span> <span class="fl">0.035</span></span>
-<span id="cb11-7"><a href="non-inferiority-setting.html#cb11-7" aria-hidden="true" tabindex="-1"></a>sd_formula <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p_0<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_0)<span class="sc">+</span>p_1<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_1))</span>
-<span id="cb11-8"><a href="non-inferiority-setting.html#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="non-inferiority-setting.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.ssninfb</span>(<span class="at">treat=</span>p_1, <span class="at">control=</span>p_0, <span class="at">delta=</span>delta_star, <span class="at">power=</span><span class="dv">1</span><span class="sc">-</span>beta, <span class="at">alpha=</span>alpha, <span class="at">n=</span><span class="cn">NA</span>)<span class="sc">$</span>n.total</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="non-inferiority-setting.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
+<span id="cb2-2"><a href="non-inferiority-setting.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="non-inferiority-setting.html#cb2-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb2-4"><a href="non-inferiority-setting.html#cb2-4" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb2-5"><a href="non-inferiority-setting.html#cb2-5" aria-hidden="true" tabindex="-1"></a>p_0 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb2-6"><a href="non-inferiority-setting.html#cb2-6" aria-hidden="true" tabindex="-1"></a>p_1 <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb2-7"><a href="non-inferiority-setting.html#cb2-7" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> p_1<span class="sc">-</span>p_0</span>
+<span id="cb2-8"><a href="non-inferiority-setting.html#cb2-8" aria-hidden="true" tabindex="-1"></a>delta_star <span class="ot">&lt;-</span> <span class="fl">0.035</span></span>
+<span id="cb2-9"><a href="non-inferiority-setting.html#cb2-9" aria-hidden="true" tabindex="-1"></a>sd_formula <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p_0<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_0)<span class="sc">+</span>p_1<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_1))</span>
+<span id="cb2-10"><a href="non-inferiority-setting.html#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="non-inferiority-setting.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.ssninfb</span>(<span class="at">treat=</span>p_1, <span class="at">control=</span>p_0, <span class="at">delta=</span>delta_star, <span class="at">power=</span><span class="dv">1</span><span class="sc">-</span>beta, <span class="at">alpha=</span>alpha, <span class="at">n=</span><span class="cn">NA</span>)<span class="sc">$</span>n.total</span></code></pre></div>
 <pre><code>## [1] 200</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="non-inferiority-setting.html#cb13-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>((<span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)<span class="sc">+</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>((sd_formula<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(delta<span class="sc">-</span>delta_star)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb13-2"><a href="non-inferiority-setting.html#cb13-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="non-inferiority-setting.html#cb4-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>((<span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)<span class="sc">+</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>((sd_formula<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(delta<span class="sc">-</span>delta_star)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-2"><a href="non-inferiority-setting.html#cb4-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div>
 <pre><code>## [1] 199.8606</code></pre>
 </div>
 <div id="frequentist-sample-size-2" class="section level2 hasAnchor" number="2.7">
@@ -272,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Choice of <span class="math inline">\(\delta_A\)</span> and <span class="math inline">\(\delta^*\)</span> in a frequentist setting assumed as fixed</li>
 <li>At the same time of high importance, because all trial conclusions are based on the (point estimate) choices</li>
 </ul>
-<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="frequentist-sample-size-3" class="section level2 hasAnchor" number="2.8">
 <h2><span class="header-section-number">2.8</span> Frequentist sample size<a href="non-inferiority-setting.html#frequentist-sample-size-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -290,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Choice of <span class="math inline">\(\delta_A\)</span> and <span class="math inline">\(\delta^*\)</span> in a frequentist setting assumed as fixed</li>
 <li>At the same time of high importance, because all trial conclusions are based on the (point estimate) choices</li>
 </ul>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="hybrid-approach" class="section level2 hasAnchor" number="2.10">
 <h2><span class="header-section-number">2.10</span> Hybrid approach<a href="non-inferiority-setting.html#hybrid-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -305,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="hybrid-approach-1" class="section level2 hasAnchor" number="2.11">
 <h2><span class="header-section-number">2.11</span> Hybrid approach<a href="non-inferiority-setting.html#hybrid-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="hybrid-approach-2" class="section level2 hasAnchor" number="2.12">
 <h2><span class="header-section-number">2.12</span> Hybrid approach<a href="non-inferiority-setting.html#hybrid-approach-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -320,16 +309,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hybrid-approach-3" class="section level2 hasAnchor" number="2.13">
 <h2><span class="header-section-number">2.13</span> Hybrid approach<a href="non-inferiority-setting.html#hybrid-approach-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Results:</p>
-<pre><code>## ── Attaching core tidyverse packages ────────────────────────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.1     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ lubridate 1.9.2     ✔ tibble    3.2.1
-## ✔ purrr     1.0.1     ✔ tidyr     1.3.0
-## ── Conflicts ──────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ ggplot2::arrow() masks emoji::arrow()
-## ✖ dplyr::filter()  masks stats::filter()
-## ✖ dplyr::lag()     masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre><code>##             type  n_0   n   AP upper_AP
 ## 1   Enthusiastic  6.6 100 0.58     0.74
 ## 2    Informative 25.0 100 0.65     0.89
@@ -345,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>u-shaped if <span class="math inline">\(n_0&lt;n\)</span> (‘prior sample’ size is smaller than planned sample size)</li>
 </ul>
 <pre><code>## Warning: Removed 128 rows containing missing values (`geom_line()`).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="implications-1" class="section level2 hasAnchor" number="2.15">
 <h2><span class="header-section-number">2.15</span> Implications<a href="non-inferiority-setting.html#implications-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -354,12 +333,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>‘hill’-shape if <span class="math inline">\(n_0&gt;n\)</span> (rather unrealistic interpretation)</li>
 </ul>
 <pre><code>## Warning: Removed 9 rows containing missing values (`geom_line()`).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="implications-2" class="section level2 hasAnchor" number="2.16">
 <h2><span class="header-section-number">2.16</span> Implications<a href="non-inferiority-setting.html#implications-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Allows statements as, for example, <span class="math inline">\(P(RPR&gt; 80\%)\)</span>:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="decomposition-of-ap" class="section level2 hasAnchor" number="2.17">
 <h2><span class="header-section-number">2.17</span> Decomposition of AP<a href="non-inferiority-setting.html#decomposition-of-ap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -376,12 +355,12 @@ AP=\overbrace{P(Z\leq - z_{1-\alpha}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(Z\
 <div id="decomposition-of-ap-1" class="section level2 hasAnchor" number="2.18">
 <h2><span class="header-section-number">2.18</span> Decomposition of AP<a href="non-inferiority-setting.html#decomposition-of-ap-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Under enthusiastic prior:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <pre><code>##              region    prop
-## 1 &#39;Not significant&#39; 0.42123
-## 2               (3) 0.48428
-## 3               (2) 0.09282
-## 4               (1) 0.00167</code></pre>
+## 1 &#39;Not significant&#39; 0.41627
+## 2               (3) 0.49073
+## 3               (2) 0.09161
+## 4               (1) 0.00139</code></pre>
 </div>
 <div id="expected-power" class="section level2 hasAnchor" number="2.19">
 <h2><span class="header-section-number">2.19</span> Expected power<a href="non-inferiority-setting.html#expected-power" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -423,7 +402,7 @@ where <span class="math inline">\(EP\)</span> is <strong>‘expected power’</s
 </div>
 <div id="conditional-bayesian-power-1" class="section level2 hasAnchor" number="2.23">
 <h2><span class="header-section-number">2.23</span> Conditional Bayesian power<a href="non-inferiority-setting.html#conditional-bayesian-power-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre><code>##   delta    y                type
 ## 1 0.000 0.83 Bayes: Enthusiastic
 ## 2 0.035 0.06 Bayes: Enthusiastic
