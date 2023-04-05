@@ -4,7 +4,7 @@ author: "André Moser, CTU Bern, University of Bern"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: [references.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 description: ""
@@ -33,9 +33,4 @@ github-repo: rstudio/bookdown-demo
 - Rufibach et al (2016): Bayesian predictive power: choice of prior [...]
 - **Kunzmann et al. (2021): A review of Bayesian Perspectives on Sample Size Derivations from Confirmatory Trials**
 - Book of Grieve (2022): Hybrid Frequentist/Bayesian Power and Bayesian Power in Planning Clinical Trials
-
-```{r, eval=FALSE}
-bookdown::render_book()
-```
-
 
