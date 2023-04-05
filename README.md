@@ -1,13 +1,2 @@
-Welcome! 
+The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et al. suggest to use the neutral term 'probability of rejection'. The classical (frequentist) 'power' is defined as the probability of rejection given that the alternative hypothesis is true. Yet, frequentist power calculations do not include uncertainties of the treatment effect. Bayesian and hybrid approaches include such uncertainties in their calculations. The following manuscript uses the different approaches (frequentist, Bayesian and hybrid) for the calculation of 'the probability of rejection'.
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
-
-This template provides a skeleton file structure that you can edit to create your book. 
-
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
-
-Additional resources:
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
