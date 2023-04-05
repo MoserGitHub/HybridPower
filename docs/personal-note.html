@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Frequentist, Bayesian and hybrid approaches for sample size and power calculations</title>
-  <meta name="description" content="References | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
+  <title>Chapter 3 Personal note | Frequentist, Bayesian and hybrid approaches for sample size and power calculations</title>
+  <meta name="description" content="Chapter 3 Personal note | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
+  <meta property="og:title" content="Chapter 3 Personal note | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
+  <meta name="twitter:title" content="Chapter 3 Personal note | Frequentist, Bayesian and hybrid approaches for sample size and power calculations" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="two-arm-non-inferiority-setting.html"/>
-
+<link rel="prev" href="notation.html"/>
+<link rel="next" href="two-arm-non-inferiority-setting.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -157,18 +157,16 @@ div.csl-indent {
 <ul class="summary">
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a></li>
+<li class="chapter" data-level="2" data-path="notation.html"><a href="notation.html"><i class="fa fa-check"></i><b>2</b> Notation</a></li>
+<li class="chapter" data-level="3" data-path="personal-note.html"><a href="personal-note.html"><i class="fa fa-check"></i><b>3</b> Personal note</a></li>
+<li class="chapter" data-level="4" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>4</b> Two-arm non-inferiority setting</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.1</b> Notation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#personal-note"><i class="fa fa-check"></i><b>1.2</b> Personal note</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Two-arm non-inferiority setting</a>
+<li class="chapter" data-level="4.1" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#binomial-outcome"><i class="fa fa-check"></i><b>4.1</b> Binomial outcome</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#binomial-outcome"><i class="fa fa-check"></i><b>2.1</b> Binomial outcome</a>
-<ul>
-<li class="chapter" data-level="2.1.1" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#frequentist-approach"><i class="fa fa-check"></i><b>2.1.1</b> Frequentist approach</a></li>
-<li class="chapter" data-level="2.1.2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#hybrid-approach-prior-on-treatment-effect"><i class="fa fa-check"></i><b>2.1.2</b> Hybrid approach: Prior on treatment effect</a></li>
-<li class="chapter" data-level="2.1.3" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#proper-bayesian-approach"><i class="fa fa-check"></i><b>2.1.3</b> Proper Bayesian approach</a></li>
+<li class="chapter" data-level="4.1.1" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#frequentist-sample-size"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist sample size</a></li>
+<li class="chapter" data-level="4.1.2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#frequentist-sample-size-calculation-in-r"><i class="fa fa-check"></i><b>4.1.2</b> Frequentist sample size: Calculation in R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#hybrid-approach-prior-on-treatment-effect"><i class="fa fa-check"></i><b>4.1.3</b> Hybrid approach: Prior on treatment effect</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -189,37 +187,18 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered hasAnchor">
-<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="personal-note" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Personal note<a href="personal-note.html#personal-note" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Many parts of this manuscript are personal notes to understand the necessary statistical concepts. Countless times I stumbled over sentences like ‘it’s straightforward to see’ or ‘simple calculations show that’. Very often that was not the case for me. Thus I tried to derive formulae derivation as precise as ‘necessary’. For some that is annoying, for me it’s helpful for reconstruction.</p>
 
-<div id="refs" class="references csl-bib-body">
-<div class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Kunzmann K, Grayling MJ, Lee KM, Robertson DS, Rufibach K, Wason JMS. A review of bayesian perspectives on sample size derivation for confirmatory trials. The American Statistician. 2021;75: 424–432. doi:<a href="https://doi.org/10.1080/00031305.2021.1901782">10.1080/00031305.2021.1901782</a></div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Spiegelhalter DJ, Abrams KR, Myles JP. Bayesian approaches to clinical trials and health‐care evaluation. Wiley; 2003. doi:<a href="https://doi.org/10.1002/0470092602">10.1002/0470092602</a></div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Baumgartner C, Klok FA, Carrier M, Limacher A, Moor J, Righini M, et al. Clinical surveillance vs. Anticoagulation for low-risk patiEnts with isolated SubSegmental pulmonary embolism: Protocol for a multicentre randomised placebo-controlled non-inferiority trial (SAFE-SSPE). BMJ Open. 2020;10: e040151. doi:<a href="https://doi.org/10.1136/bmjopen-2020-040151">10.1136/bmjopen-2020-040151</a></div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Grieve AP. Hybrid frequentist/bayesian power and bayesian power in planning clinical trials. Chapman; Hall/CRC; 2022. doi:<a href="https://doi.org/10.1201/9781003218531">10.1201/9781003218531</a></div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">O’Hagan A, Stevens JW, Campbell MJ. Assurance in clinical trial design. Pharmaceutical Statistics. 2005;4: 187–201. doi:<a href="https://doi.org/10.1002/pst.175">10.1002/pst.175</a></div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">6. </div><div class="csl-right-inline">Rufibach K, Burger HU, Abt M. Bayesian predictive power: Choice of prior and some recommendations for its use as probability of success in drug development. Pharmaceutical Statistics. 2016;15: 438–446. doi:<a href="https://doi.org/10.1002/pst.1764">10.1002/pst.1764</a></div>
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="two-arm-non-inferiority-setting.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="notation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="two-arm-non-inferiority-setting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

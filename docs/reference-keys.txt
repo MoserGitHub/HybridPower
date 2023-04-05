@@ -1,6 +1,8 @@
 background
+notation
+personal-note
 two-arm-non-inferiority-setting
 binomial-outcome
-frequentist-sample-size
-frequentist-sample-size-calculation-in-r
+frequentist-approach
 hybrid-approach-prior-on-treatment-effect
+proper-bayesian-approach
