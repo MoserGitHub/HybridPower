@@ -274,7 +274,7 @@ n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)
 </div>
 <div id="hybrid-approach-prior-on-treatment-effect" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Hybrid approach: Prior on treatment effect<a href="two-arm-non-inferiority-setting.html#hybrid-approach-prior-on-treatment-effect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Suppose that the true treatment effect <span class="math inline">\(\delta\)</span> is a realization from a random variable <span class="math inline">\(\Delta\)</span> such that <span class="math inline">\(\Delta \sim N\left(d, \frac{\tilde\sigma^2}{m}\right)\)</span>, where <span class="math inline">\(\tilde\sigma^2=\sigma_1^2+\sigma_0^2\)</span>. This prior can be thought as a realisation from a ‘prior sample’ of size <span class="math inline">\(m\)</span>.</p>
+<p>Suppose that the true treatment effect <span class="math inline">\(\delta\)</span> is a realization from a random variable <span class="math inline">\(\Delta\)</span> such that <span class="math inline">\(\Delta \sim p(\delta)\)</span>. In this subsection we assume that the prior comes from a Gaussian distribution function so that <span class="math inline">\(\Delta \sim N\left(d, \frac{\sigma_1^2+\sigma_0^2}{m}\right)\)</span>. This prior can be thought as a realisation from a ‘prior sample’ of size <span class="math inline">\(m\)</span>.</p>
 <p>In the following we use the following priors:</p>
 <ul>
 <li><strong>Enthusiastic prior</strong> (favors non-inferiority): <span class="math inline">\(d=0\)</span>, <span class="math inline">\(m=6.6\)</span>, <span class="math inline">\(P(\Delta&gt;\delta^*)=0.05\)</span>. This prior is centered on the treatment effect such that there is a low probability (here 5%) of inferiority.</li>
@@ -283,11 +283,11 @@ n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)
 <li><strong>Noninformative prior</strong>: <span class="math inline">\(d=0\)</span> with <span class="math inline">\(m=0.5\)</span>.</li>
 </ul>
 <p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>In the following we define</p>
-<p><span class="math display">\[
-AP:=\int_{\Delta} P(S^{F}|\delta, \delta^*)p(\delta)d\delta,
+<p>Let
+<span class="math display">\[
+AP:=\int_{\Delta} P(S^{F}|\delta)p(\delta)d\delta,
 \]</span></p>
-<p>as the ‘average power’ <span class="citation">[<a href="#ref-Grieve2022" role="doc-biblioref">4</a>]</span> (other terminologies which are often used are: assurance <span class="citation">[<a href="#ref-OHagan2005" role="doc-biblioref">5</a>]</span>, probability of success <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>, <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>).</p>
+<p>be the ‘average power’ <span class="citation">[<a href="#ref-Grieve2022" role="doc-biblioref">4</a>]</span> (other terminologies which are often used for the same estimator: assurance <span class="citation">[<a href="#ref-OHagan2005" role="doc-biblioref">5</a>]</span>, probability of success <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>, <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>).</p>
 <p>Suppose <span class="math inline">\(\tilde D\)</span> is a risk difference calculated from future observations. Then the predictive distribution of <span class="math inline">\(\tilde D\)</span> taking into account the uncertainty from the prior is distributed as <span class="math inline">\(\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)\)</span>. Let <span class="math inline">\(c_i=\frac{m+n_i}{m}\)</span>, then <span class="math inline">\(\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}\)</span>, and remember from the frequentist approach that the null hypothesis is rejected if
 <span class="math display">\[
 D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.

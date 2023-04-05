@@ -119,7 +119,7 @@ n_1
 
 ### Hybrid approach: Prior on treatment effect
 
-Suppose that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ such that $\Delta \sim N\left(d, \frac{\tilde\sigma^2}{m}\right)$, where $\tilde\sigma^2=\sigma_1^2+\sigma_0^2$. This prior can be thought as a realisation from a 'prior sample' of size $m$.
+Suppose that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ such that $\Delta \sim p(\delta)$. In this subsection we assume that the prior comes from a Gaussian distribution function so that $\Delta \sim N\left(d, \frac{\sigma_1^2+\sigma_0^2}{m}\right)$. This prior can be thought as a realisation from a 'prior sample' of size $m$.
 
 In the following we use the following priors:
 
@@ -163,13 +163,12 @@ prior_mean_skeptical <- delta_star
 ggplot(data_output, aes(x=delta_range, y=y, colour=factor(type)))+geom_line(linewidth=1.2)+theme_bw()+xlab("delta=p1-p0")+ylab("Density")+scale_x_continuous(breaks=c(-0.1, 0, delta_star, 0.1))+theme(panel.grid = element_blank())+geom_vline(xintercept=delta_star, linetype="dotted")+geom_vline(xintercept=0, linetype="dashed")+scale_linetype("Prior type") + stat_function(fun = dnorm, args = list(mean = prior_mean_enthusiastic, sd = sd_tilde/m0), xlim = c(delta_star, 0.1), geom = "area", show.legend = F, fill="purple", alpha=0.3, colour=NA) + stat_function(fun = dnorm, args = list(mean = prior_mean_skeptical, sd = sd_tilde/m0), xlim = c(-0.1,0), geom = "area", show.legend = F, fill="darkred", alpha=0.3, colour=NA) +scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))
 ```
 
-In the following we define
-
+Let
 $$
-AP:=\int_{\Delta} P(S^{F}|\delta, \delta^*)p(\delta)d\delta,
+AP:=\int_{\Delta} P(S^{F}|\delta)p(\delta)d\delta,
 $$ 
 
-as the 'average power' @Grieve2022 (other terminologies which are often used are: assurance @OHagan2005, probability of success @Kunzmann2022, @Spiegelhalter2003).
+be the 'average power' @Grieve2022 (other terminologies which are often used for the same estimator: assurance @OHagan2005, probability of success @Kunzmann2022, @Spiegelhalter2003).
 
 Suppose $\tilde D$ is a risk difference calculated from future observations. Then the predictive distribution of $\tilde D$ taking into account the uncertainty from the prior is distributed as $\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)$. Let $c_i=\frac{m+n_i}{m}$, then $\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}$, and remember from the frequentist approach that the null hypothesis is rejected if
 $$
