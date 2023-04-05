@@ -1,6 +1,4 @@
 background
-aim
-a-timeline-of-selected-literature
 two-arm-non-inferiority-setting
 binomial-outcome
 frequentist-sample-size

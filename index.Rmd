@@ -10,27 +10,13 @@ bibliography: [references.bib, packages.bib]
 description: ""
 link-citations: yes
 github-repo: rstudio/bookdown-demo
+csl: plos-one.csl
 ---
 
 # Background
 
-@Kunzmann2022
+The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et al. suggest to use the neutral term 'probability of rejection'. The classical (frequentist) 'power' is defined as the probability of rejection given that the alternative hypothesis is true. Yet, frequentist power calculations do not include uncertainties of the treatment effect. Bayesian and hybrid approaches include such uncertainties in their calculations. The following manuscript uses the different approaches (frequentist, Bayesian and hybrid) for the calculation of 'the probability of rejection'.
 
-## Aim
-
-- Overview 'power' terminology
-- Focus on 'hybrid' approach (95%), 5% proper Bayesian 
-- Use of SAFE-SSPE trial as example
-
-**Definition 'hybrid'** (Spiegelhalter 2004, Section 6.5.2)
+**Definition 'hybrid'** (@Spiegelhalter2003, Section 6.5.2)
 
 *'[...] we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior [...]'*
-
-## A timeline of selected literature
-
-- Book of Spiegelhalter (2004): Bayesian Approaches to Clinical Trials and Health Care Evaluation
-- O'Hagan (2005): Assurance in Clincial Trials
-- Rufibach et al (2016): Bayesian predictive power: choice of prior [...]
-- **Kunzmann et al. (2021): A review of Bayesian Perspectives on Sample Size Derivations from Confirmatory Trials**
-- Book of Grieve (2022): Hybrid Frequentist/Bayesian Power and Bayesian Power in Planning Clinical Trials
-

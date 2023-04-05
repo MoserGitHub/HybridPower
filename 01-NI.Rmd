@@ -23,7 +23,7 @@ Here $\delta=p_1-p_0$, where $p_i$, $i\in \{0,1\}$, are event probabilities for 
 
 **Working example**
 
-We consider 
+We use the SAFE-SSPE as a working example @Baumgartner2020.
 
 For example, $H_0$ is 'clinical surveillance is inferior to an active treatment' versus $H_a$ 'clinical surveillance is non-inferior to an active treatment'. The primary outcome is a risk difference with an non-inferiority margin of 3.5%.
 
@@ -121,7 +121,7 @@ n_1
 
 Suppose that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ such that $\Delta \sim N\left(d, \frac{\tilde\sigma^2}{m}\right)$, where $\tilde\sigma^2=\sigma_1^2+\sigma_0^2$. This prior can be thought as a realisation from a 'prior sample' of size $m$.
 
-In the following we choose the following prior:
+In the following we use the following priors:
 
 - **Enthusiastic prior** (favors non-inferiority): $d=0$, $m=6.6$, $P(\Delta>\delta^*)=0.05$. This prior is centered on the treatment effect such that there is a low probability (here 5%) of inferiority.
 - **Skeptical prior** (favors inferiority): $d=\delta^*$, $m=6.6$, $P(\Delta>0)=0.05$. This prior is centered on the non-inferiority margin such that there is a low probability (here 5%) of superiority.
@@ -169,7 +169,7 @@ $$
 AP:=\int_{\Delta} P(S^{F}|\delta, \delta^*)p(\delta)d\delta,
 $$ 
 
-as the 'average power' (Grieve) (other terminologies: assurance (O'Hagan), probability of success (**!**) (Kunzmann et al., Spiegelhalter).
+as the 'average power' @Grieve2022 (other terminologies which are often used are: assurance @OHagan2005, probability of success @Kunzmann2022, @Spiegelhalter2003).
 
 Suppose $\tilde D$ is a risk difference calculated from future observations. Then the predictive distribution of $\tilde D$ taking into account the uncertainty from the prior is distributed as $\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)$. Let $c_i=\frac{m+n_i}{m}$, then $\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}$, and remember from the frequentist approach that the null hypothesis is rejected if
 $$
@@ -234,7 +234,7 @@ data.frame(data_output %>% arrange(type))
 ---
 
 
-Rufibach et al. (2016) give a closed a formula for the distribution of $RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})$, where $\Delta \sim N(d,\tilde\sigma^2/n_0)$, and discuss the shape under different prior choices (RPR='Random probability to reject`, see Kunzmann et al.)
+Rufibach et al. give a closed a formula for the distribution of $RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})$, where $\Delta \sim N(d,\tilde\sigma^2/n_0)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
 
 ---
 

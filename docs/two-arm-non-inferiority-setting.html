@@ -155,14 +155,9 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Frequentist, Bayesian and hybrid approaches to sample size and power calculations</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#aim"><i class="fa fa-check"></i><b>1.1</b> Aim</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-timeline-of-selected-literature"><i class="fa fa-check"></i><b>1.2</b> A timeline of selected literature</a></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a></li>
 <li class="chapter" data-level="2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Two-arm non-inferiority setting</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html#binomial-outcome"><i class="fa fa-check"></i><b>2.1</b> Binomial outcome</a>
@@ -173,9 +168,6 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -202,7 +194,7 @@ div.csl-indent {
 <p>Here <span class="math inline">\(\delta=p_1-p_0\)</span>, where <span class="math inline">\(p_i\)</span>, <span class="math inline">\(i\in \{0,1\}\)</span>, are event probabilities for two groups.</p>
 <hr />
 <p><strong>Working example</strong></p>
-<p>We consider</p>
+<p>We use the SAFE-SSPE as a working example <span class="citation">[<a href="#ref-Baumgartner2020" role="doc-biblioref">3</a>]</span>.</p>
 <p>For example, <span class="math inline">\(H_0\)</span> is ‘clinical surveillance is inferior to an active treatment’ versus <span class="math inline">\(H_a\)</span> ‘clinical surveillance is non-inferior to an active treatment’. The primary outcome is a risk difference with an non-inferiority margin of 3.5%.</p>
 <hr />
 <div id="frequentist-sample-size" class="section level3 hasAnchor" number="2.1.1">
@@ -283,7 +275,7 @@ n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)
 <div id="hybrid-approach-prior-on-treatment-effect" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Hybrid approach: Prior on treatment effect<a href="two-arm-non-inferiority-setting.html#hybrid-approach-prior-on-treatment-effect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose that the true treatment effect <span class="math inline">\(\delta\)</span> is a realization from a random variable <span class="math inline">\(\Delta\)</span> such that <span class="math inline">\(\Delta \sim N\left(d, \frac{\tilde\sigma^2}{m}\right)\)</span>, where <span class="math inline">\(\tilde\sigma^2=\sigma_1^2+\sigma_0^2\)</span>. This prior can be thought as a realisation from a ‘prior sample’ of size <span class="math inline">\(m\)</span>.</p>
-<p>In the following we choose the following prior:</p>
+<p>In the following we use the following priors:</p>
 <ul>
 <li><strong>Enthusiastic prior</strong> (favors non-inferiority): <span class="math inline">\(d=0\)</span>, <span class="math inline">\(m=6.6\)</span>, <span class="math inline">\(P(\Delta&gt;\delta^*)=0.05\)</span>. This prior is centered on the treatment effect such that there is a low probability (here 5%) of inferiority.</li>
 <li><strong>Skeptical prior</strong> (favors inferiority): <span class="math inline">\(d=\delta^*\)</span>, <span class="math inline">\(m=6.6\)</span>, <span class="math inline">\(P(\Delta&gt;0)=0.05\)</span>. This prior is centered on the non-inferiority margin such that there is a low probability (here 5%) of superiority.</li>
@@ -295,7 +287,7 @@ n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)
 <p><span class="math display">\[
 AP:=\int_{\Delta} P(S^{F}|\delta, \delta^*)p(\delta)d\delta,
 \]</span></p>
-<p>as the ‘average power’ (Grieve) (other terminologies: assurance (O’Hagan), probability of success (<strong>!</strong>) (Kunzmann et al., Spiegelhalter).</p>
+<p>as the ‘average power’ <span class="citation">[<a href="#ref-Grieve2022" role="doc-biblioref">4</a>]</span> (other terminologies which are often used are: assurance <span class="citation">[<a href="#ref-OHagan2005" role="doc-biblioref">5</a>]</span>, probability of success <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>, <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>).</p>
 <p>Suppose <span class="math inline">\(\tilde D\)</span> is a risk difference calculated from future observations. Then the predictive distribution of <span class="math inline">\(\tilde D\)</span> taking into account the uncertainty from the prior is distributed as <span class="math inline">\(\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)\)</span>. Let <span class="math inline">\(c_i=\frac{m+n_i}{m}\)</span>, then <span class="math inline">\(\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}\)</span>, and remember from the frequentist approach that the null hypothesis is rejected if
 <span class="math display">\[
 D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
@@ -354,7 +346,7 @@ Note that as <span class="math inline">\(m \rightarrow \infty\)</span>, then <sp
 ## 3 Noninformative 99.93031 99.93031 0.52
 ## 4      Skeptical 99.93031 99.93031 0.34</code></pre>
 <hr />
-<p>Rufibach et al. (2016) give a closed a formula for the distribution of <span class="math inline">\(RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})\)</span>, where <span class="math inline">\(\Delta \sim N(d,\tilde\sigma^2/n_0)\)</span>, and discuss the shape under different prior choices (RPR=’Random probability to reject`, see Kunzmann et al.)</p>
+<p>Rufibach et al. give a closed a formula for the distribution of <span class="math inline">\(RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})\)</span>, where <span class="math inline">\(\Delta \sim N(d,\tilde\sigma^2/n_0)\)</span>, and discuss the shape under different prior choices <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</a>]</span>. In the following we use the wording ’random probability to reject` (RPR) similar to <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>.</p>
 <hr />
 <p><strong>Working example (continued) </strong></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="two-arm-non-inferiority-setting.html#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>,<span class="fl">0.999</span>,<span class="fl">0.001</span>)</span>
@@ -399,6 +391,27 @@ Note that as <span class="math inline">\(m \rightarrow \infty\)</span>, then <sp
 </div>
 </div>
 </div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-Kunzmann2022" class="csl-entry">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Kunzmann K, Grayling MJ, Lee KM, Robertson DS, Rufibach K, Wason JMS. A review of bayesian perspectives on sample size derivation for confirmatory trials. The American Statistician. 2021;75: 424–432. doi:<a href="https://doi.org/10.1080/00031305.2021.1901782">10.1080/00031305.2021.1901782</a></div>
+</div>
+<div id="ref-Spiegelhalter2003" class="csl-entry">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Spiegelhalter DJ, Abrams KR, Myles JP. Bayesian approaches to clinical trials and health‐care evaluation. Wiley; 2003. doi:<a href="https://doi.org/10.1002/0470092602">10.1002/0470092602</a></div>
+</div>
+<div id="ref-Baumgartner2020" class="csl-entry">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Baumgartner C, Klok FA, Carrier M, Limacher A, Moor J, Righini M, et al. Clinical surveillance vs. Anticoagulation for low-risk patiEnts with isolated SubSegmental pulmonary embolism: Protocol for a multicentre randomised placebo-controlled non-inferiority trial (SAFE-SSPE). BMJ Open. 2020;10: e040151. doi:<a href="https://doi.org/10.1136/bmjopen-2020-040151">10.1136/bmjopen-2020-040151</a></div>
+</div>
+<div id="ref-Grieve2022" class="csl-entry">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Grieve AP. Hybrid frequentist/bayesian power and bayesian power in planning clinical trials. Chapman; Hall/CRC; 2022. doi:<a href="https://doi.org/10.1201/9781003218531">10.1201/9781003218531</a></div>
+</div>
+<div id="ref-OHagan2005" class="csl-entry">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">O’Hagan A, Stevens JW, Campbell MJ. Assurance in clinical trial design. Pharmaceutical Statistics. 2005;4: 187–201. doi:<a href="https://doi.org/10.1002/pst.175">10.1002/pst.175</a></div>
+</div>
+<div id="ref-Rufibach2016" class="csl-entry">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Rufibach K, Burger HU, Abt M. Bayesian predictive power: Choice of prior and some recommendations for its use as probability of success in drug development. Pharmaceutical Statistics. 2016;15: 438–446. doi:<a href="https://doi.org/10.1002/pst.1764">10.1002/pst.1764</a></div>
+</div>
+</div>
             </section>
 
           </div>
@@ -436,8 +449,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-NI.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,
