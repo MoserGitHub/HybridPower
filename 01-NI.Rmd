@@ -23,9 +23,7 @@ Here $\delta=p_1-p_0$, where $p_i$, $i\in \{0,1\}$, are event probabilities for 
 
 **Working example**
 
-We use the SAFE-SSPE as a working example @Baumgartner2020.
-
-For example, $H_0$ is 'clinical surveillance is inferior to an active treatment' versus $H_a$ 'clinical surveillance is non-inferior to an active treatment'. The primary outcome is a risk difference with an non-inferiority margin of 3.5%.
+We use the SAFE-SSPE trial as a working example @Baumgartner2020. In brief, this non-inferiority randomised placebo-controlled trial compares clinical surveillance versus anticoagulant treatment in low-risk patients with isolated subsegmental pulmonary embolism (SSPE). The primary outcome is 3-month recurrence of venous thromboembolism (VTE). The null hypothesis $H_0$ is 'clinical surveillance is inferior to anticoagulant treatment' versus the alternative hypothesis $H_a$ 'clinical surveillance is non-inferior to anticoagulant treatment'. The non-inferiority margin was set at 3.5% and it was assumed that the proportion of VTE in both groups was 1%.
 
 ---
 
@@ -39,21 +37,19 @@ We are interested whether the upper $(1-\alpha)\%$-confidence limit is smaller t
 $$
 D+z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}\leq \delta^*,
 $$
-where $z_{1-\alpha}=\Phi^{-1}(1-\alpha)$ with $\Phi^{-1}$, the quantile function of the standard Gaussian distribution function.
-
-Because
+where $z_{1-\alpha}=\Phi^{-1}(1-\alpha)$ with $\Phi^{-1}$, the quantile function of the standard Gaussian distribution function, which is equal to
 $$
-D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*
+D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
 $$
-we have that, for $\Phi$ being the probability distribution function of the standard Gaussian distribution,
+Denote $D_{suc}:=-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*$ as the risk difference for a 'success'. Then, for $\Phi$ being the probability distribution function of the standard Gaussian distribution,
 $$
-P(S^{F}|\delta)=P_{\delta}(Z\leq - z_{1-\alpha})= \Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right),
+P_\delta(D\leq D_{suc})=\Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right),
 $$
-since under certain regularity conditions,
+since under regularity conditions,
 $$
-Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{\min\{n1,n_0\} \rightarrow \infty} N(0,1).
+Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{\min(n1,n_0) \rightarrow \infty} N(0,1).
 $$
-For an alternative point difference $\delta_A$ we have that $P_{\delta_A}(Z\leq - z_{1-\alpha})=1-\beta$, which is known as the frequentist power (or the **probability of rejection given $\delta_A$**). From that we have that
+For an alternative point difference $\delta_A$, $P_{\delta_A}(D\leq D_{suc})$ is known as the frequentist power (or the **probability of rejection given $\delta_A$**). From that we have that
 
 $$
 -z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)=\Phi^{-1}(1-\beta)=z_{1-\beta}
@@ -67,7 +63,7 @@ $$
 n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta-\delta^*)^2}, \quad n_1=an_0.
 $$
 
-$\delta_A$ and $\delta^*$ are assumed as fixed constants in a frequentist approach. Their choices are of high importance, because all trial conclusions are based on those choices and affect the sample size calculation. The plot below shows how the sample size increase as $\delta^* \rightarrow \delta$.
+$\delta_A$ and $\delta^*$ are assumed as fixed and known constants in a frequentist approach. Their choices are of high importance, because all trial conclusions are based on those choices and affect the sample size calculation. The plot below shows how the sample size increase as $\delta^* \rightarrow \delta$.
 
 ```{r}
 #| echo: false
@@ -115,7 +111,7 @@ n_1 <- n_0*a
 n_1
 ```
 
-
+Given the specified operating characteristics and parameters a sample size of 200 patients (100 per arm) is needed to reject the null hypothesis of inferiority.
 
 ### Hybrid approach: Prior on treatment effect
 
@@ -130,8 +126,6 @@ In the following we use the following priors:
 
 ```{r}
 #| echo: false
-
-sd_tilde <- sqrt(sd_0^2+sd_1^2)
 
 delta_range <- seq(from=-0.1, to=0.1, 0.001)
 
@@ -173,17 +167,23 @@ be the 'average power' @Grieve2022 (other terminologies which are often used for
 $$
 D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
 $$
-By using a design prior we want to take into account the uncertainty of the treatment effect. The predictive distribution from a risk difference from future observations, say $\tilde D\sim f(\tilde\delta)$, includes this uncertainty. For the Gaussian case, the predictive distribution of $\tilde D$ is distributed as $\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)$, see for example @Spiegelhalter2003. Denote in the following $c_i=\frac{m+n_i}{m}$, then $\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}$.
+By using a design prior we take into account the uncertainty of the treatment effect. The predictive distribution from a risk difference from future observations, say $\tilde D\sim f(\tilde\delta)$, based on the prior information includes this uncertainty. For the Gaussian case, the predictive distribution of $\tilde D$ is distributed as $\tilde D \sim N\left(d, \underbrace{\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}+\frac{\sigma_1^2}{m}+\frac{\sigma_0^2}{m}}_{\tilde\sigma^2}\right)$, see for example @Spiegelhalter2003. Denote in the following $c_i=\frac{m+n_i}{m}$, then $\tilde\sigma^2=\frac{\sigma_1^2c_1}{n_1}+\frac{\sigma_0^2c_0}{n_0}$.
 
 Suppose now that $D$ has a predictive distribution as described above, then
 $$
-AP=\int_{-\infty}^{-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*}f(\tilde\delta)d\tilde\delta= \Phi\left(-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}(d-\delta^*)\right),
+\begin{aligned}
+AP&=\int_{-\infty}^{-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*}f(\tilde\delta)d\tilde\delta\\
+&= \Phi\left(-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}(d-\delta^*)\right)\\
+&=\Phi\left(\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}\left[-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(d-\delta^*)\right]\right),
+\end{aligned}
 $$
 see for example @Grieve2022. Note that as $m \rightarrow \infty$, then $c_i \rightarrow 1$, $i\in {0,1}$, and $AP \rightarrow \Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(d-\delta^*)\right)$, that is, the frequentist power at $d$.
 
 ---
 
 **Working example (continued) **
+
+We calculate the AP under the assumed prior distributions, operating characteristics and parameters for the SAFE-SSPE trial.
 
 ```{r}
 #| echo: true
@@ -231,14 +231,25 @@ data_output <- rbind(data_output, data.frame(type="Noninformative", n_0, n_1, AP
 data.frame(data_output %>% arrange(type))
 ```
 
+Under an 'enthusiastic prior' we get an average power of 58%. This is substantially lower than the frequentist power of 80%.
+
 ---
 
+Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D\leq D_{suc})$, where $\Delta \sim N(d,\tilde\sigma^2/m)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
 
-Rufibach et al. give a closed a formula for the distribution of $RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})$, where $\Delta \sim N(d,\tilde\sigma^2/n_0)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
+The random variable $RPR$ has a probability density function
+$$
+\begin{aligned}
+p(y)&=\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\\& \quad \phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
+\end{aligned}
+$$
+see @Rufibach2016.
 
 ---
 
 **Working example (continued) **
+
+We derive the probability densities for the different assumed priors for the SAFE-SSPE study.
 
 ```{r}
 #| echo: true
@@ -246,32 +257,38 @@ Rufibach et al. give a closed a formula for the distribution of $RPR:=P_{\Delta}
 
 x <- seq(0.001,0.999,0.001)
 
+# Enthusiastic prior
 m <- 6.6
 prior_mean <- 0
 
 ## Rufibach 2016: formula (4)
-y <- sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*dnorm(-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(1-alpha)-sqrt(m)/sd_tilde*(prior_mean-delta_star)-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+
+sqrt(sd_0^2+sd_1^2)
 
 data_power <- data.frame(x, y, type="Enthusiastic")
 
+# Skeptical prior
 m <- 6.6
 prior_mean <- delta_star
 
-y <- sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*dnorm(-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(1-alpha)-sqrt(m)/sd_tilde*(prior_mean-delta_star)-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Skeptical"))
 
+# Informative prior
 m <- 25
 prior_mean <- 0
 
-y <- sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*dnorm(-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(1-alpha)-sqrt(m)/sd_tilde*(prior_mean-delta_star)-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Informative"))
 
+# Noninformative prior
 m <- 0.5
 prior_mean <- 0
 
-y <- sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*dnorm(-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(1-alpha)-sqrt(m)/sd_tilde*(prior_mean-delta_star)-sqrt(sd_1^2/n_1+sd_0^2/n_0)/(sqrt(sd_tilde^2/m))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Noninformative"))
 
