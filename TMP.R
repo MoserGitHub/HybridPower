@@ -1,45 +1,4 @@
-Rufibach et al. (2016) give a closed a formula for the distribution of $RPR:=P_{\Delta}(Z\leq - z_{1-\alpha})$, where $\Delta \sim N(d,\tilde\sigma^2/n_0)$, and discuss the shape under different prior choices (RPR='Random probability to reject`, see Kunzmann et al.)
 
-```{r}
-#| echo: false
-
-x <- seq(0.001,0.999,0.001)
-
-n <- 100
-delta_star <- 0.035
-prior_mean <- 0
-prior_mean_skeptical <- delta_star
-alpha <- 0.05
-
-n_0 <- 6.6
-
-## Rufibach 2016: formula (4)
-y <- sqrt(n_0/n)*dnorm(-sqrt(n_0/n)*qnorm(1-alpha)-sqrt(n_0)/sd_tilde*(prior_mean-delta_star)-sqrt(n_0/n)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
-
-data_power <- data.frame(x, y, type="Enthusiastic")
-
-n_0 <- 6.6
-
-y <- sqrt(n_0/n)*dnorm(-sqrt(n_0/n)*qnorm(1-alpha)-sqrt(n_0)/sd_tilde*(prior_mean_skeptical-delta_star)-sqrt(n_0/n)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
-
-data_power <- rbind(data_power, data.frame(x, y, type="Skeptical"))
-
-n_0 <- 25
-
-y <- sqrt(n_0/n)*dnorm(-sqrt(n_0/n)*qnorm(1-alpha)-sqrt(n_0)/sd_tilde*(prior_mean_enthusiastic-delta_star)-sqrt(n_0/n)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
-
-data_power <- rbind(data_power, data.frame(x, y, type="Informative"))
-
-n_0 <- 0.5
-
-y <- sqrt(n_0/n)*dnorm(-sqrt(n_0/n)*qnorm(1-alpha)-sqrt(n_0)/sd_tilde*(prior_mean_enthusiastic-delta_star)-sqrt(n_0/n)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
-
-data_power <- rbind(data_power, data.frame(x, y, type="Noninformative"))
-
-data_output2 <- data_output %>% select(type, x=AP) %>% mutate(y=0)
-
-ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(data=data_output2, aes(x=x, y=y, colour=type))+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+theme_bw()+theme(panel.grid = element_blank())+ylab("Density")+xlab("RPR")+ylim(c(0,2))
-```
 
 
 
