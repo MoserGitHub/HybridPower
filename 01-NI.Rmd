@@ -245,19 +245,33 @@ data_output <- rbind(data_output, data.frame(type="Noninformative", n_0, n_1, AP
 data.frame(data_output %>% arrange(type))
 ```
 
-Under an 'enthusiastic prior' we get an average power of 58%. This is substantially lower than the frequentist power of 80% (which holds under the alternative hypothesis).
+Under an 'enthusiastic prior' we get an average power of 58%. For an 'skeptical prior' the average power decreases to 34%. These values are lower than the frequentist power of 80%.
 
 ---
 
 Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D\leq D_{suc}^{\delta^*})$, where $\Delta \sim N(d,\tilde\sigma^2/m)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
 
-The random variable $RPR$ has a probability density function
+For $0<y<1$, the random variable $RPR$ has a probability density function
 $$
 \begin{aligned}
-p(y)&=\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\cdot\\& \quad \phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
+f(y)&=\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\cdot\\& \quad \phi\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
 \end{aligned}
 $$
 see @Rufibach2016.
+
+---
+
+**Special case**
+
+For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$ the formula above reduces to
+
+$$
+\begin{aligned}
+f(y)&=\sqrt{\frac{m}{n}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\phi\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0<y<1.
+\end{aligned}
+$$
+
+---
 
 ---
 
@@ -311,18 +325,35 @@ ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(dat
 
 ---
 
-From the above formula one can derive probability statements as $P(RPR>\gamma)$, from
+The cumulative distribution function of $RPR$ is
 
 $$
 \begin{aligned}
-P(RPR>\gamma)=\Phi&\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}\Phi^{-1}(y) \right),
+P(RPR\leq y)=1-\Phi&\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right), \quad 0<y<1.
 \end{aligned}
 $$
+
+---
+
+**Special case**
+
+For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$ the formula above reduces to
+
+$$
+\begin{aligned}
+P(RPR\leq y)=1-\Phi&\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0<y<1.
+\end{aligned}
+$$
+
+---
+
+This allows the calculation of probability statements as $P(RPR>\gamma)$:
 
 ```{r}
 #| echo: false
 
 gamma <- seq(0.01,0.99,0.01)
+
 prior_mean <- 0
 m_range <- c(0.5, 6.6, 25, 100)
 
@@ -331,8 +362,6 @@ n_0_range <- n_0
 data_rpr <- expand.grid(gamma, m_range, n_0_range)
 names(data_rpr) <- c("gamma", "m_range", "n_0_range")
 data_rpr$n_1_range <- a*data_rpr$n_0_range
-
-
 
 data_rpr$p_rpr <- pnorm(-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(data_rpr$gamma))
 

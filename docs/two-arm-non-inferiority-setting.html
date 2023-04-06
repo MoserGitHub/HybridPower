@@ -351,16 +351,25 @@ see for example <span class="citation">[<a href="#ref-Grieve2022" role="doc-bibl
 ## 2    Informative 99.93031 99.93031 0.65
 ## 3 Noninformative 99.93031 99.93031 0.52
 ## 4      Skeptical 99.93031 99.93031 0.34</code></pre>
-<p>Under an ‘enthusiastic prior’ we get an average power of 58%. This is substantially lower than the frequentist power of 80% (which holds under the alternative hypothesis).</p>
+<p>Under an ‘enthusiastic prior’ we get an average power of 58%. For an ‘skeptical prior’ the average power decreases to 34%. These values are lower than the frequentist power of 80%.</p>
 <hr />
 <p>Rufibach et al. give a closed a formula for the distribution of <span class="math inline">\(RPR:=P_\Delta(D\leq D_{suc}^{\delta^*})\)</span>, where <span class="math inline">\(\Delta \sim N(d,\tilde\sigma^2/m)\)</span>, and discuss the shape under different prior choices <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</a>]</span>. In the following we use the wording ’random probability to reject` (RPR) similar to <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>.</p>
-<p>The random variable <span class="math inline">\(RPR\)</span> has a probability density function
+<p>For <span class="math inline">\(0&lt;y&lt;1\)</span>, the random variable <span class="math inline">\(RPR\)</span> has a probability density function
 <span class="math display">\[
 \begin{aligned}
-p(y)&amp;=\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\\&amp; \quad \phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
+f(y)&amp;=\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\cdot\\&amp; \quad \phi\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
 \end{aligned}
 \]</span>
 see <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</a>]</span>.</p>
+<hr />
+<p><strong>Special case</strong></p>
+<p>For the case that <span class="math inline">\(n_0=n_1=n\)</span> and <span class="math inline">\(\sigma_1^2=\sigma_0^2=\sigma^2\)</span> the formula above reduces to</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(y)&amp;=\sqrt{\frac{m}{n}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\phi\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0&lt;y&lt;1.
+\end{aligned}
+\]</span></p>
+<hr />
 <hr />
 <p><strong>Working example (continued) </strong></p>
 <p>We derive the probability densities for the different assumed priors for the SAFE-SSPE study.</p>
@@ -404,12 +413,22 @@ see <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</
 <span id="cb9-38"><a href="two-arm-non-inferiority-setting.html#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_power, <span class="fu">aes</span>(x, y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>data_output2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">scale_colour_manual</span>(<span class="st">&quot;Prior type&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;darkred&quot;</span>))<span class="sc">+</span><span class="fu">theme_bw</span>()<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;Density&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&quot;RPR&quot;</span>)<span class="sc">+</span><span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))<span class="sc">+</span><span class="fu">labs</span>(<span class="at">caption=</span><span class="st">&quot;Dots indicate the AP.&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <hr />
-<p>From the above formula one can derive probability statements as <span class="math inline">\(P(RPR&gt;\gamma)\)</span>, from</p>
+<p>The cumulative distribution function of <span class="math inline">\(RPR\)</span> is</p>
 <p><span class="math display">\[
 \begin{aligned}
-P(RPR&gt;\gamma)=\Phi&amp;\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}\Phi^{-1}(y) \right),
+P(RPR\leq y)=1-\Phi&amp;\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right), \quad 0&lt;y&lt;1.
 \end{aligned}
 \]</span></p>
+<hr />
+<p><strong>Special case</strong></p>
+<p>For the case that <span class="math inline">\(n_0=n_1=n\)</span> and <span class="math inline">\(\sigma_1^2=\sigma_0^2=\sigma^2\)</span> the formula above reduces to</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(RPR\leq y)=1-\Phi&amp;\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0&lt;y&lt;1.
+\end{aligned}
+\]</span></p>
+<hr />
+<p>This allows the calculation of probability statements as <span class="math inline">\(P(RPR&gt;\gamma)\)</span>:</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>For a specific threshold <span class="math inline">\(\gamma=0.6\)</span> we obtain</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
