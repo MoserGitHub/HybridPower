@@ -254,7 +254,7 @@ Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D
 The random variable $RPR$ has a probability density function
 $$
 \begin{aligned}
-p(y)&=\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\\& \quad \phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
+p(y)&=\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\cdot\\& \quad \phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
 \end{aligned}
 $$
 see @Rufibach2016.
@@ -315,7 +315,7 @@ From the above formula one can derive probability statements as $P(RPR>\gamma)$,
 
 $$
 \begin{aligned}
-P(RPR>\gamma)&=\Phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\frac{\sqrt{mn_0\sigma_1^2+mn_1\sigma_0^2}}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}\Phi^{-1}(y) \right),
+P(RPR>\gamma)=\Phi&\left(-z_{1-\alpha}\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}-\sqrt{\frac{m}{\sigma_1^2+\sigma_2^2}}(d-\delta^*)-\sqrt{\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{\sqrt{n_1n_0(\sigma_1^2+\sigma_2^2)}}}\Phi^{-1}(y) \right),
 \end{aligned}
 $$
 
@@ -326,7 +326,7 @@ gamma <- seq(0.01,0.99,0.01)
 prior_mean <- 0
 m_range <- c(0.5, 6.6, 25, 100)
 
-n_0_range <- c(100)
+n_0_range <- n_0
 
 data_rpr <- expand.grid(gamma, m_range, n_0_range)
 names(data_rpr) <- c("gamma", "m_range", "n_0_range")
@@ -334,9 +334,9 @@ data_rpr$n_1_range <- a*data_rpr$n_0_range
 
 
 
-data_rpr$p_rpr <- pnorm(-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(gamma))
+data_rpr$p_rpr <- pnorm(-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(data_rpr$gamma))
 
-ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(m_range)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))
+ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(m_range)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on planned sample size of ", round(n_0_range,0), " for n0."))
 ```
 
 For a specific threshold $\gamma=0.6$ we obtain
