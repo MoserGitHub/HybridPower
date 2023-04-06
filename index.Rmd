@@ -24,5 +24,6 @@ The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et 
 ## Notation
 
 - $iid$: independent and identically distributed
-- $\Phi$: Probability distribution function of the standard Gaussian distribution
+- $\phi$: Probability density function of the standard Gaussian distribution
+- $\Phi$: Cumulative distribution function of the standard Gaussian distribution
 - $\Phi^{-1}$: Quantile function of the standard Gaussian distribution function
