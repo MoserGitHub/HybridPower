@@ -81,7 +81,76 @@ Allows statements as, for example, $P(RPR> 80\%)$:
 
 
 
+## Expected power
 
+$$
+AP=\overbrace{P(Z\leq - z_{1-\alpha}, \Delta>\delta^*)}^{(1)}+\overbrace{P(Z\leq - z_{1-\alpha}, 0<\Delta\leq\delta^*)}^{(2)} \\
++\overbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq0)}^{(3)}
+$$
+For our noninferiority setting consider (2)+(3).
+
+$$
+P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)=P(Z\leq - z_{1-\alpha}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}P(\Delta\leq\delta^*),
+$$
+where $EP$ is **'expected power'** (Kunzmann et al.).
+
+## To make things more powerful confusing
+
+Spiegelhalter calls $P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
+
+$$
+\underbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
+$$
+
+## EP, PAP, AP
+
+Noninferiority setting $\Delta\leq\delta^*$:
+
+```{r}
+#| echo: false
+
+n <- 100
+delta_star <- 0.035
+prior_mean_skeptical <- delta_star
+prior_mean_enthusiastic <- 0
+
+
+set.seed(1)
+draws <- rnorm(100000, mean=prior_mean_skeptical, sd=sd_tilde/sqrt(6.6))
+
+power_classic <- pnorm(-qnorm(1-alpha)-sqrt(n)/sd_tilde*(draws-delta_star))
+
+data_ep <- data.frame(ep=mean(power_classic[draws<=delta_star]), pap=mean(power_classic[draws<=delta_star])*pnorm(delta_star, mean=prior_mean_skeptical, sd=sd_tilde/sqrt(6.6)), ap=mean(power_classic), const=pnorm(delta_star, mean=prior_mean_skeptical, sd=sd_tilde/sqrt(6.6)), type="Skeptical")
+
+set.seed(1)
+draws <- rnorm(100000, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(6.6))
+
+power_classic <- pnorm(-qnorm(1-alpha)-sqrt(n)/sd_tilde*(draws-delta_star))
+
+data_ep <- rbind(data_ep, data.frame(ep=mean(power_classic[draws<=delta_star]), pap=mean(power_classic[draws<=delta_star])*pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(6.6)), ap=mean(power_classic), const=pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(6.6)), type="Enthusiastic"))
+
+set.seed(1)
+draws <- rnorm(100000, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(25))
+
+power_classic <- pnorm(-qnorm(1-alpha)-sqrt(n)/sd_tilde*(draws-delta_star))
+
+data_ep <- rbind(data_ep, data.frame(ep=mean(power_classic[draws<=delta_star]), pap=mean(power_classic[draws<=delta_star])*pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(25)), ap=mean(power_classic), const=pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(25)), type="Informative"))
+
+set.seed(1)
+draws <- rnorm(100000, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(0.5))
+
+power_classic <- pnorm(-qnorm(1-alpha)-sqrt(n)/sd_tilde*(draws-delta_star))
+
+data_ep <- rbind(data_ep, data.frame(ep=mean(power_classic[draws<=delta_star]), pap=mean(power_classic[draws<=delta_star])*pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(0.5)), ap=mean(power_classic), const=pnorm(delta_star, mean=prior_mean_enthusiastic, sd=sd_tilde/sqrt(0.5)), type="Noninformative"))
+
+
+data_ep$ep <- round(data_ep$ep, 4)
+data_ep$ap <- round(data_ep$ap, 4)
+data_ep$pap <- round(data_ep$pap, 4)
+data_ep$const <- round(data_ep$const, 4)
+
+data_ep
+```
 
 ## Conditional Bayesian power
 
@@ -132,70 +201,7 @@ data_power %>% filter(delta%in%c("0", "0.035"))
 
 ## Average Bayesian power
 
-- $P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)$
 
-```{r}
-#| echo: false
-
-### Hybrid
-n <- 100
-
-n_0 <- c(6.6)
-
-data_output <- data.frame(type="Enthusiastic", n_0, n, AP=round(pnorm(sqrt(n_0/(n_0+n))*(-qnorm(1-alpha)-sqrt(n/(sd_tilde^2))*(prior_mean_enthusiastic-delta_star))),3), upper_AP=round(pnorm(-(prior_mean_enthusiastic-delta_star)*sqrt(n_0/sd_tilde^2)), 3))
-
-n_0 <- c(6.6)
-
-data_output <- rbind(data_output, data.frame(type="Skeptical", n_0, n, AP=round(pnorm(sqrt(n_0/(n_0+n))*(-qnorm(1-alpha)-sqrt(n/(sd_tilde^2))*(prior_mean_skeptical-delta_star))),3), upper_AP=round(pnorm(-(prior_mean_skeptical-delta_star)*sqrt(n_0/sd_tilde^2)), 3)))
-
-n_0 <- c(25)
-
-data_output <- rbind(data_output, data.frame(type="Informative", n_0, n, AP=round(pnorm(sqrt(n_0/(n_0+n))*(-qnorm(1-alpha)-sqrt(n/(sd_tilde^2))*(prior_mean_enthusiastic-delta_star))),3), upper_AP=round(pnorm(-(prior_mean_enthusiastic-delta_star)*sqrt(n_0/sd_tilde^2)), 3)))
-
-n_0 <- c(0.5)
-
-data_output <- rbind(data_output, data.frame(type="Noninformative", n_0, n, AP=round(pnorm(sqrt(n_0/(n_0+n))*(-qnorm(1-alpha)-sqrt(n/(sd_tilde^2))*(prior_mean_enthusiastic-delta_star))),3), upper_AP=round(pnorm(-(prior_mean_enthusiastic-delta_star)*sqrt(n_0/sd_tilde^2)), 3)))
-
-data_output <- data_output %>% select(type, AP)
-
-n <- 100
-delta_star <- 0.035
-
-
-prior_mean <- 0
-n_0 <- 6.6
-
-y <- pnorm(-sqrt(n_0/n)*qnorm(1-alpha)-((prior_mean-delta_star)*sqrt(n_0+n)*sqrt(n_0))/(sd_tilde*sqrt(n)))
-
-data_output2 <- data.frame(type="Enthusiastic", n_0, n, AP=round(y, 3))
-
-prior_mean <- 0.035
-n_0 <- 6.6
-
-y <- pnorm(-sqrt(n_0/n)*qnorm(1-alpha)-((prior_mean-delta_star)*sqrt(n_0+n)*sqrt(n_0))/(sd_tilde*sqrt(n)))
-
-data_output2 <- rbind(data_output2, data.frame(type="Skeptical", n_0, n, AP=round(y, 3)))
-
-prior_mean <- 0
-n_0 <- 25
-
-y <- pnorm(-sqrt(n_0/n)*qnorm(1-alpha)-((prior_mean-delta_star)*sqrt(n_0+n)*sqrt(n_0))/(sd_tilde*sqrt(n)))
-
-data_output2 <- rbind(data_output2, data.frame(type="Informative", n_0, n, AP=round(y, 3)))
-
-prior_mean <- 0
-n_0 <- 0.5
-
-y <- pnorm(-sqrt(n_0/n)*qnorm(1-alpha)-((prior_mean-delta_star)*sqrt(n_0+n)*sqrt(n_0))/(sd_tilde*sqrt(n)))
-
-data_output2 <- rbind(data_output2, data.frame(type="Noninformative", n_0, n, AP=round(y, 3)))
-
-data_output2$AP_bayes <- data_output2$AP
-
-data_output <- left_join(data_output, data_output2 %>% select(type, AP_bayes), by="type")
-
-data_output
-```
 
 Of course, Bayesian average power can again be decomposed into EP and PAP.
 

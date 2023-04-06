@@ -1,3 +1,7 @@
+# Rmd files
+.Rmd
+
+
 # History files
 .Rhistory
 .Rapp.history
@@ -45,4 +49,4 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-*.Rmd
+
