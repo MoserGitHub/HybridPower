@@ -49,7 +49,7 @@ since under regularity conditions,
 $$
 Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{\min(n_1,n_0) \rightarrow \infty} N(0,1).
 $$
-$P_{\delta}(D\leq D_{suc}^{\delta^*})$ is the **'probability of rejection given $\delta$'**. Note that under a null value $\delta_0$, $P_{\delta_0}(D\leq D_{suc}^{\delta^*})$ is the 'type-I error' and under an alternative value $\delta_A$ is the 'frequentist power'. For an alternative value $\delta_A$ it holds that
+$P_{\delta}(D\leq D_{suc}^{\delta^*})$ is the **'probability of rejection given $\delta$'**. Note that under a null value $\delta=p1-p0$, $P_{\delta_0}(D\leq D_{suc}^{\delta^*})=\alpha$ is the 'type-I error' and under an alternative value $\delta_A$ is the 'frequentist power' $P_{\delta_A}(D\leq D_{suc}^{\delta^*})=1-\beta$. For an alternative value $\delta_A$ it holds that
 
 $$
 -z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta_A-\delta^*)=\Phi^{-1}(1-\beta)=z_{1-\beta}
@@ -138,6 +138,8 @@ In the following we use the following priors:
 
 ```{r}
 #| echo: false
+
+sd_tilde <- sqrt(sd_0^2+sd_1^2)
 
 delta_range <- seq(from=-0.1, to=0.1, 0.001)
 
@@ -247,7 +249,7 @@ Under an 'enthusiastic prior' we get an average power of 58%. This is substantia
 
 ---
 
-Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D\leq D_{suc})$, where $\Delta \sim N(d,\tilde\sigma^2/m)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
+Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D\leq D_{suc}^{\delta^*})$, where $\Delta \sim N(d,\tilde\sigma^2/m)$, and discuss the shape under different prior choices @Rufibach2016. In the following we use the wording 'random probability to reject` (RPR) similar to @Kunzmann2022.
 
 The random variable $RPR$ has a probability density function
 $$
@@ -304,7 +306,7 @@ data_power <- rbind(data_power, data.frame(x, y, type="Noninformative"))
 
 data_output2 <- data_output %>% select(type, x=AP) %>% mutate(y=0)
 
-ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(data=data_output2, aes(x=x, y=y, colour=type))+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+theme_bw()+theme(panel.grid = element_blank())+ylab("Density")+xlab("RPR")+ylim(c(0,2))
+ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(data=data_output2, aes(x=x, y=y, colour=type))+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+theme_bw()+theme(panel.grid = element_blank())+ylab("Density")+xlab("RPR")+ylim(c(0,2))+labs(caption="Dots indicate the AP.")
 ```
 
 ---
@@ -354,13 +356,13 @@ data_rpr <- rbind(data_rpr, data_rpr_skep)
 ggplot(data_rpr, aes(x=n_0_range, y=p_rpr, colour=factor(m_range), linetype=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Final sample size (one arm)")+ylab("P(RPR>0.8)")+scale_x_continuous(breaks=c(0, 100, 250, 500, 750, 1000))+geom_vline(xintercept=100, linetype="dashed")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+scale_linetype("Prior type")
 ```
 
-AP integrates over whole $\delta$ range, including 'non-favorable'
+AP integrates over whole $\delta$ range, including 'non-favorable' regions.
 $$
-AP=\overbrace{P(D\leq D_{suc}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}, 0<\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(D\leq D_{suc}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)} \\
++\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 $$
 AP=(1) Probability of Type-I error + (2) 'Non-inferior, but treatment effect not relevant' + (3) 'Non-inferior, treatment effect relevant'
-$AP \approx P(D\leq D_{suc}}, \Delta\leq0)$ (see @Spiegelhalter2003), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.
+$AP \approx P(D\leq D_{suc}^{\delta^*}}, \Delta\leq0)$ (see @Spiegelhalter2003), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.
 
 Under enthusiastic prior:
 
@@ -393,13 +395,13 @@ data.frame(data_sim %>% group_by(region) %>% summarise(prop=n()/nrow(data_sim)))
 
 
 $$
-AP=\overbrace{P(Z\leq - z_{1-\alpha}, \Delta>\delta^*)}^{(1)}+\overbrace{P(Z\leq - z_{1-\alpha}, 0<\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)} \\
++\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 $$
 For our noninferiority setting consider (2)+(3).
 
 $$
-P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)=P(Z\leq - z_{1-\alpha}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}P(\Delta\leq\delta^*),
+P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
 $$
 where $EP$ is **'expected power'** (Kunzmann et al.).
 
@@ -407,7 +409,7 @@ where $EP$ is **'expected power'** (Kunzmann et al.).
 Spiegelhalter calls $P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
 
 $$
-\underbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
+\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
 $$
 
 
@@ -468,11 +470,35 @@ data_ep
 
 ### Proper Bayesian approach
 
-Uses posterior distribution to define 'Bayesian significance': $S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon$, (not $\alpha$)
-- Remember $D=\overline{Y}_{1}-\overline{Y}_{0}$ with $D \sim N(\delta, \frac{\tilde\sigma^2}{n})$, where $\tilde\sigma^2=\sigma_1^2+\sigma_1^2$
-Suppose that $\Delta \sim N(d, \tilde\sigma^2/n_0)$ then the posterior distribution given $D$ is distributed as $\Delta|D \sim N\left(\frac{n_0d+nD}{n_0+n}, \frac{\tilde\sigma^2}{n_0+n}\right)$. We are interested in
+A proper Bayesian approach ises posterior distribution to define 'Bayesian significance': $S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon$, (not $\alpha$)
+Remember $D=p_1-p_0$ with $D \sim N(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0})$. Suppose that $\Delta \sim N(d, \tilde\sigma^2/n_0)$ then the posterior distribution given $D$ is distributed as
+$$
+\Delta|D \sim N\left(\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}\delta+\frac{m}{\sigma_1^2+\sigma_0^2}D}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}, \frac{1}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\right)
+$$
+For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma_^2$ this reduces to
 
-- $P(S^B|\delta)=\Phi\left(-\sqrt{\frac{n_0+n}{n}}z_{1-\epsilon}-\frac{\sqrt{n}}{\tilde\sigma}\left[\delta-\frac{n_0+n}{n}\delta^*+\frac{n_0}{n}d\right]\right)$
+$$
+\Delta|D \sim N\left(\frac{n\delta+md}{n+m}, \frac{2\sigma^2}{n+m} \right)
+$$
+Bases on the above specified 'Bayesian significance' we are interested whether the upper $(1-\epsilon)$ credible interval is smaller than the non-inferiority margin, that is
+
+$$
+\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}D+\frac{m}{\sigma_1^2+\sigma_0^2}d}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}+z_{1-\epsilon}\frac{1}{\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}}\leq \delta^*.
+$$
+Simple algebra yields to
+
+$$
+\begin{aligned}
+D\leq -z_{1-\epsilon}&\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}+ \\&\delta^*\left(1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}\right)-\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}d
+\end{aligned}
+$$
+Thus
+$$
+\begin{aligned}
+P(S^B|\delta)&=\Phi\left(-z_{1-\epsilon}\left\{\sqrt{1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}}\right\}- \right. \\
+&\left. \frac{m\sqrt{n_0\sigma_1^2+n_1\sigma_0^2}}{\sqrt{n_1n_0}(\sigma_1^2+\sigma_0^2)}d-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}\left\{\delta-\delta^*\left[1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)} \right]\right\} \right)
+\end{aligned}
+$$
 - $P(S^{F}|\delta)=\Phi\left(-z_{1-\alpha}-\frac{\sqrt{n}}{\tilde\sigma}(\delta-\delta^*)\right)$
 
 
@@ -482,20 +508,22 @@ Suppose that $\Delta \sim N(d, \tilde\sigma^2/n_0)$ then the posterior distribut
 n <- 100
 delta_star <- 0.035
 
-
+epsilon <- 0.05
 prior_mean <- 0
 n_0 <- 6.6
 
 delta <- seq(-0.025, 0.05, 0.001)
 
-y_bayes <- pnorm(-(delta)*sqrt(n)/sd_tilde+(delta_star)*(n_0+n)/(sd_tilde*sqrt(n))-(prior_mean*n_0)/(sd_tilde*sqrt(n))-sqrt((n_0+n)/n)*qnorm(1-alpha))
+# y_bayes <- pnorm(-(delta)*sqrt(n)/sd_tilde+(delta_star)*(n_0+n)/(sd_tilde*sqrt(n))-(prior_mean*n_0)/(sd_tilde*sqrt(n))-sqrt((n_0+n)/n)*qnorm(1-alpha))
+
+y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
 
 data_power <- data.frame(delta, y=y_bayes, type="Bayes: Enthusiastic")
 
 prior_mean <- 0.035
 n_0 <- 6.6
 
-y_bayes <- pnorm(-(delta)*sqrt(n)/sd_tilde+(delta_star)*(n_0+n)/(sd_tilde*sqrt(n))-(prior_mean*n_0)/(sd_tilde*sqrt(n))-sqrt((n_0+n)/n)*qnorm(1-alpha))
+y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
 data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Skeptical"))
 
 

@@ -23,7 +23,7 @@
 <meta name="author" content="André Moser, CTU Bern, University of Bern" />
 
 
-<meta name="date" content="2023-04-05" />
+<meta name="date" content="2023-04-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ since under regularity conditions,
 <span class="math display">\[
 Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{\min(n_1,n_0) \rightarrow \infty} N(0,1).
 \]</span>
-<span class="math inline">\(P_{\delta}(D\leq D_{suc}^{\delta^*})\)</span> is the <strong>‘probability of rejection given <span class="math inline">\(\delta\)</span>’</strong>. Note that under a null value <span class="math inline">\(\delta_0\)</span>, <span class="math inline">\(P_{\delta_0}(D\leq D_{suc}^{\delta^*})\)</span> is the ‘type-I error’ and under an alternative value <span class="math inline">\(\delta_A\)</span> is the ‘frequentist power’. For an alternative value <span class="math inline">\(\delta_A\)</span> it holds that</p>
+<span class="math inline">\(P_{\delta}(D\leq D_{suc}^{\delta^*})\)</span> is the <strong>‘probability of rejection given <span class="math inline">\(\delta\)</span>’</strong>. Note that under a null value <span class="math inline">\(\delta=p1-p0\)</span>, <span class="math inline">\(P_{\delta_0}(D\leq D_{suc}^{\delta^*})=\alpha\)</span> is the ‘type-I error’ and under an alternative value <span class="math inline">\(\delta_A\)</span> is the ‘frequentist power’ <span class="math inline">\(P_{\delta_A}(D\leq D_{suc}^{\delta^*})=1-\beta\)</span>. For an alternative value <span class="math inline">\(\delta_A\)</span> it holds that</p>
 <p><span class="math display">\[
 -z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta_A-\delta^*)=\Phi^{-1}(1-\beta)=z_{1-\beta}
 \]</span>
@@ -354,7 +354,7 @@ see for example <span class="citation">[<a href="#ref-Grieve2022" role="doc-bibl
 ## 4      Skeptical 99.93031 99.93031 0.34</code></pre>
 <p>Under an ‘enthusiastic prior’ we get an average power of 58%. This is substantially lower than the frequentist power of 80% (which holds under the alternative hypothesis).</p>
 <hr />
-<p>Rufibach et al. give a closed a formula for the distribution of <span class="math inline">\(RPR:=P_\Delta(D\leq D_{suc})\)</span>, where <span class="math inline">\(\Delta \sim N(d,\tilde\sigma^2/m)\)</span>, and discuss the shape under different prior choices <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</a>]</span>. In the following we use the wording ’random probability to reject` (RPR) similar to <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>.</p>
+<p>Rufibach et al. give a closed a formula for the distribution of <span class="math inline">\(RPR:=P_\Delta(D\leq D_{suc}^{\delta^*})\)</span>, where <span class="math inline">\(\Delta \sim N(d,\tilde\sigma^2/m)\)</span>, and discuss the shape under different prior choices <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</a>]</span>. In the following we use the wording ’random probability to reject` (RPR) similar to <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>.</p>
 <p>The random variable <span class="math inline">\(RPR\)</span> has a probability density function
 <span class="math display">\[
 \begin{aligned}
@@ -402,7 +402,7 @@ see <span class="citation">[<a href="#ref-Rufibach2016" role="doc-biblioref">6</
 <span id="cb9-35"><a href="two-arm-non-inferiority-setting.html#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-36"><a href="two-arm-non-inferiority-setting.html#cb9-36" aria-hidden="true" tabindex="-1"></a>data_output2 <span class="ot">&lt;-</span> data_output <span class="sc">%&gt;%</span> <span class="fu">select</span>(type, <span class="at">x=</span>AP) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y=</span><span class="dv">0</span>)</span>
 <span id="cb9-37"><a href="two-arm-non-inferiority-setting.html#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-38"><a href="two-arm-non-inferiority-setting.html#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_power, <span class="fu">aes</span>(x, y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>data_output2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">scale_colour_manual</span>(<span class="st">&quot;Prior type&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;darkred&quot;</span>))<span class="sc">+</span><span class="fu">theme_bw</span>()<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;Density&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&quot;RPR&quot;</span>)<span class="sc">+</span><span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))</span></code></pre></div>
+<span id="cb9-38"><a href="two-arm-non-inferiority-setting.html#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_power, <span class="fu">aes</span>(x, y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>data_output2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">scale_colour_manual</span>(<span class="st">&quot;Prior type&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;darkred&quot;</span>))<span class="sc">+</span><span class="fu">theme_bw</span>()<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;Density&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&quot;RPR&quot;</span>)<span class="sc">+</span><span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))<span class="sc">+</span><span class="fu">labs</span>(<span class="at">caption=</span><span class="st">&quot;Dots indicate the AP.&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <hr />
 <p>From the above formula one can derive probability statements as <span class="math inline">\(P(RPR&gt;\gamma)\)</span>, say <span class="math inline">\(\gamma=0.8\)</span>, from</p>
@@ -412,13 +412,13 @@ P(RPR&gt;\gamma)&amp;=\Phi\left(-z_{1-\alpha}\frac{\sqrt{mn_0\sigma_1^2+mn_1\sig
 \end{aligned}
 \]</span></p>
 <p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>AP integrates over whole <span class="math inline">\(\delta\)</span> range, including ‘non-favorable’
+<p>AP integrates over whole <span class="math inline">\(\delta\)</span> range, including ‘non-favorable’ regions.
 <span class="math display">\[
-AP=\overbrace{P(D\leq D_{suc}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}, 0&lt;\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(D\leq D_{suc}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0&lt;\Delta\leq\delta^*)}^{(2)} \\
++\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 \]</span>
 AP=(1) Probability of Type-I error + (2) ‘Non-inferior, but treatment effect not relevant’ + (3) ‘Non-inferior, treatment effect relevant’
-<span class="math inline">\(AP \approx P(D\leq D_{suc}}, \Delta\leq0)\)</span> (see <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.</p>
+<span class="math inline">\(AP \approx P(D\leq D_{suc}^{\delta^*}}, \Delta\leq0)\)</span> (see <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.</p>
 <p>Under enthusiastic prior:</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre><code>##              region   prop
@@ -427,17 +427,17 @@ AP=(1) Probability of Type-I error + (2) ‘Non-inferior, but treatment effect n
 ## 3               (2) 0.0964
 ## 4               (1) 0.0017</code></pre>
 <p><span class="math display">\[
-AP=\overbrace{P(Z\leq - z_{1-\alpha}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(Z\leq - z_{1-\alpha}, 0&lt;\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0&lt;\Delta\leq\delta^*)}^{(2)} \\
++\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 \]</span>
 For our noninferiority setting consider (2)+(3).</p>
 <p><span class="math display">\[
-P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)=P(Z\leq - z_{1-\alpha}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}P(\Delta\leq\delta^*),
+P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
 \]</span>
 where <span class="math inline">\(EP\)</span> is <strong>‘expected power’</strong> (Kunzmann et al.).</p>
 <p>Spiegelhalter calls <span class="math inline">\(P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)\)</span> the <strong>‘prior adjusted power’</strong> (PAP):</p>
 <p><span class="math display">\[
-\underbrace{P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(Z\leq - z_{1-\alpha})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
+\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
 \]</span></p>
 <p>Noninferiority setting <span class="math inline">\(\Delta\leq\delta^*\)</span>:</p>
 <pre><code>##       ep    pap     ap  const           type
@@ -448,19 +448,39 @@ where <span class="math inline">\(EP\)</span> is <strong>‘expected power’</s
 </div>
 <div id="proper-bayesian-approach" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Proper Bayesian approach<a href="two-arm-non-inferiority-setting.html#proper-bayesian-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Uses posterior distribution to define ‘Bayesian significance’: <span class="math inline">\(S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon\)</span>, (not <span class="math inline">\(\alpha\)</span>)
-- Remember <span class="math inline">\(D=\overline{Y}_{1}-\overline{Y}_{0}\)</span> with <span class="math inline">\(D \sim N(\delta, \frac{\tilde\sigma^2}{n})\)</span>, where <span class="math inline">\(\tilde\sigma^2=\sigma_1^2+\sigma_1^2\)</span>
-Suppose that <span class="math inline">\(\Delta \sim N(d, \tilde\sigma^2/n_0)\)</span> then the posterior distribution given <span class="math inline">\(D\)</span> is distributed as <span class="math inline">\(\Delta|D \sim N\left(\frac{n_0d+nD}{n_0+n}, \frac{\tilde\sigma^2}{n_0+n}\right)\)</span>. We are interested in</p>
-<ul>
-<li><span class="math inline">\(P(S^B|\delta)=\Phi\left(-\sqrt{\frac{n_0+n}{n}}z_{1-\epsilon}-\frac{\sqrt{n}}{\tilde\sigma}\left[\delta-\frac{n_0+n}{n}\delta^*+\frac{n_0}{n}d\right]\right)\)</span></li>
-<li><span class="math inline">\(P(S^{F}|\delta)=\Phi\left(-z_{1-\alpha}-\frac{\sqrt{n}}{\tilde\sigma}(\delta-\delta^*)\right)\)</span></li>
-</ul>
+<p>A proper Bayesian approach ises posterior distribution to define ‘Bayesian significance’: <span class="math inline">\(S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon\)</span>, (not <span class="math inline">\(\alpha\)</span>)
+Remember <span class="math inline">\(D=p_1-p_0\)</span> with <span class="math inline">\(D \sim N(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0})\)</span>. Suppose that <span class="math inline">\(\Delta \sim N(d, \tilde\sigma^2/n_0)\)</span> then the posterior distribution given <span class="math inline">\(D\)</span> is distributed as
+<span class="math display">\[
+\Delta|D \sim N\left(\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}\delta+\frac{m}{\sigma_1^2+\sigma_0^2}D}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}, \frac{1}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\right)
+\]</span>
+For the case that <span class="math inline">\(n_0=n_1=n\)</span> and <span class="math inline">\(\sigma_1^2=\sigma_0^2=\sigma_^2\)</span> this reduces to</p>
+<p><span class="math display">\[
+\Delta|D \sim N\left(\frac{n\delta+md}{n+m}, \frac{2\sigma^2}{n+m} \right)
+\]</span>
+Bases on the above specified ‘Bayesian significance’ we are interested whether the upper <span class="math inline">\((1-\epsilon)\)</span> credible interval is smaller than the non-inferiority margin, that is</p>
+<p><span class="math display">\[
+\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}D+\frac{m}{\sigma_1^2+\sigma_0^2}d}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}+z_{1-\epsilon}\frac{1}{\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}}\leq \delta^*.
+\]</span>
+Simple algebra yields to</p>
+<p><span class="math display">\[
+\begin{aligned}
+D\leq -z_{1-\epsilon}&amp;\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}+ \\&amp;\delta^*\left(1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}\right)-\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}d
+\end{aligned}
+\]</span>
+Thus
+<span class="math display">\[
+\begin{aligned}
+P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\left\{\sqrt{1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}}\right\}- \right. \\
+&amp;\left. \frac{m\sqrt{n_0\sigma_1^2+n_1\sigma_0^2}}{\sqrt{n_1n_0}(\sigma_1^2+\sigma_0^2)}d-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}\left\{\delta-\delta^*\left[1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)} \right]\right\} \right)
+\end{aligned}
+\]</span>
+- <span class="math inline">\(P(S^{F}|\delta)=\Phi\left(-z_{1-\alpha}-\frac{\sqrt{n}}{\tilde\sigma}(\delta-\delta^*)\right)\)</span></p>
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre><code>##   delta    y                type
-## 1 0.000 0.83 Bayes: Enthusiastic
-## 2 0.035 0.06 Bayes: Enthusiastic
-## 3 0.000 0.78    Bayes: Skeptical
-## 4 0.035 0.04    Bayes: Skeptical
+## 1 0.000 0.22 Bayes: Enthusiastic
+## 2 0.035 0.05 Bayes: Enthusiastic
+## 3 0.000 0.21    Bayes: Skeptical
+## 4 0.035 0.05    Bayes: Skeptical
 ## 5 0.000 0.80         Frequentist
 ## 6 0.035 0.05         Frequentist</code></pre>
 <ul>
