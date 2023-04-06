@@ -26,7 +26,3 @@ The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et 
 - $iid$: independent and identically distributed
 - $\Phi$: Probability distribution function of the standard Gaussian distribution
 - $\Phi^{-1}$: Quantile function of the standard Gaussian distribution function
-
-## Personal note
-
-This manuscript was developed as 'personal notes' to understand the necessary statistical concepts. Countless times I stumbled over sentences like 'it's straightforward to see' or 'simple calculations show that' in articles or books. Very often that was not the case for me. Thus I tried to derive formulae derivation as precise as 'necessary'. For some that is annoying, for me it's helpful for reconstruction.

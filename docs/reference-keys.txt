@@ -1,6 +1,5 @@
 background
 notation
-personal-note
 two-arm-non-inferiority-setting
 binomial-outcome
 frequentist-approach

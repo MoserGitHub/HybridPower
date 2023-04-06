@@ -475,7 +475,7 @@ Remember $D=p_1-p_0$ with $D \sim N(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_
 $$
 \Delta|D \sim N\left(\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}\delta+\frac{m}{\sigma_1^2+\sigma_0^2}D}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}, \frac{1}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\right)
 $$
-For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma_^2$ this reduces to
+For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$ this reduces to
 
 $$
 \Delta|D \sim N\left(\frac{n\delta+md}{n+m}, \frac{2\sigma^2}{n+m} \right)
@@ -505,32 +505,46 @@ $$
 ```{r}
 #| echo: false
 
-n <- 100
-delta_star <- 0.035
-
-epsilon <- 0.05
-prior_mean <- 0
-n_0 <- 6.6
-
+# Delta range
 delta <- seq(-0.025, 0.05, 0.001)
 
-# y_bayes <- pnorm(-(delta)*sqrt(n)/sd_tilde+(delta_star)*(n_0+n)/(sd_tilde*sqrt(n))-(prior_mean*n_0)/(sd_tilde*sqrt(n))-sqrt((n_0+n)/n)*qnorm(1-alpha))
+# Epsilon
+epsilon <- 0.05
+
+# Enthusiastic prior
+prior_mean <- 0
+m <- 6.6
 
 y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
 
 data_power <- data.frame(delta, y=y_bayes, type="Bayes: Enthusiastic")
 
+# Skeptical prior
 prior_mean <- 0.035
-n_0 <- 6.6
+m <- 6.6
 
 y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
 data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Skeptical"))
 
+# Informative prior
+prior_mean <- 0
+m <- 25
 
-y_freq <- pnorm(-(delta-delta_star)*sqrt(n)/sd_tilde-qnorm(1-alpha))
+y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
+data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Informative"))
+
+# Noninformative prior
+prior_mean <- 0
+m <- 0.5
+
+y_bayes <- pnorm(-qnorm(1-epsilon)*(sqrt(1+m*(n_0*sd_1^2+n_1*sd_0^2)/(n_1*n_0*(sd_1^2+sd_0^2))))-(m*sqrt(n_0*sd_1^2+n_1*sd_0^2))/(sqrt(n_1*n_0)*(sd_1^2+sd_0^2))*prior_mean-sqrt((n_1*n_0)/((n_0*sd_1^2+n_1*sd_0^2)))*(delta-delta_star*(1+(m*(n_0*sd_1^2+n_1*sd_0^2))/(n_1*n_0*(sd_1^2+sd_0^2)))))
+data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Noninformative"))
+
+# Frequentist
+y_freq <- pnorm(-(delta-delta_star)*sqrt(n_1*n_0)/sqrt(n_0*sd_1^2+n_1*sd_0^2)-qnorm(1-alpha))
 data_power <- rbind(data_power, data.frame(delta, y=y_freq, type="Frequentist"))
 
-ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle("n=100 (one arm)")+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
+ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(paste0(paste0("n=", round(n_0+n_1,0)), " (total sample size)"))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
 
 data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))

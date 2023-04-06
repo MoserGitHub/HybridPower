@@ -160,7 +160,6 @@ div.csl-indent {
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.1</b> Notation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#personal-note"><i class="fa fa-check"></i><b>1.2</b> Personal note</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Two-arm non-inferiority setting</a>
 <ul>
@@ -453,7 +452,7 @@ Remember <span class="math inline">\(D=p_1-p_0\)</span> with <span class="math i
 <span class="math display">\[
 \Delta|D \sim N\left(\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}\delta+\frac{m}{\sigma_1^2+\sigma_0^2}D}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}, \frac{1}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\right)
 \]</span>
-For the case that <span class="math inline">\(n_0=n_1=n\)</span> and <span class="math inline">\(\sigma_1^2=\sigma_0^2=\sigma_^2\)</span> this reduces to</p>
+For the case that <span class="math inline">\(n_0=n_1=n\)</span> and <span class="math inline">\(\sigma_1^2=\sigma_0^2=\sigma^2\)</span> this reduces to</p>
 <p><span class="math display">\[
 \Delta|D \sim N\left(\frac{n\delta+md}{n+m}, \frac{2\sigma^2}{n+m} \right)
 \]</span>
@@ -476,13 +475,17 @@ P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\left\{\sqrt{1+\frac{m(n_0\sigma_1^2
 \]</span>
 - <span class="math inline">\(P(S^{F}|\delta)=\Phi\left(-z_{1-\alpha}-\frac{\sqrt{n}}{\tilde\sigma}(\delta-\delta^*)\right)\)</span></p>
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<pre><code>##   delta    y                type
-## 1 0.000 0.22 Bayes: Enthusiastic
-## 2 0.035 0.05 Bayes: Enthusiastic
-## 3 0.000 0.21    Bayes: Skeptical
-## 4 0.035 0.05    Bayes: Skeptical
-## 5 0.000 0.80         Frequentist
-## 6 0.035 0.05         Frequentist</code></pre>
+<pre><code>##    delta    y                  type
+## 1  0.000 0.83   Bayes: Enthusiastic
+## 2  0.035 0.06   Bayes: Enthusiastic
+## 3  0.000 0.78      Bayes: Skeptical
+## 4  0.035 0.04      Bayes: Skeptical
+## 5  0.000 0.90    Bayes: Informative
+## 6  0.035 0.11    Bayes: Informative
+## 7  0.000 0.80 Bayes: Noninformative
+## 8  0.035 0.05 Bayes: Noninformative
+## 9  0.000 0.80           Frequentist
+## 10 0.035 0.05           Frequentist</code></pre>
 <ul>
 <li><span class="math inline">\(P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)\)</span></li>
 </ul>
