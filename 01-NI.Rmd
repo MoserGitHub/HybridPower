@@ -523,9 +523,11 @@ data_ep
 
 ### Proper Bayesian approach
 
-A proper Bayesian approach uses the posterior distribution to define 'Bayesian significance': $S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon$. Remember $D=p_1-p_0$ with $D \sim N(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0})$. Suppose that $\Delta \sim N(d, \tilde\sigma^2/m)$ then the posterior distribution given $D$ is distributed as
+A proper Bayesian approach uses the posterior distribution to define 'Bayesian significance': $S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon$. Remember $D=p_1-p_0$ with $D \sim N(\delta, \sigma^2_{treat})$. Suppose that $\Delta \sim N(d, \sigma^2_{prior})$ then the posterior distribution given $D$ is distributed as
 $$
-\Delta|D \sim N\left(\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}\delta+\frac{m}{\sigma_1^2+\sigma_0^2}D}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}, \frac{1}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\right)
+\begin{aligned}
+\Delta|D \sim N\left(\frac{\frac{d}{\sigma^2_{prior}}+\frac{D}{\sigma^2_{treat}}}{\frac{1}{\sigma^2_{prior}}+\frac{1}{\sigma^2_{treat}}}, \frac{1}{\frac{1}{\sigma^2_{prior}}+\frac{1}{\sigma^2_{treat}}}\right)=N\left( \frac{\sigma^2_{treat}d+\sigma^2_{prior}D}{\sigma^2_{treat}+\sigma^2_{prior}}, \frac{\sigma^2_{treat}\sigma^2_{prior}}{\sigma^2_{treat}+\sigma^2_{prior}}  \right)
+\end{aligned}
 $$
 
 ---
@@ -535,7 +537,7 @@ $$
 For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$ the formula above reduces to
 
 $$
-\Delta|D \sim N\left(\frac{n\delta+mD}{n+m}, \frac{2\sigma^2}{n+m} \right).
+\Delta|D \sim N\left(\frac{n\delta+mD}{n+m}, \frac{\sigma^2}{n+m} \right).
 $$
 
 ---
@@ -543,13 +545,13 @@ $$
 Bases on the above specified 'Bayesian significance' we are interested whether the upper $(1-\epsilon)$ credible interval is smaller than the non-inferiority margin, that is
 
 $$
-\frac{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}D+\frac{m}{\sigma_1^2+\sigma_0^2}d}{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}+z_{1-\epsilon}\frac{1}{\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}}\leq \delta^*.
+\frac{\sigma^2_{treat}d+\sigma^2_{prior}D}{\sigma^2_{treat}+\sigma^2_{prior}}+z_{1-\epsilon}\frac{\sigma_{treat}\sigma_{prior}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\leq \delta^*.
 $$
 Simple algebra yields to
 
 $$
 \begin{aligned}
-D\leq -z_{1-\epsilon}&\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}+\frac{m}{\sigma_1^2+\sigma_0^2}}\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}+ \\&\delta^*\left(1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}\right)-\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}d
+D\leq -z_{1-\epsilon}&\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}}{\sigma_{prior}}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d
 \end{aligned}
 $$
 Thus
