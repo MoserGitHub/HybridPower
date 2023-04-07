@@ -31,7 +31,7 @@ We use the SAFE-SSPE trial as a working example @Baumgartner2020. In brief, this
 
 ### Frequentist approach
 
-Let $Y_{i,k} \sim^{iid} Bernoulli(p_i)$, $k=1,\dots,n_i$, $i\in \{0,1\}$. Let $\overline p_i=\frac{1}{n_i}\sum_{k\leq n_i} Y_{i,k}$, $i\in {0,1}$, and thus the risk difference $D=\overline p_1-\overline p_0$ is Gaussian distributed with $D \sim N\left(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)$, where $\sigma_i^2=p_i(1-p_i)$, $i\in \{0,1\}$.
+Let $Y_{i,k} \sim^{iid} Bernoulli(p_i)$, $k=1,\dots,n_i$, $i\in \{0,1\}$. Let $\overline p_i=\frac{1}{n_i}\sum_{k\leq n_i} Y_{i,k}$, $i\in {0,1}$, and thus the risk difference $D=\overline p_1-\overline p_0$ is Gaussian distributed with $D \sim N\left(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)$, where $\sigma_i^2=p_i(1-p_i)$, $i\in \{0,1\}$. For notational purposes we denote $\sigma_{treat}^2=\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}$, that is, the variance for the 'treatment effect'.
 
 We are interested whether the upper $(1-\alpha)\%$-confidence limit is smaller than the non-inferiority margin, that is,
 $$
@@ -43,11 +43,14 @@ D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
 $$
 Note that $D_{suc}^{\delta^*}:=-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*$ is the required risk difference for a 'successful' rejection of the null hypothesis. Then
 $$
-P_\delta(D\leq D_{suc}^{\delta^*})=\Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right),
+\begin{aligned}
+P_\delta(D\leq D_{suc}^{\delta^*})&=\Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right) \\
+&=\Phi\left(-z_{1-\alpha}-\frac{\delta-\delta^*}{\sigma_{treat}}\right),
+\end{aligned}
 $$
 since under regularity conditions,
 $$
-Z=\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(D-\delta) \rightarrow^{\min(n_1,n_0) \rightarrow \infty} N(0,1).
+Z=\frac{D-\delta^*}{\sigma_{treat}} \rightarrow N(0,1), \quad \min(n_1,n_0) \rightarrow \infty.
 $$
 $P_{\delta}(D\leq D_{suc}^{\delta^*})$ is the **'probability of rejection given $\delta$'**. Note that under a null value $\delta=p1-p0$, $P_{\delta_0}(D\leq D_{suc}^{\delta^*})=\alpha$ is the 'type-I error' and under an alternative value $\delta_A$ is the 'frequentist power' $P_{\delta_A}(D\leq D_{suc}^{\delta^*})=1-\beta$. For an alternative value $\delta_A$ it holds that
 
@@ -127,9 +130,9 @@ Given the specified operating characteristics and parameters a sample size of 20
 
 ### Hybrid approach: Prior on treatment effect
 
-Suppose that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ such that $\Delta \sim p(\delta)$. In this subsection we assume that the prior comes from a Gaussian distribution function so that $\Delta \sim N\left(d, \frac{\sigma_1^2+\sigma_0^2}{m}\right)$. This prior can be thought as a realisation from $m$ Gaussian 'prior observations' with variance $\sigma_1^2+\sigma_0^2$.
+Suppose that the true treatment effect $\delta$ is a realization from a random variable $\Delta$ with $p(\delta)$. In this subsection we assume that the prior comes from a Gaussian distribution function so that $\Delta \sim N\left(d, \frac{\sigma_1^2+\sigma_0^2}{m}\right)$. Note that this prior can be thought as a realisation from $m$ Gaussian 'prior observations' with variance $\sigma_1^2+\sigma_0^2$. Again for notational purposes we denote $\sigma_{prior}^2=\frac{\sigma_1^2+\sigma_0^2}{m}$ as the variance of the design prior on the treatment effect.
 
-In the following we use the following priors:
+In the following we will use the following priors:
 
 - **Enthusiastic prior** (favors non-inferiority): $d=0$, $m=6.6$, $P(\Delta>\delta^*)=0.05$. This prior is centered on the treatment effect such that there is a low probability (here 5%) of inferiority.
 - **Skeptical prior** (favors inferiority): $d=\delta^*$, $m=6.6$, $P(\Delta>0)=0.05$. This prior is centered on the non-inferiority margin such that there is a low probability (here 5%) of superiority.
