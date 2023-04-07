@@ -160,7 +160,8 @@ div.csl-indent {
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#general-notation-and-abbreviations"><i class="fa fa-check"></i><b>1.1</b> General notation and abbreviations</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-bayesian-concepts"><i class="fa fa-check"></i><b>1.2</b> Some ‘Bayesian’ concepts</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#power-vocabulary"><i class="fa fa-check"></i><b>1.2</b> ‘Power’ vocabulary</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#some-bayesian-concepts"><i class="fa fa-check"></i><b>1.3</b> Some ‘Bayesian’ concepts</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Two-arm non-inferiority setting</a>
 <ul>
@@ -421,7 +422,7 @@ f(y)&amp;=\sqrt{\frac{m}{n}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\p
 <span id="cb9-38"><a href="two-arm-non-inferiority-setting.html#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_power, <span class="fu">aes</span>(x, y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>data_output2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">colour=</span>type))<span class="sc">+</span><span class="fu">scale_colour_manual</span>(<span class="st">&quot;Prior type&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;purple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;darkred&quot;</span>))<span class="sc">+</span><span class="fu">theme_bw</span>()<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;Density&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&quot;RPR&quot;</span>)<span class="sc">+</span><span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))<span class="sc">+</span><span class="fu">labs</span>(<span class="at">caption=</span><span class="st">&quot;Dots indicate the AP.&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <hr />
-<p>The cumulative distribution function of <span class="math inline">\(RPR\)</span> is</p>
+<p>The cumulative distribution function of <span class="math inline">\(RPR\)</span> can the be calculated as</p>
 <p><span class="math display">\[
 \begin{aligned}
 P(RPR\leq y)=1-\Phi&amp;\left(-z_{1-\alpha}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{d-\delta^*}{\sigma_{prior}}-\frac{\sigma_{treat}}{\sigma_{prior}}\Phi^{-1}(y) \right), \quad 0&lt;y&lt;1.
@@ -436,17 +437,31 @@ P(RPR\leq y)=1-\Phi&amp;\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{
 \end{aligned}
 \]</span></p>
 <hr />
-<p>This allows the calculation of probability statements as <span class="math inline">\(P(RPR&gt;\gamma)\)</span>:</p>
+<p>This allows the calculation of probability statements that the probability of the random probability of rejection is greater than a threshold, say <span class="math inline">\(0&lt;\gamma&lt;1\)</span>, that is <span class="math inline">\(P(RPR&gt;\gamma)\)</span>:</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>For a specific threshold <span class="math inline">\(\gamma=0.6\)</span> we obtain</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>AP integrates over whole <span class="math inline">\(\delta\)</span> range, including ‘non-favorable’ regions.
+<p>Note that the average power AP integrates over the whole <span class="math inline">\(\Delta\)</span> range. This might include also ‘non-favorable’ regions. To see that one can decompose AP as follows (see <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>, <span class="citation">[<a href="#ref-Grieve2022" role="doc-biblioref">4</a>]</span>):
 <span class="math display">\[
-AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0&lt;\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta&gt;\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0&lt;\Delta\leq\delta^*)}^{(2)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 \]</span>
-AP=(1) Probability of Type-I error + (2) ‘Non-inferior, but treatment effect not relevant’ + (3) ‘Non-inferior, treatment effect relevant’
-<span class="math inline">\(AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)\)</span> (see <span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.</p>
+where</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Probability of Type-I error,</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>‘Non-inferior, but treatment effect not relevant’,</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>‘Non-inferior, treatment effect relevant’.</li>
+</ol></li>
+</ul>
+<p><span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span> highlights that <span class="math inline">\(AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)\)</span> because the type-I error is often small and one has strong believe for the alternative hypothesis. <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span> and <span class="citation">[<a href="#ref-OHagan2005" role="doc-biblioref">5</a>]</span> discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.</p>
+<p>The AP decomposition can be visualised using the posterior predictive distribution. Let <span class="math inline">\(p(\tilde\delta)\)</span> be the pdf of the posterior predictive distribution then
+<span class="math display">\[
+p(\tilde\delta, \delta)
+\]</span></p>
 <p>Under enthusiastic prior:</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre><code>##              region   prop
@@ -527,9 +542,10 @@ P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\sqrt{\frac{n+m}{n}}- \frac{m}{\sqrt
 ## 8  0.035 0.05 Bayes: Noninformative
 ## 9  0.000 0.80           Frequentist
 ## 10 0.035 0.05           Frequentist</code></pre>
-<ul>
-<li><span class="math inline">\(P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)\)</span></li>
-</ul>
+<p>The average Bayesian power can be calculated as
+$$</p>
+<p>$$</p>
+<p><span class="math inline">\(P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)\)</span></p>
 <pre><code>##             type    AP AP_bayes
 ## 1   Enthusiastic 0.583    0.594
 ## 2      Skeptical 0.341    0.336

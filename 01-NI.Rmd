@@ -333,7 +333,7 @@ ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(dat
 
 ---
 
-The cumulative distribution function of $RPR$ is
+The cumulative distribution function of $RPR$ can the be calculated as
 
 $$
 \begin{aligned}
@@ -355,7 +355,7 @@ $$
 
 ---
 
-This allows the calculation of probability statements as $P(RPR>\gamma)$:
+This allows the calculation of probability statements that the probability of the random probability of rejection is greater than a threshold, say $0<\gamma<1$, that is $P(RPR>\gamma)$:
 
 ```{r}
 #| echo: false
@@ -414,13 +414,22 @@ data_rpr <- rbind(data_rpr, data_rpr_skep)
 ggplot(data_rpr, aes(x=n_1_range, y=p_rpr, colour=factor(m_range), linetype=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Planned sample size active group")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 50, 100, 200, 300, 400, 500))+geom_vline(xintercept=100, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_linetype("Prior type")
 ```
 
-AP integrates over whole $\delta$ range, including 'non-favorable' regions.
+Note that the average power AP integrates over the whole $\Delta$ range. This might include also 'non-favorable' regions. To see that one can decompose AP as follows (see @Kunzmann2022, @Grieve2022):
 $$
-AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
 $$
-AP=(1) Probability of Type-I error + (2) 'Non-inferior, but treatment effect not relevant' + (3) 'Non-inferior, treatment effect relevant'
-$AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)$ (see @Spiegelhalter2003), pharma (favors AP, shortterm) vs regulators (favors the other, longterm), see discussion in Kunzmann et al.
+where
+
+- (1) Probability of Type-I error,
+- (2) 'Non-inferior, but treatment effect not relevant',
+- (3) 'Non-inferior, treatment effect relevant'.
+
+@Spiegelhalter2003 highlights that $AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)$ because the type-I error is often small and one has strong believe for the alternative hypothesis. @Kunzmann2022 and @OHagan2005 discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.
+
+The AP decomposition can be visualised using the posterior predictive distribution. Let $p(\tilde\delta)$ be the pdf of the posterior predictive distribution then
+$$
+p(\tilde\delta, \delta)
+$$
 
 Under enthusiastic prior:
 
@@ -630,7 +639,12 @@ data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))
 ```
 
-- $P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)$
+The average Bayesian power can be calculated as
+$$
+
+$$
+
+$P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)$
 
 ```{r}
 #| echo: false

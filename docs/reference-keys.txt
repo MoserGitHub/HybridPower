@@ -1,0 +1,9 @@
+background
+general-notation-and-abbreviations
+power-vocabulary
+some-bayesian-concepts
+two-arm-non-inferiority-setting
+binomial-outcome
+frequentist-approach
+hybrid-approach-prior-on-treatment-effect
+proper-bayesian-approach
