@@ -492,14 +492,13 @@ where <span class="math inline">\(EP\)</span> is <strong>‘expected power’</s
 Simple algebra yields to</p>
 <p><span class="math display">\[
 \begin{aligned}
-D\leq -z_{1-\epsilon}&amp;\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}}{\sigma_{prior}}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d
+D\leq -z_{1-\epsilon}&amp;\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d
 \end{aligned}
 \]</span>
 Thus
 <span class="math display">\[
 \begin{aligned}
-P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\left\{\sqrt{1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)}}\right\}- \right. \\
-&amp;\left. \frac{m\sqrt{n_0\sigma_1^2+n_1\sigma_0^2}}{\sqrt{n_1n_0}(\sigma_1^2+\sigma_0^2)}d-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}\left\{\delta-\delta^*\left[1+\frac{m(n_0\sigma_1^2+n_1\sigma_0^2)}{n_1n_0(\sigma_1^2+\sigma_0^2)} \right]\right\} \right)
+P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma_{prior}^2}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ \frac{1}{\sigma_{treat}^2}+\frac{1}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right)
 \end{aligned}
 \]</span></p>
 <hr />
