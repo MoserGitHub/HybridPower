@@ -29,6 +29,12 @@ The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et 
 - $\Phi$: Cumulative distribution function of the standard Gaussian distribution
 - $\Phi^{-1}$: Quantile function of the standard Gaussian distribution function
 
+## 'Power' vocabulary
+
+- **Frequentist power**: Probability of rejection under the alternative hypothesis.
+- **Average power**: Prior averaged probability of rejection. Often also called 'probability of success', 'assurance', 'Bayesian predictive power'.
+- **Expected power**:
+
 ## Some 'Bayesian' concepts
 
 - **Prior predictive distribution**: Situation *before* a sample was taken. Let $\theta$ be a realisation of a random variable $\Theta$ with pdf $p(\theta)$. Then for a future observation $\tilde X$

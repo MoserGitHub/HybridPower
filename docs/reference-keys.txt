@@ -1,8 +1,0 @@
-background
-general-notation-and-abbreviations
-some-bayesian-concepts
-two-arm-non-inferiority-setting
-binomial-outcome
-frequentist-approach
-hybrid-approach-prior-on-treatment-effect
-proper-bayesian-approach
