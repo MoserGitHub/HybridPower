@@ -21,9 +21,26 @@ The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et 
 
 *'[...] we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior [...]'*
 
-## Notation
+## General notation and abbreviations
 
 - $iid$: independent and identically distributed
+- pdf: probability density function
 - $\phi$: Probability density function of the standard Gaussian distribution
 - $\Phi$: Cumulative distribution function of the standard Gaussian distribution
 - $\Phi^{-1}$: Quantile function of the standard Gaussian distribution function
+
+## Some 'Bayesian' concepts
+
+- **Prior predictive distribution**: Situation *before* a sample was taken. Let $\theta$ be a realisation of a random variable $\Theta$ with pdf $p(\theta)$. Then for a future observation $\tilde X$
+
+$$
+p(\tilde x)=\int_\Theta p(\tilde x, \theta)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta)}_{prior}d\theta
+$$
+
+- **Posterior predictive distribution**: Situation *after* a sample was taken. Let $\theta$ be a realisation of a random variable $\Theta$ with pdf $p(\theta)$. Then for a future observation $\tilde X$ and observed $X$
+
+$$
+p(\tilde x|x)=\int_\Theta p(\tilde x | \theta, x)p(\theta|x)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta|x)}_{prior}d\theta,
+$$
+
+since $X$ is independent $\tilde X$.

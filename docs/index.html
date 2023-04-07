@@ -23,7 +23,7 @@
 <meta name="author" content="André Moser, CTU Bern, University of Bern" />
 
 
-<meta name="date" content="2023-04-06" />
+<meta name="date" content="2023-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,7 +159,8 @@ div.csl-indent {
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Background</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#notation"><i class="fa fa-check"></i><b>1.1</b> Notation</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#general-notation-and-abbreviations"><i class="fa fa-check"></i><b>1.1</b> General notation and abbreviations</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-bayesian-concepts"><i class="fa fa-check"></i><b>1.2</b> Some ‘Bayesian’ concepts</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="two-arm-non-inferiority-setting.html"><a href="two-arm-non-inferiority-setting.html"><i class="fa fa-check"></i><b>2</b> Two-arm non-inferiority setting</a>
 <ul>
@@ -191,21 +192,38 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Frequentist, Bayesian and hybrid approaches for sample size and power calculations</h1>
 <p class="author"><em>André Moser, CTU Bern, University of Bern</em></p>
-<p class="date"><em>2023-04-06</em></p>
+<p class="date"><em>2023-04-07</em></p>
 </div>
 <div id="background" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Background<a href="index.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The terminology of ‘power’ is often imprecisely used <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>. Kunzmann et al. suggest to use the neutral term ‘probability of rejection’. The classical (frequentist) ‘power’ is defined as the probability of rejection given that the alternative hypothesis is true. Yet, frequentist power calculations do not include uncertainties of the treatment effect. Bayesian and hybrid approaches include such uncertainties in their calculations. The following manuscript uses the different approaches (frequentist, Bayesian and hybrid) for the calculation of ‘the probability of rejection’.</p>
 <p><strong>Definition ‘hybrid’</strong> (<span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>, Section 6.5.2)</p>
 <p><em>‘[…] we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior […]’</em></p>
-<div id="notation" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Notation<a href="index.html#notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="general-notation-and-abbreviations" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> General notation and abbreviations<a href="index.html#general-notation-and-abbreviations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><span class="math inline">\(iid\)</span>: independent and identically distributed</li>
+<li>pdf: probability density function</li>
 <li><span class="math inline">\(\phi\)</span>: Probability density function of the standard Gaussian distribution</li>
 <li><span class="math inline">\(\Phi\)</span>: Cumulative distribution function of the standard Gaussian distribution</li>
 <li><span class="math inline">\(\Phi^{-1}\)</span>: Quantile function of the standard Gaussian distribution function</li>
 </ul>
+</div>
+<div id="some-bayesian-concepts" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Some ‘Bayesian’ concepts<a href="index.html#some-bayesian-concepts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Prior predictive distribution</strong>: Situation <em>before</em> a sample was taken. Let <span class="math inline">\(\theta\)</span> be a realisation of a random variable <span class="math inline">\(\Theta\)</span> with pdf <span class="math inline">\(p(\theta)\)</span>. Then for a future observation <span class="math inline">\(\tilde X\)</span></li>
+</ul>
+<p><span class="math display">\[
+p(\tilde x)=\int_\Theta p(\tilde x, \theta)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta)}_{prior}d\theta
+\]</span></p>
+<ul>
+<li><strong>Posterior predictive distribution</strong>: Situation <em>after</em> a sample was taken. Let <span class="math inline">\(\theta\)</span> be a realisation of a random variable <span class="math inline">\(\Theta\)</span> with pdf <span class="math inline">\(p(\theta)\)</span>. Then for a future observation <span class="math inline">\(\tilde X\)</span> and observed <span class="math inline">\(X\)</span></li>
+</ul>
+<p><span class="math display">\[
+p(\tilde x|x)=\int_\Theta p(\tilde x | \theta, x)p(\theta|x)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta|x)}_{prior}d\theta,
+\]</span></p>
+<p>since <span class="math inline">\(X\)</span> is independent <span class="math inline">\(\tilde X\)</span>.</p>
 
 </div>
 </div>

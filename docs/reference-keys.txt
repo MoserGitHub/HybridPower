@@ -1,5 +1,6 @@
 background
-notation
+general-notation-and-abbreviations
+some-bayesian-concepts
 two-arm-non-inferiority-setting
 binomial-outcome
 frequentist-approach
