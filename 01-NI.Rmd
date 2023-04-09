@@ -420,11 +420,11 @@ AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D
 $$
 where
 
-- (1) Probability of Type-I error,
-- (2) 'Non-inferior, but treatment effect not relevant',
-- (3) 'Non-inferior, treatment effect relevant'.
+- $(1)$ Probability of Type-I error,
+- $(2)$ 'Non-inferior, but treatment effect not relevant',
+- $(3)$ 'Non-inferior, treatment effect relevant'.
 
-@Spiegelhalter2003 highlights that $AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)$ because the type-I error is often small and one has strong believe for the alternative hypothesis. @Kunzmann2022 and @OHagan2005 discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.
+@Spiegelhalter2003 shows that $AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)$ because the type-I error is often small and one has strong believe for the alternative hypothesis @Spiegelhalter2003. @Kunzmann2022 and @OHagan2005 discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.
 
 The AP decomposition can be visualised using the posterior predictive distribution. Let $p(\tilde\delta)$ be the pdf of the posterior predictive distribution then
 $$
@@ -432,7 +432,7 @@ p(\tilde\delta, \delta)= N_2\left(\begin{pmatrix} d \\ d \end{pmatrix}, \begin{p
 $$
 see formula (2.11) in @Grieve2022.
 
-Under enthusiastic prior:
+Under an enthusiastic prior:
 
 ```{r}
 #| echo: false
@@ -461,27 +461,19 @@ ggplot(data_sim, aes(x=delta, y=delta_pred, colour=factor(region)))+geom_point(s
 data.frame(data_sim %>% group_by(region) %>% summarise(prop=n()/nrow(data_sim)))
 ```
 
+For the non-inferiority setting we are interested in (2)+(3):
 
 $$
-AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)} \\
-+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
+P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
 $$
-For our noninferiority setting consider (2)+(3).
-
-$$
-P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)\\=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
-$$
-where $EP$ is **'expected power'** (Kunzmann et al.).
-
-
-Spiegelhalter calls $P(Z\leq - z_{1-\alpha}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
+Kunzmann et al. denote EP the **'expected power'** (@Kunzmann2022). Note that
 
 $$
-\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}
+\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}.
 $$
+Spiegelhalter calls $P(P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
 
-
-Noninferiority setting $\Delta\leq\delta^*$:
+For the noninferiority setting $\Delta\leq\delta^*$:
 
 ```{r}
 #| echo: false
@@ -557,7 +549,7 @@ $$
 
 ---
 
-Bases on the above specified 'Bayesian significance' we are interested whether the upper $(1-\epsilon)$ credible interval is smaller than the non-inferiority margin, that is
+One is interested whether the upper $(1-\epsilon)$ credible interval is smaller than the non-inferiority margin, that is
 
 $$
 \frac{\sigma^2_{treat}d+\sigma^2_{prior}D}{\sigma^2_{treat}+\sigma^2_{prior}}+z_{1-\epsilon}\frac{\sigma_{treat}\sigma_{prior}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\leq \delta^*.
@@ -569,12 +561,12 @@ $$
 D\leq -z_{1-\epsilon}&\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d
 \end{aligned}
 $$
-$D_{suc}^{d,\delta^*}=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d$ can be seen as a success rejection of the null hypothesis in the Bayesian setting.
+Denote $D_{suc}^{d,\delta^*}=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d$ as the required risk difference for a successful rejection of the null hypothesis in the Bayesian setting.
 
-Thus
+Thus, since $D\sim N(\delta, \sigma_{treat}^2)$,
 $$
 \begin{aligned}
-P(S^B|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{1+\frac{\sigma^2_{treat}}{\sigma_{prior}^2}}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ 1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right)
+P(D\leq D_{suc}^{d,\delta^*}|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{1+\frac{\sigma^2_{treat}}{\sigma_{prior}^2}}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ 1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right)
 \end{aligned}
 $$
 
@@ -643,12 +635,13 @@ data_power %>% filter(delta%in%c("0", "0.035"))
 The average Bayesian power can be calculated as
 $$
 \begin{aligned}
-P(S^B)&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right] \\
-&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}+\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(\delta^*-d)
+P(D\leq D_{suc}^{d,\delta^*})&=\int_{\Delta}P(D\leq D_{suc}^{d,\delta^*}|\delta)d\delta
+\\&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)\\
+&\quad \quad \quad-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right] \\
+&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}+\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(\delta^*-d),
 \end{aligned}
 $$
-
-$P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+n}(d-\delta^*)}{\sqrt{n}\tilde\sigma }\right)$
+since for the posterior predictive distribution $\tilde D \sim N(d, \sigma_{treat}^2+\sigma_{prior}^2)$.
 
 ---
 
@@ -657,9 +650,8 @@ $P(S^B)=\Phi\left(-\sqrt{\frac{n_0}{n}}z_{1-\epsilon}-\frac{\sqrt{n_0}\sqrt{n_0+
 If $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$, then $\sigma_{treat}^2=\frac{2\sigma^2}{n}$ and $\sigma_{prior}^2=\frac{2\sigma^2}{m}$, and the formula above reduces to
 $$
 \begin{aligned}
-P(S^B)&=-z_{1-\epsilon}\sqrt{\frac{m}{n}}+\sqrt{\frac{(m+n)m}{2n\sigma^2}}(\delta^*-d)
+P(D\leq D_{suc}^{d,\delta^*})&=-z_{1-\epsilon}\sqrt{\frac{m}{n}}+\sqrt{\frac{(m+n)m}{2n\sigma^2}}(\delta^*-d)
 \end{aligned}
-
 $$
 
 ---
