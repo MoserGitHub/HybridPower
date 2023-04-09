@@ -533,10 +533,10 @@ P(S^B|\delta)&amp;=\Phi\left(-z_{1-\epsilon}\sqrt{\frac{n+m}{n}}- \frac{m}{\sqrt
 ## 8  0.035 0.05 Bayes: Noninformative
 ## 9  0.000 0.80           Frequentist
 ## 10 0.035 0.05           Frequentist</code></pre>
-<p>The average Bayesian power can be calculated as
+<p>The average Bayesian power (BAP) can be calculated as
 <span class="math display">\[
 \begin{aligned}
-P(D\leq D_{suc}^{d,\delta^*})&amp;=\int_{\Delta}P(D\leq D_{suc}^{d,\delta^*}|\delta)d\delta
+BAP&amp;=\int_{-\infty}^{-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d} f(\tilde \delta)d\tilde \delta
 \\&amp;=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)\\
 &amp;\quad \quad \quad-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right] \\
 &amp;=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}+\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(\delta^*-d),

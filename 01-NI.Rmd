@@ -632,10 +632,10 @@ data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))
 ```
 
-The average Bayesian power can be calculated as
+The average Bayesian power (BAP) can be calculated as
 $$
 \begin{aligned}
-P(D\leq D_{suc}^{d,\delta^*})&=\int_{\Delta}P(D\leq D_{suc}^{d,\delta^*}|\delta)d\delta
+BAP&=\int_{-\infty}^{-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d} f(\tilde \delta)d\tilde \delta
 \\&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)\\
 &\quad \quad \quad-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right] \\
 &=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}+\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(\delta^*-d),
