@@ -428,8 +428,9 @@ where
 
 The AP decomposition can be visualised using the posterior predictive distribution. Let $p(\tilde\delta)$ be the pdf of the posterior predictive distribution then
 $$
-p(\tilde\delta, \delta)
+p(\tilde\delta, \delta)= N_2\left(\begin{pmatrix} d \\ d \end{pmatrix}, \begin{pmatrix} \sigma^2_{treat}+\sigma^2_{prior} \quad \sigma^2_{prior} \\ \quad \quad \sigma^2_{prior} \quad \ \quad  \sigma^2_{prior}\end{pmatrix}\right),
 $$
+see formula (2.11) in @Grieve2022.
 
 Under enthusiastic prior:
 
