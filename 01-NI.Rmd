@@ -364,7 +364,7 @@ $$
 
 ---
 
-Note that if $n_0$ and $n_1$ are the planned treatment arm sample sizes from a frequentist power calculation as described in [Section 2.1.1](###-frequentist-approach) above then
+Note that if $n_0$ and $n_1$ are the planned treatment arm sample sizes from a frequentist power calculation as described in [Section 2.1.1](###-frequentist-approach) above, then, if $d=\delta_A$,
 $$
 -z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}=\Phi^{-1}(y)=\Phi^{-1}(1-\beta) \quad \Rightarrow \quad P(RPR\leq y)=0.5, \quad y=1-\beta.
 $$
@@ -372,7 +372,7 @@ With the above formular we can calculate probability statements like $P(RPR>\gam
 
 ```{r}
 #| echo: false
-
+#| warning: false
 gamma <- seq(0.01,0.99,0.01)
 
 prior_mean <- 0
