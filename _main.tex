@@ -1,0 +1,952 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Frequentist, Bayesian and hybrid approaches for sample size and power calculations},
+  pdfauthor={André Moser, CTU Bern, University of Bern},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Frequentist, Bayesian and hybrid approaches for sample size and power calculations}
+\author{André Moser, CTU Bern, University of Bern}
+\date{2023-04-11}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{background}{%
+\chapter{Background}\label{background}}
+
+The terminology of `power' is often imprecisely used \citet{Kunzmann2022}. Kunzmann et al.~suggest to use the neutral term `probability of rejection'. The classical (frequentist) `power' is defined as the probability of rejection given that the alternative hypothesis is true. Frequentist power calculations do not include uncertainties of the treatment effect, whereas Bayesian and hybrid approaches include such uncertainties in their calculations. In the following we use different approaches for the calculation of the `probability of rejection' (frequentist, Bayesian and hybrid) for different clinical trial designs.
+
+\textbf{Definition `hybrid'} (\citet{Spiegelhalter2003}, Section 6.5.2)
+
+\emph{`{[}\ldots{]} we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior {[}\ldots{]}'}
+
+\hypertarget{general-notation-and-abbreviations}{%
+\section{General notation and abbreviations}\label{general-notation-and-abbreviations}}
+
+\begin{itemize}
+\tightlist
+\item
+  iid: independent and identically distributed
+\item
+  pdf: probability density function
+\item
+  \(N_2\): Bivariate cumulative Gaussian distribution function
+\item
+  \(\phi\): Probability density function of the standard Gaussian distribution
+\item
+  \(\Phi\): Cumulative distribution function of the standard Gaussian distribution
+\item
+  \(\Phi^{-1}\): Quantile function of the standard Gaussian distribution function
+\end{itemize}
+
+\hypertarget{power-vocabulary}{%
+\section{`Power' vocabulary}\label{power-vocabulary}}
+
+In their supplement Kunzmann et al. \citet{Kunzmann2022} provide a literature review of the terminology used in articles. We provide here a summary of this terminology:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Frequentist power}: Probability of rejection given that the alternative hypothesis is true.
+\item
+  \textbf{Average power}: Prior averaged probability of rejection. Often also called `probability of success', `assurance', `Bayesian predictive power'.
+\item
+  \textbf{Prior adjusted power}: Joint probability of rejection and that the treatment effect is effective.
+\end{itemize}
+
+\hypertarget{some-bayesian-concepts}{%
+\section{Some `Bayesian' concepts}\label{some-bayesian-concepts}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Prior predictive distribution}: Situation \emph{before} a sample was taken. Let \(\theta\) be a realisation of a random variable \(\Theta\) with pdf \(p(\theta)\). Then for a future observation \(\tilde X\)
+\end{itemize}
+
+\[
+p(\tilde x)=\int_\Theta p(\tilde x, \theta)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta)}_{prior}d\theta
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Posterior predictive distribution}: Situation \emph{after} a sample was taken. Let \(\theta\) be a realisation of a random variable \(\Theta\) with pdf \(p(\theta)\). Then for a future observation \(\tilde X\) and observed \(X\)
+\end{itemize}
+
+\[
+p(\tilde x|x)=\int_\Theta p(\tilde x | \theta, x)p(\theta|x)d\theta=\int_\Theta \underbrace{p(\tilde x | \theta)}_{likelihood}\underbrace{p(\theta|x)}_{prior}d\theta,
+\]
+
+since \(X\) is independent \(\tilde X\).
+
+\hypertarget{two-arm-non-inferiority-setting}{%
+\chapter{Two-arm non-inferiority setting}\label{two-arm-non-inferiority-setting}}
+
+In this section we consider a non-inferiority clinical trial setting with a null hypothesis \(H_0: \delta > \delta^*\) and alternative hypothesis \(H_a: \delta \leq \delta^*\), where \(\delta^*>0\) is a fixed non-inferiority margin and a treatment effect \(\delta\).
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\hypertarget{binomial-outcome}{%
+\section{Binomial outcome}\label{binomial-outcome}}
+
+Here \(p_i\), \(i\in \{0,1\}\), are event probabilities from two treatment arms. \(\delta=p_1-p_0\) is the true treatment effect expressed as a risk difference.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example}
+
+We use the SAFE-SSPE trial as a working example \citet{Baumgartner2020}. In brief, this non-inferiority randomised placebo-controlled trial compares clinical surveillance versus anticoagulant treatment in low-risk patients with isolated subsegmental pulmonary embolism (SSPE). The primary outcome is 3-month recurrence of venous thromboembolism (VTE). The null hypothesis \(H_0\) is `clinical surveillance is inferior to anticoagulant treatment' versus the alternative hypothesis \(H_a\) `clinical surveillance is non-inferior to anticoagulant treatment'. The non-inferiority margin was set at 3.5\% and it was assumed that the proportion of VTE in both groups was 1\%.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{frequentist-approach}{%
+\subsection{Frequentist approach}\label{frequentist-approach}}
+
+Let \(Y_{i,k} \sim^{iid} Bernoulli(p_i)\), \(k=1,\dots,n_i\), \(i\in \{0,1\}\). Let \(\overline p_i=\frac{1}{n_i}\sum_{k\leq n_i} Y_{i,k}\), \(i\in {0,1}\), and thus the estimated risk difference \(D=\overline p_1-\overline p_0\) is Gaussian distributed with \(D \sim N\left(\delta, \frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\right)\), where \(\sigma_i^2=p_i(1-p_i)\), \(i\in \{0,1\}\). For notational purposes we denote \(\sigma_{treat}^2=\frac{\sigma_1^2}{n_1}+\frac{\sigma_0^2}{n_0}\), that is, the variance for the estimated treatment effect.
+
+We are interested whether the upper \((1-\alpha)\%\)-confidence limit is smaller than the non-inferiority margin, that is,
+\[
+D+z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}\leq \delta^*,
+\]
+where \(z_{1-\alpha}=\Phi^{-1}(1-\alpha)\). Simple algebra leads to
+\[
+D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
+\]
+Note that \(D_{suc}^{\delta^*}:=-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*\) is the required risk difference for a `successful' rejection of the null hypothesis. Then
+\[
+\begin{aligned}
+P_\delta(D\leq D_{suc}^{\delta^*})&=\Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right) \\
+&=\Phi\left(-z_{1-\alpha}-\frac{(\delta-\delta^*)}{\sigma_{treat}}\right),
+\end{aligned}
+\]
+since under regularity conditions,
+\[
+Z=\frac{D-\delta^*}{\sigma_{treat}} \rightarrow N(0,1), \quad \min(n_1,n_0) \rightarrow \infty.
+\]
+\(P_{\delta}(D\leq D_{suc}^{\delta^*})\) is the \textbf{`probability of rejection given \(\delta\)'}. Under the null value \(\delta_0=p_1-p_0\), \(P_{\delta_0}(D\leq D_{suc}^{\delta^*})=\alpha\) is the `type-I error' and under an alternative value \(\delta_A\), \(P_{\delta_A}(D\leq D_{suc}^{\delta^*})=1-\beta\) is the `frequentist power'.
+
+For an alternative value \(\delta_A\) it holds that
+
+\[
+-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta_A-\delta^*)=\Phi^{-1}(1-\beta)=z_{1-\beta}
+\]
+and so the sample size can then be derived as
+\[
+\frac{(z_{1-\beta}+z_{1-\alpha})^2}{(\delta_A-\delta^*)^2}=\frac{an_0^2}{n_0\sigma_1^2+an_0\sigma_0^2},
+\]
+where \(a=n_1/n_0\) is an allocation ratio, such that
+\[
+n_0=(z_{1-\beta}+z_{1-\alpha})^2\frac{\sigma_1^2+a\sigma_0^2}{a(\delta_A-\delta^*)^2}, \quad n_1=an_0.
+\]
+
+\(\delta_0\), \(\delta_A\) and \(\delta^*\) are assumed as fixed and known constants in a frequentist approach. Their choices are of high importance, because all trial conclusions are based on those choices and affect the sample size calculation. The plot below shows how the sample size increase as \(\delta^*\) approaches \(\delta\).
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued)}
+
+We calculate the required sample size for the SAFE-SSPE trial under the following parameters:
+
+\begin{itemize}
+\tightlist
+\item
+  \(p_1=0.01\), \(p_0=0.01\), \(\delta^*=0.035\), \(1-\beta=0.8\), \(\alpha=0.05\), \(a=1/1\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(epiR)}
+
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FloatTok{0.2}
+\NormalTok{p\_0 }\OtherTok{\textless{}{-}} \FloatTok{0.01}
+\NormalTok{p\_1 }\OtherTok{\textless{}{-}} \FloatTok{0.01}
+\NormalTok{delta }\OtherTok{\textless{}{-}}\NormalTok{ p\_1}\SpecialCharTok{{-}}\NormalTok{p\_0}
+\NormalTok{delta\_star }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+\NormalTok{sd\_0 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(p\_0}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p\_0))}
+\NormalTok{sd\_1 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(p\_1}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p\_1))}
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\DecValTok{1}
+
+\FunctionTok{epi.ssninfb}\NormalTok{(}\AttributeTok{treat=}\NormalTok{p\_1, }\AttributeTok{control=}\NormalTok{p\_0, }\AttributeTok{delta=}\NormalTok{delta\_star, }\AttributeTok{power=}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{beta, }\AttributeTok{r=}\NormalTok{a, }\AttributeTok{alpha=}\NormalTok{alpha, }\AttributeTok{n=}\ConstantTok{NA}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $n.total
+## [1] 200
+## 
+## $n.treat
+## [1] 100
+## 
+## $n.control
+## [1] 100
+## 
+## $delta
+## [1] 0.035
+## 
+## $power
+## [1] 0.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}}\NormalTok{ ((}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{beta)}\SpecialCharTok{+}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{((sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{a}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(a}\SpecialCharTok{*}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{n\_0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 99.93031
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_1 }\OtherTok{\textless{}{-}}\NormalTok{ n\_0}\SpecialCharTok{*}\NormalTok{a}
+\NormalTok{n\_1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 99.93031
+\end{verbatim}
+
+Given the specified operating characteristics and parameters a sample size of 200 patients (100 per arm) is needed to reject the null hypothesis of inferiority. This is more or less the sample size mentioned in the study protocol of the SAFE-SSPE trial but without dropouts and adjustments for rare events.
+
+\hypertarget{hybrid-approach-prior-on-treatment-effect}{%
+\subsection{Hybrid approach: Prior on treatment effect}\label{hybrid-approach-prior-on-treatment-effect}}
+
+Suppose that the true treatment effect \(\delta\) is a realization from a random variable \(\Delta\) with \(p(\delta)\). In this subsection we assume that the prior comes from a Gaussian distribution function so that \(\Delta \sim N\left(d, \frac{\sigma_1^2+\sigma_0^2}{m}\right)\). Note that this prior can be thought as a realisation from \(m\) Gaussian `prior observations' with variance \(\sigma_1^2+\sigma_0^2\). Again for notational purposes we denote \(\sigma_{prior}^2=\frac{\sigma_1^2+\sigma_0^2}{m}\) as the variance of the design prior on the treatment effect.
+
+In the following we will use the following priors:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Enthusiastic prior} (favors non-inferiority): \(d=0\), \(m=6.6\), \(P(\Delta>\delta^*)=0.05\). This prior is centered on the treatment effect such that there is a low probability (here 5\%) of inferiority.
+\item
+  \textbf{Skeptical prior} (favors inferiority): \(d=\delta^*\), \(m=6.6\), \(P(\Delta>0)=0.05\). This prior is centered on the non-inferiority margin such that there is a low probability (here 5\%) of superiority.
+\item
+  \textbf{Informative prior} (clinical expert knowledge): \(d=0\) with \(m=25\).
+\item
+  \textbf{Noninformative prior}: \(d=0\) with \(m=0.5\).
+\end{itemize}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Let
+\[
+AP:=\int_{\Delta} P_{\delta}(D\leq D_{suc}^{\delta^*})p(\delta)d\delta,
+\]
+
+be the \textbf{`average power'} \citet{Grieve2022} (also called `assurance' \citet{OHagan2005}, `probability of success' \citet{Kunzmann2022}, \citet{Spiegelhalter2003} or Bayesian predictive power \citet{Rufibach2016}. The supplemental section of \citet{Kunzmann2022} contains a literature review of the used terminology). Remember that in an hybrid approach we are interested in trial conclusions from a frequentist point of view, thus we are interested in
+
+\[
+D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
+\]
+By using a design prior we take into account the uncertainty of the treatment effect. The prior predictive distribution for an estimated risk difference, say \(\tilde D\), with a prior \(\Delta \sim N\left(d, \sigma_{prior}^2\right)\) includes this uncertainty. For the Gaussian case, the prior predictive distribution of \(\tilde D\) is given as
+\[
+\tilde D \sim N\left(d, \sigma_{treat}^2+\sigma_{prior}^2\right),
+\]
+since \(\tilde D \sim N\left(\delta, \sigma_{treat}^2\right)\).
+
+Suppose now that \(D\) has a predictive distribution as described above, then
+\[
+\begin{aligned}
+AP&=\int_{-\infty}^{-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*}f(\tilde\delta)d\tilde\delta= \Phi\left(\frac{1}{\sigma_{prior}}\left[-z_{1-\alpha}\sigma_{treat}-(d-\delta^*)\right]\right)
+\end{aligned}
+\]
+see for example \citet{Grieve2022}. Note that as \(m \rightarrow \infty\), then \(AP \rightarrow \Phi\left(-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}\right)\), that is, the frequentist power at \(d\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued) }
+
+We calculate the AP under the assumed prior distributions and parameters for the SAFE-SSPE trial.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Enthusiastic prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{AP }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)))}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Enthusiastic"}\NormalTok{, n\_0, n\_1, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(AP,}\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# Skeptical prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}}\NormalTok{ delta\_star}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{AP }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)))}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Skeptical"}\NormalTok{, n\_0, n\_1, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(AP,}\DecValTok{2}\NormalTok{)))}
+
+\CommentTok{\# Informative prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{25}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{AP }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)))}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Informative"}\NormalTok{, n\_0, n\_1, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(AP,}\DecValTok{2}\NormalTok{)))}
+
+\CommentTok{\# Noninformative prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{AP }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)))}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Noninformative"}\NormalTok{, n\_0, n\_1, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(AP,}\DecValTok{2}\NormalTok{)))}
+
+\FunctionTok{data.frame}\NormalTok{(data\_output }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(type))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             type      n_0      n_1   AP
+## 1   Enthusiastic 99.93031 99.93031 0.59
+## 2    Informative 99.93031 99.93031 0.66
+## 3 Noninformative 99.93031 99.93031 0.52
+## 4      Skeptical 99.93031 99.93031 0.34
+\end{verbatim}
+
+Under an `enthusiastic prior' we get an average power of 59\%. For an `skeptical prior' the average power decreases to 34\%. These values are lower than the frequentist power of 80\%.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Rufibach et al.~give a closed a formula for the distribution of \(RPR:=P_\Delta(D\leq D_{suc}^{\delta^*})\), where \(\Delta \sim N(d,\sigma^2_{prior})\), and discuss the shape under different prior choices \citet{Rufibach2016}. In the following we use the wording 'random probability to reject` (RPR) similar to \citet{Kunzmann2022}.
+
+For \(0<y<1\), the random variable \(RPR\) has a probability density function
+\[
+\begin{aligned}
+f(y)&=\frac{\sigma_{treat}}{\sigma_{prior}} \phi\left(-z_{1-\alpha}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{(d-\delta^*)}{\sigma_{prior}}-\frac{\sigma_{treat}}{\sigma_{prior}}\Phi^{-1}(y) \right)\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1},
+\end{aligned}
+\]
+see \citet{Rufibach2016}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Special case}
+
+For the case that \(n_0=n_1=n\) and \(\sigma_1^2=\sigma_0^2=\sigma^2\), then \(\sigma_{treat}^2=\frac{2\sigma^2}{n}\) and \(\sigma_{prior}^2=\frac{2\sigma^2}{m}\), and the formula above reduces to
+
+\[
+\begin{aligned}
+f(y)&=\sqrt{\frac{m}{n}}\phi\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right)\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}, \quad 0<y<1.
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued) }
+
+We derive the probability densities for the different assumed priors for the SAFE-SSPE study.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.001}\NormalTok{,}\FloatTok{0.999}\NormalTok{,}\FloatTok{0.001}\NormalTok{)}
+
+\CommentTok{\# Enthusiastic prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\DocumentationTok{\#\# Rufibach 2016: formula (4)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\FunctionTok{dnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(m)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(x))}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(x)))}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(x, y, }\AttributeTok{type=}\StringTok{"Enthusiastic"}\NormalTok{)}
+
+\CommentTok{\# Skeptical prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}}\NormalTok{ delta\_star}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\FunctionTok{dnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{{-}}\NormalTok{(sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(x))}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(x)))}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(x, y, }\AttributeTok{type=}\StringTok{"Skeptical"}\NormalTok{))}
+
+\CommentTok{\# Informative prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{25}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\FunctionTok{dnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{{-}}\NormalTok{(sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(x))}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(x)))}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(x, y, }\AttributeTok{type=}\StringTok{"Informative"}\NormalTok{))}
+
+\CommentTok{\# Noninformative prior}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{sigma\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{sigma\_treat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1))}
+
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{*}\FunctionTok{dnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{{-}}\NormalTok{(sigma\_treat}\SpecialCharTok{/}\NormalTok{sigma\_prior)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(x))}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(x)))}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(x, y, }\AttributeTok{type=}\StringTok{"Noninformative"}\NormalTok{))}
+
+\NormalTok{data\_output2 }\OtherTok{\textless{}{-}}\NormalTok{ data\_output }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(type, }\AttributeTok{x=}\NormalTok{AP) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{y=}\DecValTok{0}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(data\_power, }\FunctionTok{aes}\NormalTok{(x, y, }\AttributeTok{colour=}\NormalTok{type))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data=}\NormalTok{data\_output2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x, }\AttributeTok{y=}\NormalTok{y, }\AttributeTok{colour=}\NormalTok{type))}\SpecialCharTok{+}\FunctionTok{scale\_colour\_manual}\NormalTok{(}\StringTok{"Prior type"}\NormalTok{, }\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"purple"}\NormalTok{, }\StringTok{"orange"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"darkred"}\NormalTok{))}\SpecialCharTok{+}\FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}\FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{xlab}\NormalTok{(}\StringTok{"RPR"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{caption=}\StringTok{"Dots indicate the AP."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+The cumulative distribution function of \(RPR\) can the be calculated as
+
+\[
+\begin{aligned}
+P(RPR\leq y)=1-\Phi&\left(\frac{\sigma_{treat}}{\sigma_{prior}}\left[-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}-\Phi^{-1}(y) \right]\right), \quad 0<y<1.
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Special case}
+
+For the case that \(n_0=n_1=n\) and \(\sigma_1^2=\sigma_0^2=\sigma^2\), then \(\sigma_{treat}^2=\frac{2\sigma^2}{n}\) and \(\sigma_{prior}^2=\frac{2\sigma^2}{m}\), and the formula above reduces to
+
+\[
+\begin{aligned}
+P(RPR\leq y)=1-\Phi&\left(\frac{\sigma_{treat}}{\sigma_{prior}}\left[-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}-\Phi^{-1}(y) \right] \right), \quad 0<y<1.
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Note that if \(n_0\) and \(n_1\) are the planned treatment arm sample sizes from a frequentist power calculation as described in \protect\hyperlink{ux5cux23ux5cux23-frequentist-approach}{Section 2.1.1} above, then, if \(d=\delta_A\),
+\[
+-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}=\Phi^{-1}(y)=\Phi^{-1}(1-\beta) \quad \Rightarrow \quad P(RPR\leq y)=0.5, \quad y=1-\beta.
+\]
+---
+
+\textbf{Working example (continued) }
+
+With the above formular we calculate the probability \(P(RPR>\gamma)\), \(0<\gamma<1\), for the SAFE-SSPE study:
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+For a specific threshold, say \(\gamma=0.6\), we obtain
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Note that the average power AP integrates over the whole \(\Delta\) range. This might include also `non-favorable' regions. To see that one can decompose AP as follows (see \citet{Kunzmann2022}, \citet{Grieve2022}):
+\[
+AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
+\]
+where
+
+\begin{itemize}
+\tightlist
+\item
+  \((1)\) Probability of Type-I error,
+\item
+  \((2)\) `Non-inferior, but treatment effect not relevant',
+\item
+  \((3)\) `Non-inferior, treatment effect relevant'.
+\end{itemize}
+
+\citet{Spiegelhalter2003} shows that \(AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)\) because the type-I error is often small and one has strong believe for the alternative hypothesis \citet{Spiegelhalter2003}. \citet{Kunzmann2022} and \citet{OHagan2005} discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.
+
+For the non-inferiority setting we are interested in (2)+(3):
+
+\[
+P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
+\]
+Kunzmann et al.~denote EP the \textbf{`expected power'} (\citet{Kunzmann2022}). Note that
+
+\[
+\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}.
+\]
+Spiegelhalter calls \(P(P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)\) the \textbf{`prior adjusted power'} (PAP):
+
+The AP decomposition can be visualised using the posterior predictive distribution. Let \(p(\tilde\delta)\) be the pdf of the posterior predictive distribution then
+\[
+p(\tilde\delta, \delta)= N_2\left(\begin{pmatrix} d \\ d \end{pmatrix}, \begin{pmatrix} \sigma^2_{treat}+\sigma^2_{prior} \quad \sigma^2_{prior} \\ \quad \quad \sigma^2_{prior} \quad \ \quad  \sigma^2_{prior}\end{pmatrix}\right),
+\]
+see formula (2.11) in \citet{Grieve2022}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued) }
+
+For the SAFE-SSPE study the bivariate scatterplot of \(p(\tilde\delta, \delta)\) under an enthusiastic prior can be visualised as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mvtnorm)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{delta\_star }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{sigma\_sim }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{((sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_0}\SpecialCharTok{+}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{n\_1}\SpecialCharTok{+}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{m), (sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{m, (sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{m, (sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{m), }\AttributeTok{nrow=}\DecValTok{2}\NormalTok{, }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{, }\AttributeTok{byrow=}\NormalTok{T)}
+
+\NormalTok{data\_sim }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{rmvnorm}\NormalTok{(}\AttributeTok{n=}\DecValTok{10000}\NormalTok{, }\AttributeTok{mean=}\FunctionTok{c}\NormalTok{(prior\_mean, prior\_mean), sigma\_sim))}
+\FunctionTok{names}\NormalTok{(data\_sim) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"delta\_pred"}\NormalTok{, }\StringTok{"delta"}\NormalTok{)}
+
+\NormalTok{data\_sim}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(data\_sim}\SpecialCharTok{$}\NormalTok{delta}\SpecialCharTok{\textless{}=}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ data\_sim}\SpecialCharTok{$}\NormalTok{delta\_pred}\SpecialCharTok{\textless{}={-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sd\_tilde}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{data\_sim}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(data\_sim}\SpecialCharTok{$}\NormalTok{delta}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ data\_sim}\SpecialCharTok{$}\NormalTok{delta}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star }\SpecialCharTok{\&}\NormalTok{ data\_sim}\SpecialCharTok{$}\NormalTok{delta\_pred}\SpecialCharTok{\textless{}={-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sd\_tilde}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star), }\DecValTok{2}\NormalTok{, data\_sim}\SpecialCharTok{$}\NormalTok{region)}
+\NormalTok{data\_sim}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(data\_sim}\SpecialCharTok{$}\NormalTok{delta}\SpecialCharTok{\textgreater{}}\NormalTok{delta\_star }\SpecialCharTok{\&}\NormalTok{ data\_sim}\SpecialCharTok{$}\NormalTok{delta\_pred}\SpecialCharTok{\textless{}={-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sd\_tilde}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{{-}}\NormalTok{(prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star), }\DecValTok{3}\NormalTok{, data\_sim}\SpecialCharTok{$}\NormalTok{region)}
+
+\NormalTok{data\_sim}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(data\_sim}\SpecialCharTok{$}\NormalTok{region, }\AttributeTok{levels=}\DecValTok{0}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"\textquotesingle{}Not significant\textquotesingle{}"}\NormalTok{, }\StringTok{"(3)"}\NormalTok{, }\StringTok{"(2)"}\NormalTok{, }\StringTok{"(1)"}\NormalTok{))}
+
+\FunctionTok{ggplot}\NormalTok{(data\_sim, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{delta, }\AttributeTok{y=}\NormalTok{delta\_pred, }\AttributeTok{colour=}\FunctionTok{factor}\NormalTok{(region)))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\FloatTok{0.3}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}\FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FloatTok{0.035}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept=}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{*}\NormalTok{sd\_tilde}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{{-}}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star), }\AttributeTok{linetype=}\StringTok{"dotted"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{caption=}\StringTok{"Dashed line: Noninferiority margin.}\SpecialCharTok{\textbackslash{}n}\StringTok{Dotted line: Upper confidence interval from mean of predicted delta \textless{}= non{-}inferiority margin."}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{ylab}\NormalTok{(}\StringTok{"Predictive distribution of Delta"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{xlab}\NormalTok{(}\StringTok{"Delta"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{scale\_color\_brewer}\NormalTok{(}\StringTok{"Region"}\NormalTok{, }\AttributeTok{palette=}\StringTok{"Reds"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.035}\NormalTok{, }\FloatTok{0.2}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.035}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data.frame}\NormalTok{(data\_sim }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(region) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{prop=}\FunctionTok{n}\NormalTok{()}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(data\_sim)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              region   prop
+## 1 'Not significant' 0.4168
+## 2               (3) 0.4851
+## 3               (2) 0.0964
+## 4               (1) 0.0017
+\end{verbatim}
+
+For the noninferiority setting \(\Delta\leq\delta^*\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta\_star }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{sd\_prior }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(m)}
+\NormalTok{draws }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior)}
+
+\NormalTok{power\_classic }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{n\_1)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(draws}\SpecialCharTok{{-}}\NormalTok{delta\_star))}
+
+\NormalTok{data\_ep }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{ep=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star]), }\AttributeTok{pap=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star])}\SpecialCharTok{*}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{ap=}\FunctionTok{mean}\NormalTok{(power\_classic), }\AttributeTok{const=}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{type=}\StringTok{"Skeptical"}\NormalTok{)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}}\NormalTok{ delta\_star}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+\NormalTok{draws }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior)}
+
+\NormalTok{power\_classic }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{*}\NormalTok{(draws}\SpecialCharTok{{-}}\NormalTok{delta\_star))}
+
+\NormalTok{data\_ep }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_ep, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{ep=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star]), }\AttributeTok{pap=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star])}\SpecialCharTok{*}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{ap=}\FunctionTok{mean}\NormalTok{(power\_classic), }\AttributeTok{const=}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{type=}\StringTok{"Enthusiastic"}\NormalTok{))}
+
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{25}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{draws }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior)}
+
+\NormalTok{power\_classic }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{*}\NormalTok{(draws}\SpecialCharTok{{-}}\NormalTok{delta\_star))}
+
+\NormalTok{data\_ep }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_ep, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{ep=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star]), }\AttributeTok{pap=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star])}\SpecialCharTok{*}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{ap=}\FunctionTok{mean}\NormalTok{(power\_classic), }\AttributeTok{const=}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{type=}\StringTok{"Informative"}\NormalTok{))}
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{draws }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100000}\NormalTok{, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_tilde}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FloatTok{0.5}\NormalTok{))}
+
+\NormalTok{power\_classic }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n)}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{*}\NormalTok{(draws}\SpecialCharTok{{-}}\NormalTok{delta\_star))}
+
+\NormalTok{data\_ep }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_ep, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{ep=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star]), }\AttributeTok{pap=}\FunctionTok{mean}\NormalTok{(power\_classic[draws}\SpecialCharTok{\textless{}=}\NormalTok{delta\_star])}\SpecialCharTok{*}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{ap=}\FunctionTok{mean}\NormalTok{(power\_classic), }\AttributeTok{const=}\FunctionTok{pnorm}\NormalTok{(delta\_star, }\AttributeTok{mean=}\NormalTok{prior\_mean, }\AttributeTok{sd=}\NormalTok{sd\_prior), }\AttributeTok{type=}\StringTok{"Noninformative"}\NormalTok{))}
+
+
+\NormalTok{data\_ep}\SpecialCharTok{$}\NormalTok{ep }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(data\_ep}\SpecialCharTok{$}\NormalTok{ep, }\DecValTok{4}\NormalTok{)}
+\NormalTok{data\_ep}\SpecialCharTok{$}\NormalTok{ap }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(data\_ep}\SpecialCharTok{$}\NormalTok{ap, }\DecValTok{4}\NormalTok{)}
+\NormalTok{data\_ep}\SpecialCharTok{$}\NormalTok{pap }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(data\_ep}\SpecialCharTok{$}\NormalTok{pap, }\DecValTok{4}\NormalTok{)}
+\NormalTok{data\_ep}\SpecialCharTok{$}\NormalTok{const }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(data\_ep}\SpecialCharTok{$}\NormalTok{const, }\DecValTok{4}\NormalTok{)}
+
+\NormalTok{data\_ep}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       ep    pap     ap  const           type
+## 1 0.7930 0.5857 0.5872 0.7386      Skeptical
+## 2 0.6741 0.3370 0.3437 0.5000   Enthusiastic
+## 3 0.7931 0.5858 0.5872 0.7386    Informative
+## 4 0.9186 0.6785 0.5233 0.7386 Noninformative
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{proper-bayesian-approach}{%
+\subsection{Proper Bayesian approach}\label{proper-bayesian-approach}}
+
+A proper Bayesian approach uses the posterior distribution to define `Bayesian significance': \(S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon\). Remember \(D=p_1-p_0\) with \(D \sim N(\delta, \sigma^2_{treat})\). Suppose that \(\Delta \sim N(d, \sigma^2_{prior})\) then the posterior distribution given \(D\) is distributed as
+\[
+\begin{aligned}
+\Delta|D \sim N\left(\frac{\frac{d}{\sigma^2_{prior}}+\frac{D}{\sigma^2_{treat}}}{\frac{1}{\sigma^2_{prior}}+\frac{1}{\sigma^2_{treat}}}, \frac{1}{\frac{1}{\sigma^2_{prior}}+\frac{1}{\sigma^2_{treat}}}\right)=N\left( \frac{\sigma^2_{treat}d+\sigma^2_{prior}D}{\sigma^2_{treat}+\sigma^2_{prior}}, \frac{\sigma^2_{treat}\sigma^2_{prior}}{\sigma^2_{treat}+\sigma^2_{prior}}  \right)
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Special case}
+
+If \(n_0=n_1=n\) and \(\sigma_1^2=\sigma_0^2=\sigma^2\), then \(\sigma_{treat}^2=\frac{2\sigma^2}{n}\) and \(\sigma_{prior}^2=\frac{2\sigma^2}{m}\), and the formula above reduces to
+
+\[
+\Delta|D \sim N\left(\frac{m\delta+nD}{n+m}, \frac{\sigma^2}{n+m} \right).
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+One is interested whether the upper \((1-\epsilon)\) credible interval is smaller than the non-inferiority margin, that is
+
+\[
+\frac{\sigma^2_{treat}d+\sigma^2_{prior}D}{\sigma^2_{treat}+\sigma^2_{prior}}+z_{1-\epsilon}\frac{\sigma_{treat}\sigma_{prior}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\leq \delta^*.
+\]
+A simple algebraic step gives
+
+\[
+\begin{aligned}
+D\leq -z_{1-\epsilon}&\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d
+\end{aligned}
+\]
+Denote \(D_{suc}^{d,\delta^*}=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d\) as the required risk difference for a successful rejection of the null hypothesis in the Bayesian setting.
+
+Thus, since \(D\sim N(\delta, \sigma_{treat}^2)\),
+\[
+\begin{aligned}
+P(D\leq D_{suc}^{d,\delta^*}|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{1+\frac{\sigma^2_{treat}}{\sigma_{prior}^2}}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ 1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right).
+\end{aligned}
+\]
+This is the Bayesian power (or probability of rejection) assuming one knows the true treatment effect \(\delta\). Note that this is a conditional probability.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Special case}
+
+If \(n_0=n_1=n\) and \(\sigma_1^2=\sigma_0^2=\sigma^2\), then \(\sigma_{treat}^2=\frac{2\sigma^2}{n}\) and \(\sigma_{prior}^2=\frac{2\sigma^2}{m}\), and the formula above reduces to
+\[
+\begin{aligned}
+P(S^B|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{\frac{n+m}{n}}- \frac{m}{\sqrt{2n\sigma^2}}d-\sqrt{\frac{n}{2n\sigma^2}}\left\{\delta-\delta^*\left(\frac{n+m}{n} \right)\right\} \right).
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued) }
+
+We derive the Bayesian probability of rejection for the SAFE-SSPE study for differently assumed \(\delta\) values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Delta range}
+\NormalTok{delta }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.001}\NormalTok{)}
+
+\CommentTok{\# Epsilon}
+\NormalTok{epsilon }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+
+\CommentTok{\# Enthusiastic prior}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+
+\NormalTok{y\_bayes }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{epsilon)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}\SpecialCharTok{{-}}\NormalTok{(m}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{prior\_mean}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{((n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{/}\NormalTok{((n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))))}
+
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(delta, }\AttributeTok{y=}\NormalTok{y\_bayes, }\AttributeTok{type=}\StringTok{"Bayes: Enthusiastic"}\NormalTok{)}
+
+\CommentTok{\# Skeptical prior}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+
+\NormalTok{y\_bayes }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{epsilon)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}\SpecialCharTok{{-}}\NormalTok{(m}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{prior\_mean}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{((n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{/}\NormalTok{((n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))))}
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(delta, }\AttributeTok{y=}\NormalTok{y\_bayes, }\AttributeTok{type=}\StringTok{"Bayes: Skeptical"}\NormalTok{))}
+
+\CommentTok{\# Informative prior}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{25}
+
+\NormalTok{y\_bayes }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{epsilon)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}\SpecialCharTok{{-}}\NormalTok{(m}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{prior\_mean}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{((n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{/}\NormalTok{((n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))))}
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(delta, }\AttributeTok{y=}\NormalTok{y\_bayes, }\AttributeTok{type=}\StringTok{"Bayes: Informative"}\NormalTok{))}
+
+\CommentTok{\# Noninformative prior}
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+
+\NormalTok{y\_bayes }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{epsilon)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}\SpecialCharTok{{-}}\NormalTok{(m}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{prior\_mean}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{((n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{/}\NormalTok{((n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{*}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(m}\SpecialCharTok{*}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0}\SpecialCharTok{*}\NormalTok{(sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)))))}
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(delta, }\AttributeTok{y=}\NormalTok{y\_bayes, }\AttributeTok{type=}\StringTok{"Bayes: Noninformative"}\NormalTok{))}
+
+\CommentTok{\# Frequentist}
+\NormalTok{y\_freq }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(delta}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_1}\SpecialCharTok{*}\NormalTok{n\_0)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{*}\NormalTok{sd\_1}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{+}\NormalTok{n\_1}\SpecialCharTok{*}\NormalTok{sd\_0}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha))}
+\NormalTok{data\_power }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_power, }\FunctionTok{data.frame}\NormalTok{(delta, }\AttributeTok{y=}\NormalTok{y\_freq, }\AttributeTok{type=}\StringTok{"Frequentist"}\NormalTok{))}
+
+\FunctionTok{ggplot}\NormalTok{(data\_power, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{delta, }\AttributeTok{y=}\NormalTok{y, }\AttributeTok{colour=}\NormalTok{type))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}\FunctionTok{scale\_colour\_brewer}\NormalTok{(}\StringTok{""}\NormalTok{, }\AttributeTok{palette=}\StringTok{"Dark2"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{ylab}\NormalTok{(}\StringTok{"Probability of rejection"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{ylab}\NormalTok{(}\StringTok{"Probability to reject"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.025}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.035}\NormalTok{,}\FloatTok{0.050}\NormalTok{))}\SpecialCharTok{+}\FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.8}\NormalTok{,}\DecValTok{1}\NormalTok{))}\SpecialCharTok{+}\FunctionTok{ggtitle}\NormalTok{(}\FunctionTok{str\_glue}\NormalTok{(}\StringTok{"For treatment arm sample sizes: n0="}\NormalTok{, }\FunctionTok{round}\NormalTok{(n\_0,}\DecValTok{0}\NormalTok{), }\StringTok{", n1="}\NormalTok{, }\FunctionTok{round}\NormalTok{(n\_1,}\DecValTok{0}\NormalTok{)))}\SpecialCharTok{+}\FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\DecValTok{0}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept=}\FloatTok{0.035}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_power}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(data\_power}\SpecialCharTok{$}\NormalTok{y, }\DecValTok{2}\NormalTok{)}
+\NormalTok{data\_power }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(delta}\SpecialCharTok{\%in\%}\FunctionTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"0.035"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    delta    y                  type
+## 1  0.000 0.83   Bayes: Enthusiastic
+## 2  0.035 0.06   Bayes: Enthusiastic
+## 3  0.000 0.78      Bayes: Skeptical
+## 4  0.035 0.04      Bayes: Skeptical
+## 5  0.000 0.90    Bayes: Informative
+## 6  0.035 0.11    Bayes: Informative
+## 7  0.000 0.80 Bayes: Noninformative
+## 8  0.035 0.05 Bayes: Noninformative
+## 9  0.000 0.80           Frequentist
+## 10 0.035 0.05           Frequentist
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+The average (marginal) Bayesian probability of rejection (BAP) can be calculated as
+\[
+\begin{aligned}
+BAP&=\int_{-\infty}^{-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d} f(\tilde \delta)d\tilde \delta
+\\&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)\\
+&\quad \quad \quad-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right] \\
+&=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}+\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(\delta^*-d),
+\end{aligned}
+\]
+since for the posterior predictive distribution \(\tilde D \sim N(d, \sigma_{treat}^2+\sigma_{prior}^2)\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Special case}
+
+If \(n_0=n_1=n\) and \(\sigma_1^2=\sigma_0^2=\sigma^2\), then \(\sigma_{treat}^2=\frac{2\sigma^2}{n}\) and \(\sigma_{prior}^2=\frac{2\sigma^2}{m}\), and the formula above reduces to
+\[
+\begin{aligned}
+P(D\leq D_{suc}^{d,\delta^*})&=-z_{1-\epsilon}\sqrt{\frac{m}{n}}+\sqrt{\frac{(m+n)m}{2n\sigma^2}}(\delta^*-d)
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Working example (continued) }
+
+We derive the average Bayesian probability of rejection for the SAFE-SSPE study.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Hybrid}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.6}\NormalTok{)}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Enthusiastic"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n))}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star))),}\DecValTok{3}\NormalTok{), }\AttributeTok{upper\_AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)), }\DecValTok{3}\NormalTok{))}
+
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{6.6}\NormalTok{)}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Skeptical"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n))}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(prior\_mean\_skeptical}\SpecialCharTok{{-}}\NormalTok{delta\_star))),}\DecValTok{3}\NormalTok{), }\AttributeTok{upper\_AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(prior\_mean\_skeptical}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)), }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{)}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Informative"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n))}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star))),}\DecValTok{3}\NormalTok{), }\AttributeTok{upper\_AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)), }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{)}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Noninformative"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n))}\SpecialCharTok{*}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{*}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star))),}\DecValTok{3}\NormalTok{), }\AttributeTok{upper\_AP=}\FunctionTok{round}\NormalTok{(}\FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(prior\_mean\_enthusiastic}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{sd\_tilde}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)), }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}}\NormalTok{ data\_output }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(type, AP)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{delta\_star }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{((prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0))}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n)))}
+
+\NormalTok{data\_output2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Enthusiastic"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(y, }\DecValTok{3}\NormalTok{))}
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \FloatTok{0.035}
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FloatTok{6.6}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{((prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0))}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n)))}
+
+\NormalTok{data\_output2 }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output2, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Skeptical"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(y, }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \DecValTok{25}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{((prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0))}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n)))}
+
+\NormalTok{data\_output2 }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output2, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Informative"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(y, }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{prior\_mean }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{n\_0 }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha)}\SpecialCharTok{{-}}\NormalTok{((prior\_mean}\SpecialCharTok{{-}}\NormalTok{delta\_star)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0}\SpecialCharTok{+}\NormalTok{n)}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n\_0))}\SpecialCharTok{/}\NormalTok{(sd\_tilde}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(n)))}
+
+\NormalTok{data\_output2 }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_output2, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{type=}\StringTok{"Noninformative"}\NormalTok{, n\_0, n, }\AttributeTok{AP=}\FunctionTok{round}\NormalTok{(y, }\DecValTok{3}\NormalTok{)))}
+
+\NormalTok{data\_output2}\SpecialCharTok{$}\NormalTok{AP\_bayes }\OtherTok{\textless{}{-}}\NormalTok{ data\_output2}\SpecialCharTok{$}\NormalTok{AP}
+
+\NormalTok{data\_output }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(data\_output, data\_output2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(type, AP\_bayes), }\AttributeTok{by=}\StringTok{"type"}\NormalTok{)}
+
+\NormalTok{data\_output }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(type, }\AttributeTok{AP\_hybrid=}\NormalTok{AP, AP\_bayes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             type AP_hybrid AP_bayes
+## 1   Enthusiastic     0.583    0.594
+## 2      Skeptical     0.341    0.336
+## 3    Informative     0.647    0.715
+## 4 Noninformative     0.524    0.524
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+  \bibliography{references.bib,packages.bib}
+
+\end{document}
