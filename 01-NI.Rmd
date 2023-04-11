@@ -368,11 +368,16 @@ Note that if $n_0$ and $n_1$ are the planned treatment arm sample sizes from a f
 $$
 -z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}=\Phi^{-1}(y)=\Phi^{-1}(1-\beta) \quad \Rightarrow \quad P(RPR\leq y)=0.5, \quad y=1-\beta.
 $$
-With the above formular we can calculate probability statements like $P(RPR>\gamma)$, $0<\gamma<1$:
+---
+
+**Working example (continued) **
+
+With the above formular we calculate the probability $P(RPR>\gamma)$, $0<\gamma<1$, for the SAFE-SSPE study:
 
 ```{r}
 #| echo: false
 #| warning: false
+#| 
 gamma <- seq(0.01,0.99,0.01)
 
 prior_mean <- 0
@@ -389,13 +394,12 @@ data_rpr$p_rpr <- pnorm(-qnorm(1-alpha)*data_rpr$sigma_treat/data_rpr$sigma_prio
 ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(m_range)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on a planned total sample size of ", round(n_0_range+a*n_0_range,0), "."))
 ```
 
-
-
 For a specific threshold, say $\gamma=0.6$, we obtain
 
 ```{r}
 #| echo: false
-
+#| warning: false
+#| 
 gamma <- 0.6
 
 prior_mean <- 0
@@ -432,6 +436,8 @@ data_rpr <- rbind(data_rpr, data_rpr_skep)
 ggplot(data_rpr, aes(x=n_1_range+n_0_range, y=p_rpr, colour=factor(m_range), linetype=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Planned total sample size")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 100, 200, 300, 400), limits=c(0,400))+geom_vline(xintercept=200, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_linetype("Prior type")
 ```
 
+---
+
 Note that the average power AP integrates over the whole $\Delta$ range. This might include also 'non-favorable' regions. To see that one can decompose AP as follows (see @Kunzmann2022, @Grieve2022):
 $$
 AP=\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta>\delta^*)}^{(1)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, 0<\Delta\leq\delta^*)}^{(2)}+\overbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)}^{(3)}
@@ -444,16 +450,32 @@ where
 
 @Spiegelhalter2003 shows that $AP \approx P(D\leq D_{suc}^{\delta^*}, \Delta\leq0)$ because the type-I error is often small and one has strong believe for the alternative hypothesis @Spiegelhalter2003. @Kunzmann2022 and @OHagan2005 discuss the relevance of the AP decomposition. For example, pharmaceutical companies might (1)+(2)+(3) taking into account shortterm risk, wheras regulators are interested in (1) or (1)+(2), that is non-inferior outcomes with relevant treatment effects.
 
+For the non-inferiority setting we are interested in (2)+(3):
+
+$$
+P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
+$$
+Kunzmann et al. denote EP the **'expected power'** (@Kunzmann2022). Note that
+
+$$
+\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}.
+$$
+Spiegelhalter calls $P(P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
+
 The AP decomposition can be visualised using the posterior predictive distribution. Let $p(\tilde\delta)$ be the pdf of the posterior predictive distribution then
 $$
 p(\tilde\delta, \delta)= N_2\left(\begin{pmatrix} d \\ d \end{pmatrix}, \begin{pmatrix} \sigma^2_{treat}+\sigma^2_{prior} \quad \sigma^2_{prior} \\ \quad \quad \sigma^2_{prior} \quad \ \quad  \sigma^2_{prior}\end{pmatrix}\right),
 $$
 see formula (2.11) in @Grieve2022.
 
-Under an enthusiastic prior:
+---
+
+**Working example (continued) **
+
+For the SAFE-SSPE study the bivariate scatterplot of $p(\tilde\delta, \delta)$ under an enthusiastic prior can be visualised as:
 
 ```{r}
-#| echo: false
+#| echo: true
 
 library(mvtnorm)
 library(tidyverse)
@@ -474,27 +496,16 @@ data_sim$region <- ifelse(data_sim$delta>delta_star & data_sim$delta_pred<=-qnor
 
 data_sim$region <- factor(data_sim$region, levels=0:3, labels=c("'Not significant'", "(3)", "(2)", "(1)"))
 
-ggplot(data_sim, aes(x=delta, y=delta_pred, colour=factor(region)))+geom_point(size=0.3)+theme_bw()+theme(panel.grid.minor = element_blank())+geom_vline(xintercept=0.035, linetype="dashed")+geom_hline(yintercept=-qnorm(1-alpha)*sd_tilde/sqrt(n)-(prior_mean_enthusiastic-delta_star), linetype="dotted")+labs(caption="Dotted line: Upper confidence interval from mean of predicted delta <= non-inferiority margin")+ylab("Predictive distribution of Delta")+xlab("Delta")+scale_color_brewer("Region", palette="Reds")
+ggplot(data_sim, aes(x=delta, y=delta_pred, colour=factor(region)))+geom_point(size=0.3)+theme_bw()+theme(panel.grid.minor = element_blank())+geom_vline(xintercept=0.035, linetype="dashed")+geom_hline(yintercept=-qnorm(1-alpha)*sd_tilde/sqrt(n)-(prior_mean_enthusiastic-delta_star), linetype="dotted")+labs(caption="Dashed line: Noninferiority margin.\nDotted line: Upper confidence interval from mean of predicted delta <= non-inferiority margin.")+ylab("Predictive distribution of Delta")+xlab("Delta")+scale_color_brewer("Region", palette="Reds")+scale_x_continuous(breaks=c(-0.2, -0.1, 0, 0.035, 0.2), labels=c(-0.2, -0.1, 0, 0.035, 0.2))
 
 data.frame(data_sim %>% group_by(region) %>% summarise(prop=n()/nrow(data_sim)))
 ```
 
-For the non-inferiority setting we are interested in (2)+(3):
-
-$$
-P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)=P(D\leq D_{suc}^{\delta^*}|\Delta\leq\delta^*)P(\Delta\leq\delta^*)=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}P(\Delta\leq\delta^*),
-$$
-Kunzmann et al. denote EP the **'expected power'** (@Kunzmann2022). Note that
-
-$$
-\underbrace{P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)}_{PAP}=\underbrace{E\left[P_{\Delta\leq\delta^*}(D\leq D_{suc}^{\delta^*})\right]}_{EP}\underbrace{P(\Delta\leq\delta^*)}_{constant}.
-$$
-Spiegelhalter calls $P(P(D\leq D_{suc}^{\delta^*}, \Delta\leq\delta^*)$ the **'prior adjusted power'** (PAP):
 
 For the noninferiority setting $\Delta\leq\delta^*$:
 
 ```{r}
-#| echo: false
+#| echo: true
 
 delta_star <- 0.035
 prior_mean <- 0
@@ -546,6 +557,8 @@ data_ep$const <- round(data_ep$const, 4)
 data_ep
 ```
 
+---
+
 ### Proper Bayesian approach
 
 A proper Bayesian approach uses the posterior distribution to define 'Bayesian significance': $S^B:=P(\Delta\leq\delta^*|data)=1-\epsilon$. Remember $D=p_1-p_0$ with $D \sim N(\delta, \sigma^2_{treat})$. Suppose that $\Delta \sim N(d, \sigma^2_{prior})$ then the posterior distribution given $D$ is distributed as
@@ -584,9 +597,10 @@ Denote $D_{suc}^{d,\delta^*}=-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}
 Thus, since $D\sim N(\delta, \sigma_{treat}^2)$,
 $$
 \begin{aligned}
-P(D\leq D_{suc}^{d,\delta^*}|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{1+\frac{\sigma^2_{treat}}{\sigma_{prior}^2}}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ 1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right)
+P(D\leq D_{suc}^{d,\delta^*}|\delta)&=\Phi\left(-z_{1-\epsilon}\sqrt{1+\frac{\sigma^2_{treat}}{\sigma_{prior}^2}}-\frac{1}{\sigma_{treat}}\left[\delta-\delta^*\left\{ 1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2} \right\} \right]-\frac{\sigma_{treat}}{\sigma_{prior}^2}d \right).
 \end{aligned}
 $$
+This is the Bayesian power (or probability of rejection) assuming one knows the true treatment effect $\delta$. Note that this is a conditional probability.
 
 ---
 
@@ -601,9 +615,14 @@ $$
 
 ---
 
+---
+
+**Working example (continued) **
+
+We derive the Bayesian probability of rejection for the SAFE-SSPE study for differently assumed $\delta$ values.
 
 ```{r}
-#| echo: false
+#| echo: true
 
 # Delta range
 delta <- seq(-0.025, 0.05, 0.001)
@@ -644,13 +663,15 @@ data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Noninf
 y_freq <- pnorm(-(delta-delta_star)*sqrt(n_1*n_0)/sqrt(n_0*sd_1^2+n_1*sd_0^2)-qnorm(1-alpha))
 data_power <- rbind(data_power, data.frame(delta, y=y_freq, type="Frequentist"))
 
-ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("For treatment arm sample sizes: n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
+ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_x_continuous(breaks=c(-0.025,0,0.035,0.050))+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("For treatment arm sample sizes: n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
 
 data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))
 ```
 
-The average Bayesian power (BAP) can be calculated as
+---
+
+The average (marginal) Bayesian probability of rejection (BAP) can be calculated as
 $$
 \begin{aligned}
 BAP&=\int_{-\infty}^{-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d} f(\tilde \delta)d\tilde \delta
@@ -674,9 +695,15 @@ $$
 
 ---
 
+---
 
-```{r}
-#| echo: false
+**Working example (continued) **
+
+We derive the average Bayesian probability of rejection for the SAFE-SSPE study.
+
+
+```{r class.source = 'fold-hide'}
+#| echo: true
 
 ### Hybrid
 n <- 100
@@ -735,5 +762,7 @@ data_output2$AP_bayes <- data_output2$AP
 
 data_output <- left_join(data_output, data_output2 %>% select(type, AP_bayes), by="type")
 
-data_output
+data_output %>% select(type, AP_hybrid=AP, AP_bayes)
 ```
+
+---

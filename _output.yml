@@ -1,9 +1,13 @@
 bookdown::gitbook:
   css: style.css
+  highlight: default
   config:
     toc:
       before: ""
-    download: ["pdf", "epub"]
+  sharing:
+    facebook: false
+    twitter: false
+  code_folding: hide
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
