@@ -337,6 +337,8 @@ data_power <- rbind(data_power, data.frame(x, y, type="Noninformative"))
 
 data_output2 <- data_output %>% select(type, x=AP) %>% mutate(y=0)
 
+data_power$type <- factor(data_power$type, levels=c("Enthusiastic", "Skeptical", "Informative", "Noninformative"))
+
 ggplot(data_power, aes(x, y, colour=type))+geom_line(linewidth=1)+geom_point(data=data_output2, aes(x=x, y=y, colour=type))+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+theme_bw()+theme(panel.grid = element_blank())+ylab("Density")+xlab("RPR")+ylim(c(0,2))+labs(caption="Dots indicate the AP.")
 ```
 
@@ -415,7 +417,9 @@ data_rpr_skep$type <- "Skeptical"
 
 data_rpr <- rbind(data_rpr, data_rpr_skep)
 
-ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(type)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on a planned total sample size of ", round(n_0_range+a*n_0_range,0), "."))
+data_rpr$type <- factor(data_rpr$type, levels=c("Enthusiastic", "Skeptical", "Informative", "Noninformative"))
+
+ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on a planned total sample size of ", round(n_0_range+a*n_0_range,0), "."))
 ```
 
 For a specific threshold, say $\gamma=0.6$, and varying 'prior sample sizes' $m$ we obtain
@@ -463,7 +467,9 @@ data_rpr_skep$type <- "Skeptical"
 
 data_rpr <- rbind(data_rpr, data_rpr_skep)
 
-ggplot(data_rpr, aes(x=n_1_range+n_0_range, y=p_rpr, colour=factor(type)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Planned total sample size")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 100, 200, 300, 400), limits=c(0,400))+geom_vline(xintercept=200, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_linetype("Prior type")
+data_rpr$type <- factor(data_rpr$type, levels=c("Enthusiastic", "Skeptical", "Informative", "Noninformative"))
+
+ggplot(data_rpr, aes(x=n_1_range+n_0_range, y=p_rpr, colour=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_manual("Prior type", values=c("purple", "orange", "blue", "darkred"))+xlab("Planned total sample size")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 100, 200, 300, 400), limits=c(0,400))+geom_vline(xintercept=200, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))
 ```
 
 ---
@@ -696,7 +702,10 @@ data_power <- rbind(data_power, data.frame(delta, y=ap_bayes, type="Bayes: Nonin
 y_freq <- pnorm(-(delta-delta_star)*sqrt(n_1*n_0)/sqrt(n_0*sd_1^2+n_1*sd_0^2)-qnorm(1-alpha))
 data_power <- rbind(data_power, data.frame(delta, y=y_freq, type="Frequentist"))
 
-ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_x_continuous(breaks=c(-0.025,0,0.035,0.050))+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("For treatment arm sample sizes: n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
+data_power$type <- factor(data_power$type, levels=c("Bayes: Enthusiastic", "Bayes: Skeptical", "Bayes: Informative", "Bayes: Noninformative", "Frequentist"))
+
+
+ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_manual("Type", values=c("purple", "orange", "blue", "darkred", "green"))+ylab("Probability of rejection")+ylab("Probability to reject")+scale_x_continuous(breaks=c(-0.025,0,0.035,0.050))+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("For treatment arm sample sizes: n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
 
 data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))
@@ -709,7 +718,7 @@ $$
 \begin{aligned}
 BAP&=\int_{-\infty}^{-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}+\delta^*\left(1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right)-\frac{\sigma^2_{treat}}{\sigma^2_{prior}}d} f(\tilde \delta)d\tilde \delta
 \\&=\Phi\left( -z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{\delta^*}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left\{1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right\} \right. \\
-  & \left. \quad \quad \quad-d\left[\frac{\sigma^2_{treat}}{\sigma^2_{prior}\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}+\frac{1}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\right]\right) \\
+  & \left. \quad \quad \quad-\frac{d}{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}\left\{1+\frac{\sigma_{treat}^2}{\sigma_{prior}^2}\right\}\right) \\
 &=\Phi\left(-z_{1-\epsilon}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{\sqrt{\sigma^2_{treat}+\sigma^2_{prior}}}{\sigma^2_{prior}}(d-\delta^*)\right),
 \end{aligned}
 $$
@@ -722,7 +731,7 @@ since for the posterior predictive distribution $\tilde D \sim N(d, \sigma_{trea
 If $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$, then $\sigma_{treat}^2=\frac{2\sigma^2}{n}$ and $\sigma_{prior}^2=\frac{2\sigma^2}{m}$, and the formula above reduces to
 $$
 \begin{aligned}
-P(D\leq D_{suc}^{d,\delta^*})&=-z_{1-\epsilon}\sqrt{\frac{m}{n}}+\sqrt{\frac{(m+n)m}{2n\sigma^2}}(\delta^*-d)
+BAP&=-z_{1-\epsilon}\sqrt{\frac{m}{n}}-\sqrt{\frac{(m+n)m}{2n\sigma^2}}(d-\delta^*)
 \end{aligned}
 $$
 
