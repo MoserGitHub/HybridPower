@@ -4,7 +4,9 @@ In this section we consider a non-inferiority clinical trial setting with a null
 
 ```{r}
 #| echo: false
-
+#| message: false
+#| warning: false
+#| 
 library(emoji)
 library(ggplot2)
 library(tidyverse)
@@ -45,7 +47,7 @@ Note that $D_{suc}^{\delta^*}:=-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_
 $$
 \begin{aligned}
 P_\delta(D\leq D_{suc}^{\delta^*})&=\Phi\left(-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(\delta-\delta^*)\right) \\
-&=\Phi\left(-z_{1-\alpha}-\frac{\delta-\delta^*}{\sigma_{treat}}\right),
+&=\Phi\left(-z_{1-\alpha}-\frac{(\delta-\delta^*)}{\sigma_{treat}}\right),
 \end{aligned}
 $$
 since under regularity conditions,
@@ -188,18 +190,17 @@ D\leq -z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*.
 $$
 By using a design prior we take into account the uncertainty of the treatment effect. The prior predictive distribution for an estimated risk difference, say $\tilde D$, with a prior $\Delta \sim N\left(d, \sigma_{prior}^2\right)$ includes this uncertainty. For the Gaussian case, the prior predictive distribution of $\tilde D$ is given as
 $$
-\tilde D \sim N\left(d, \sigma_{treat}^2+\sigma_{prior}^2\right)
-$$, since $\tilde D \sim N\left(\delta, \sigma_{treat}^2\right)$.
+\tilde D \sim N\left(d, \sigma_{treat}^2+\sigma_{prior}^2\right),
+$$
+since $\tilde D \sim N\left(\delta, \sigma_{treat}^2\right)$.
 
 Suppose now that $D$ has a predictive distribution as described above, then
 $$
 \begin{aligned}
-AP&=\int_{-\infty}^{-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*}f(\tilde\delta)d\tilde\delta\\
-&= \Phi\left(-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}(d-\delta^*)\right)\\
-&=\Phi\left(\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_0\sigma_1^2c_1+n_1\sigma_0^2c_0}}\left[-z_{1-\alpha}-\sqrt{\frac{n_1n_0}{n_0\sigma_1^2+n_1\sigma_0^2}}(d-\delta^*)\right]\right),
+AP&=\int_{-\infty}^{-z_{1-\alpha}\sqrt{\frac{n_0\sigma_1^2+n_1\sigma_0^2}{n_1n_0}}+\delta^*}f(\tilde\delta)d\tilde\delta= \Phi\left(\frac{1}{\sigma_{prior}}\left[-z_{1-\alpha}\sigma_{treat}-(d-\delta^*)\right]\right)
 \end{aligned}
 $$
-see for example @Grieve2022. Note that as $m \rightarrow \infty$, then $c_i \rightarrow 1$, $i\in {0,1}$, and $AP \rightarrow \Phi\left(-z_{1-\alpha}-\frac{d-\delta^*}{\sigma_{treat}}\right)$, that is, the frequentist power at $d$.
+see for example @Grieve2022. Note that as $m \rightarrow \infty$, then $AP \rightarrow \Phi\left(-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}\right)$, that is, the frequentist power at $d$.
 
 ---
 
@@ -212,48 +213,48 @@ We calculate the AP under the assumed prior distributions and parameters for the
 
 # Enthusiastic prior
 m <- 6.6
-c_1 <- (m+n_1)/m
-c_0 <- (m+n_0)/m
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-AP <- pnorm(-qnorm(1-alpha)*sqrt(n_0*sd_1^2+n_1*sd_0^2)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0)-(sqrt(n_0*n_1)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0))*(prior_mean-delta_star))
+AP <- pnorm(1/sigma_prior*(-qnorm(1-alpha)*sigma_treat-(prior_mean-delta_star)))
 
 data_output <- data.frame(type="Enthusiastic", n_0, n_1, AP=round(AP,2))
 
 # Skeptical prior
 m <- 6.6
-c_1 <- (m+n_1)/m
-c_0 <- (m+n_0)/m
 prior_mean <- delta_star
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-AP <- pnorm(-qnorm(1-alpha)*sqrt(n_0*sd_1^2+n_1*sd_0^2)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0)-(sqrt(n_0*n_1)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0))*(prior_mean-delta_star))
+AP <- pnorm(1/sigma_prior*(-qnorm(1-alpha)*sigma_treat-(prior_mean-delta_star)))
 
 data_output <- rbind(data_output, data.frame(type="Skeptical", n_0, n_1, AP=round(AP,2)))
 
 # Informative prior
 m <- 25
-c_1 <- (m+n_1)/m
-c_0 <- (m+n_0)/m
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-AP <- pnorm(-qnorm(1-alpha)*sqrt(n_0*sd_1^2+n_1*sd_0^2)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0)-(sqrt(n_0*n_1)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0))*(prior_mean-delta_star))
+AP <- pnorm(1/sigma_prior*(-qnorm(1-alpha)*sigma_treat-(prior_mean-delta_star)))
 
 data_output <- rbind(data_output, data.frame(type="Informative", n_0, n_1, AP=round(AP,2)))
 
 # Noninformative prior
 m <- 0.5
-c_1 <- (m+n_1)/m
-c_0 <- (m+n_0)/m
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-AP <- pnorm(-qnorm(1-alpha)*sqrt(n_0*sd_1^2+n_1*sd_0^2)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0)-(sqrt(n_0*n_1)/sqrt(n_0*sd_1^2*c_1+n_1*sd_0^2*c_0))*(prior_mean-delta_star))
+AP <- pnorm(1/sigma_prior*(-qnorm(1-alpha)*sigma_treat-(prior_mean-delta_star)))
 
 data_output <- rbind(data_output, data.frame(type="Noninformative", n_0, n_1, AP=round(AP,2)))
 
 data.frame(data_output %>% arrange(type))
 ```
 
-Under an 'enthusiastic prior' we get an average power of 58%. For an 'skeptical prior' the average power decreases to 34%. These values are lower than the frequentist power of 80%.
+Under an 'enthusiastic prior' we get an average power of 59%. For an 'skeptical prior' the average power decreases to 34%. These values are lower than the frequentist power of 80%.
 
 ---
 
@@ -262,7 +263,7 @@ Rufibach et al. give a closed a formula for the distribution of $RPR:=P_\Delta(D
 For $0<y<1$, the random variable $RPR$ has a probability density function
 $$
 \begin{aligned}
-f(y)&=\frac{\sigma_{treat}}{\sigma_{prior}} \phi\left(-z_{1-\alpha}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{d-\delta^*}{\sigma_{prior}}-\frac{\sigma_{treat}}{\sigma_{prior}}\Phi^{-1}(y) \right)\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1},
+f(y)&=\frac{\sigma_{treat}}{\sigma_{prior}} \phi\left(-z_{1-\alpha}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{(d-\delta^*)}{\sigma_{prior}}-\frac{\sigma_{treat}}{\sigma_{prior}}\Phi^{-1}(y) \right)\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1},
 \end{aligned}
 $$
 see @Rufibach2016.
@@ -275,7 +276,7 @@ For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$, then $\sigma
 
 $$
 \begin{aligned}
-f(y)&=\sqrt{\frac{m}{n}}\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}\phi\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0<y<1.
+f(y)&=\sqrt{\frac{m}{n}}\phi\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right)\left[ \phi\left(\Phi^{-1}(y) \right) \right]^{-1}, \quad 0<y<1.
 \end{aligned}
 $$
 
@@ -296,6 +297,8 @@ x <- seq(0.001,0.999,0.001)
 # Enthusiastic prior
 m <- 6.6
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
 ## Rufibach 2016: formula (4)
 y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
@@ -305,24 +308,30 @@ data_power <- data.frame(x, y, type="Enthusiastic")
 # Skeptical prior
 m <- 6.6
 prior_mean <- delta_star
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sigma_treat/sigma_prior*dnorm(-qnorm(1-alpha)*sigma_treat/sigma_prior-(1/sigma_prior)*(prior_mean-delta_star)-(sigma_treat/sigma_prior)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Skeptical"))
 
 # Informative prior
 m <- 25
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sigma_treat/sigma_prior*dnorm(-qnorm(1-alpha)*sigma_treat/sigma_prior-(1/sigma_prior)*(prior_mean-delta_star)-(sigma_treat/sigma_prior)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Informative"))
 
 # Noninformative prior
 m <- 0.5
 prior_mean <- 0
+sigma_prior <- sqrt((sd_0^2+sd_1^2))/sqrt(m)
+sigma_treat <- sqrt((sd_0^2/n_0+sd_1^2/n_1))
 
-y <- sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*dnorm(-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(m)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(m*n_0*sd_1^2+m*n_1*sd_0^2)/(sqrt(n_1*n_0*(sd_0^2+sd_1^2)))*qnorm(x))*(dnorm(qnorm(x)))^(-1)
+y <- sigma_treat/sigma_prior*dnorm(-qnorm(1-alpha)*sigma_treat/sigma_prior-(1/sigma_prior)*(prior_mean-delta_star)-(sigma_treat/sigma_prior)*qnorm(x))*(dnorm(qnorm(x)))^(-1)
 
 data_power <- rbind(data_power, data.frame(x, y, type="Noninformative"))
 
@@ -337,7 +346,7 @@ The cumulative distribution function of $RPR$ can the be calculated as
 
 $$
 \begin{aligned}
-P(RPR\leq y)=1-\Phi&\left(-z_{1-\alpha}\frac{\sigma_{treat}}{\sigma_{prior}}-\frac{d-\delta^*}{\sigma_{prior}}-\frac{\sigma_{treat}}{\sigma_{prior}}\Phi^{-1}(y) \right), \quad 0<y<1.
+P(RPR\leq y)=1-\Phi&\left(\frac{\sigma_{treat}}{\sigma_{prior}}\left[-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}-\Phi^{-1}(y) \right]\right), \quad 0<y<1.
 \end{aligned}
 $$
 
@@ -349,13 +358,17 @@ For the case that $n_0=n_1=n$ and $\sigma_1^2=\sigma_0^2=\sigma^2$, then $\sigma
 
 $$
 \begin{aligned}
-P(RPR\leq y)=1-\Phi&\left(\sqrt{\frac{m}{n}}\left[-z_{1-\alpha}-\sqrt{\frac{n}{2\sigma^2}}(d-\delta^*)-\Phi^{-1}(y)\right] \right), \quad 0<y<1.
+P(RPR\leq y)=1-\Phi&\left(\frac{\sigma_{treat}}{\sigma_{prior}}\left[-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}-\Phi^{-1}(y) \right] \right), \quad 0<y<1.
 \end{aligned}
 $$
 
 ---
 
-This allows the calculation of probability statements that the probability of the random probability of rejection is greater than a threshold, say $0<\gamma<1$, that is $P(RPR>\gamma)$:
+Note that if $n_0$ and $n_1$ are the planned treatment arm sample sizes from a frequentist power calculation as described in [Section 2.1.1](###-frequentist-approach) above then
+$$
+-z_{1-\alpha}-\frac{(d-\delta^*)}{\sigma_{treat}}=\Phi^{-1}(y)=\Phi^{-1}(1-\beta) \quad \Rightarrow \quad P(RPR\leq y)=0.5, \quad y=1-\beta.
+$$
+With the above formular we can calculate probability statements like $P(RPR>\gamma)$, $0<\gamma<1$:
 
 ```{r}
 #| echo: false
@@ -364,19 +377,21 @@ gamma <- seq(0.01,0.99,0.01)
 
 prior_mean <- 0
 m_range <- c(0.5, 6.6, 25, 100)
-
 n_0_range <- n_0
-
 data_rpr <- expand.grid(gamma, m_range, n_0_range)
 names(data_rpr) <- c("gamma", "m_range", "n_0_range")
 data_rpr$n_1_range <- a*data_rpr$n_0_range
+data_rpr$sigma_treat <- sqrt(sd_0^2/data_rpr$n_0_range+sd_1^2/data_rpr$n_1_range)
+data_rpr$sigma_prior <- sqrt(sd_0^2/data_rpr$m_range+sd_1^2/data_rpr$m_range)
 
-data_rpr$p_rpr <- pnorm(-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(data_rpr$gamma))
+data_rpr$p_rpr <- pnorm(-qnorm(1-alpha)*data_rpr$sigma_treat/data_rpr$sigma_prior-(1/data_rpr$sigma_prior)*(prior_mean-delta_star)-(data_rpr$sigma_treat/data_rpr$sigma_prior)*qnorm(data_rpr$gamma))
 
-ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(m_range)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on planned sample size of ", round(n_0_range,0), " for n0."))
+ggplot(data_rpr, aes(x=gamma, y=p_rpr, colour=factor(m_range)))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Threshold gamma")+ylab("Probability that RPR is greater than threshold gamma")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_x_continuous(breaks=seq(0,1,0.2))+labs(caption=str_glue("Calculated based on a planned total sample size of ", round(n_0_range+a*n_0_range,0), "."))
 ```
 
-For a specific threshold $\gamma=0.6$ we obtain
+
+
+For a specific threshold, say $\gamma=0.6$, we obtain
 
 ```{r}
 #| echo: false
@@ -386,32 +401,35 @@ gamma <- 0.6
 prior_mean <- 0
 
 m_range <- c(0.5, 6.6, 25, 50, 100, 1000)
-n_0_range <- seq(0.01, 500, by=1)
+n_0_range <- seq(0.01, 300, by=1)
 
 data_rpr <- expand.grid(m_range, n_0_range)
 names(data_rpr) <- c("m_range", "n_0_range")
 data_rpr$n_1_range <- a*data_rpr$n_0_range
+data_rpr$sigma_treat <- sqrt(sd_0^2/data_rpr$n_0_range+sd_1^2/data_rpr$n_1_range)
+data_rpr$sigma_prior <- sqrt(sd_0^2/data_rpr$m_range+sd_1^2/data_rpr$m_range)
 
-data_rpr$p_rpr <- pnorm(-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr$m_range*data_rpr$n_0_range*sd_1^2+data_rpr$m_range*data_rpr$n_1_range*sd_0^2)/(sqrt(data_rpr$n_1_range*data_rpr$n_0_range*(sd_0^2+sd_1^2)))*qnorm(gamma))
+data_rpr$p_rpr <- pnorm(data_rpr$sigma_treat/data_rpr$sigma_prior*(-qnorm(1-alpha)-(1/data_rpr$sigma_treat)*(prior_mean-delta_star)-qnorm(gamma)))
 
 data_rpr$type <- "Enthusiastic"
 prior_mean <- delta_star
 
 m_range <- c(0.5, 6.6, 25, 50, 100, 1000)
-n_0_range <- seq(0.01, 500, by=1)
-n_1_range <- a*n_0_range
+n_0_range <- seq(0.01, 300, by=1)
 
 data_rpr_skep <- expand.grid(m_range, n_0_range)
 names(data_rpr_skep) <- c("m_range", "n_0_range")
 data_rpr_skep$n_1_range <- a*data_rpr_skep$n_0_range
+data_rpr_skep$sigma_treat <- sqrt(sd_0^2/data_rpr_skep$n_0_range+sd_1^2/data_rpr_skep$n_1_range)
+data_rpr_skep$sigma_prior <- sqrt(sd_0^2/data_rpr_skep$m_range+sd_1^2/data_rpr_skep$m_range)
 
-data_rpr_skep$p_rpr <- pnorm(-sqrt(data_rpr_skep$m_range*data_rpr_skep$n_0_range*sd_1^2+data_rpr_skep$m_range*data_rpr_skep$n_1_range*sd_0^2)/(sqrt(data_rpr_skep$n_1_range*data_rpr_skep$n_0_range*(sd_0^2+sd_1^2)))*qnorm(1-alpha)-sqrt(data_rpr_skep$m_range)/sqrt((sd_0^2+sd_1^2))*(prior_mean-delta_star)-sqrt(data_rpr_skep$m_range*data_rpr_skep$n_0_range*sd_1^2+data_rpr_skep$m_range*data_rpr_skep$n_1_range*sd_0^2)/(sqrt(data_rpr_skep$n_1_range*data_rpr_skep$n_0_range*(sd_0^2+sd_1^2)))*qnorm(gamma))
+data_rpr_skep$p_rpr <- pnorm(data_rpr_skep$sigma_treat/data_rpr_skep$sigma_prior*(-qnorm(1-alpha)-(1/data_rpr_skep$sigma_treat)*(prior_mean-delta_star)-qnorm(gamma)))
 
 data_rpr_skep$type <- "Skeptical"
 
 data_rpr <- rbind(data_rpr, data_rpr_skep)
 
-ggplot(data_rpr, aes(x=n_1_range, y=p_rpr, colour=factor(m_range), linetype=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Planned sample size active group")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 50, 100, 200, 300, 400, 500))+geom_vline(xintercept=100, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_linetype("Prior type")
+ggplot(data_rpr, aes(x=n_1_range+n_0_range, y=p_rpr, colour=factor(m_range), linetype=type))+geom_line(linewidth=1)+theme_bw()+theme(panel.grid.minor = element_blank())+scale_color_brewer("Prior sample size", palette="Reds")+xlab("Planned total sample size")+ylab(str_glue("Probability that RPR is greater than ", gamma*100, "%"))+scale_x_continuous(breaks=c(0, 100, 200, 300, 400), limits=c(0,400))+geom_vline(xintercept=200, linetype="dashed")+scale_y_continuous(breaks=seq(0,1,0.1))+scale_linetype("Prior type")
 ```
 
 Note that the average power AP integrates over the whole $\Delta$ range. This might include also 'non-favorable' regions. To see that one can decompose AP as follows (see @Kunzmann2022, @Grieve2022):
@@ -626,7 +644,7 @@ data_power <- rbind(data_power, data.frame(delta, y=y_bayes, type="Bayes: Noninf
 y_freq <- pnorm(-(delta-delta_star)*sqrt(n_1*n_0)/sqrt(n_0*sd_1^2+n_1*sd_0^2)-qnorm(1-alpha))
 data_power <- rbind(data_power, data.frame(delta, y=y_freq, type="Frequentist"))
 
-ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
+ggplot(data_power, aes(x=delta, y=y, colour=type))+geom_line()+theme_bw()+theme(panel.grid.minor = element_blank())+scale_colour_brewer("", palette="Dark2")+ylab("Probability of rejection")+ylab("Probability to reject")+scale_y_continuous(breaks=c(0,0.5,0.8,1))+ggtitle(str_glue("For treatment arm sample sizes: n0=", round(n_0,0), ", n1=", round(n_1,0)))+geom_vline(xintercept=0, linetype="dashed")+geom_vline(xintercept=0.035, linetype="dashed")
 
 data_power$y <- round(data_power$y, 2)
 data_power %>% filter(delta%in%c("0", "0.035"))

@@ -23,7 +23,7 @@
 <meta name="author" content="André Moser, CTU Bern, University of Bern" />
 
 
-<meta name="date" content="2023-04-09" />
+<meta name="date" content="2023-04-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -193,11 +193,11 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Frequentist, Bayesian and hybrid approaches for sample size and power calculations</h1>
 <p class="author"><em>André Moser, CTU Bern, University of Bern</em></p>
-<p class="date"><em>2023-04-09</em></p>
+<p class="date"><em>2023-04-11</em></p>
 </div>
 <div id="background" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Background<a href="index.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The terminology of ‘power’ is often imprecisely used <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>. Kunzmann et al. suggest to use the neutral term ‘probability of rejection’. The classical (frequentist) ‘power’ is defined as the probability of rejection given that the alternative hypothesis is true. Yet, frequentist power calculations do not include uncertainties of the treatment effect. Bayesian and hybrid approaches include such uncertainties in their calculations. The following manuscript uses the different approaches (frequentist, Bayesian and hybrid) for the calculation of ‘the probability of rejection’.</p>
+<p>The terminology of ‘power’ is often imprecisely used <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span>. Kunzmann et al. suggest to use the neutral term ‘probability of rejection’. The classical (frequentist) ‘power’ is defined as the probability of rejection given that the alternative hypothesis is true. Frequentist power calculations do not include uncertainties of the treatment effect, whereas Bayesian and hybrid approaches include such uncertainties in their calculations. In the following we use different approaches for the calculation of the ‘probability of rejection’ (frequentist, Bayesian and hybrid) for different clinical trial designs.</p>
 <p><strong>Definition ‘hybrid’</strong> (<span class="citation">[<a href="#ref-Spiegelhalter2003" role="doc-biblioref">2</a>]</span>, Section 6.5.2)</p>
 <p><em>‘[…] we have a prior distribution to use in our study design, but that the conclusions of the study will be entirely classical and will not make use of the prior […]’</em></p>
 <div id="general-notation-and-abbreviations" class="section level2 hasAnchor" number="1.1">
@@ -205,6 +205,7 @@ div.csl-indent {
 <ul>
 <li>iid: independent and identically distributed</li>
 <li>pdf: probability density function</li>
+<li><span class="math inline">\(N_2\)</span>: Bivariate cumulative Gaussian distribution function</li>
 <li><span class="math inline">\(\phi\)</span>: Probability density function of the standard Gaussian distribution</li>
 <li><span class="math inline">\(\Phi\)</span>: Cumulative distribution function of the standard Gaussian distribution</li>
 <li><span class="math inline">\(\Phi^{-1}\)</span>: Quantile function of the standard Gaussian distribution function</li>
@@ -212,10 +213,11 @@ div.csl-indent {
 </div>
 <div id="power-vocabulary" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> ‘Power’ vocabulary<a href="index.html#power-vocabulary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In their supplement Kunzmann et al. <span class="citation">[<a href="#ref-Kunzmann2022" role="doc-biblioref">1</a>]</span> provide a literature review of the terminology used in articles. We provide here a summary of this terminology:</p>
 <ul>
-<li><strong>Frequentist power</strong>: Probability of rejection under the alternative hypothesis.</li>
+<li><strong>Frequentist power</strong>: Probability of rejection given that the alternative hypothesis is true.</li>
 <li><strong>Average power</strong>: Prior averaged probability of rejection. Often also called ‘probability of success’, ‘assurance’, ‘Bayesian predictive power’.</li>
-<li><strong>Expected power</strong>:</li>
+<li><strong>Prior adjusted power</strong>: Joint probability of rejection and that the treatment effect is effective.</li>
 </ul>
 </div>
 <div id="some-bayesian-concepts" class="section level2 hasAnchor" number="1.3">

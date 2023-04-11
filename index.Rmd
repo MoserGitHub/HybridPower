@@ -15,7 +15,7 @@ csl: plos-one.csl
 
 # Background
 
-The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et al. suggest to use the neutral term 'probability of rejection'. The classical (frequentist) 'power' is defined as the probability of rejection given that the alternative hypothesis is true. Yet, frequentist power calculations do not include uncertainties of the treatment effect. Bayesian and hybrid approaches include such uncertainties in their calculations. The following manuscript uses the different approaches (frequentist, Bayesian and hybrid) for the calculation of 'the probability of rejection'.
+The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et al. suggest to use the neutral term 'probability of rejection'. The classical (frequentist) 'power' is defined as the probability of rejection given that the alternative hypothesis is true. Frequentist power calculations do not include uncertainties of the treatment effect, whereas Bayesian and hybrid approaches include such uncertainties in their calculations. In the following we use different approaches for the calculation of the 'probability of rejection' (frequentist, Bayesian and hybrid) for different clinical trial designs.
 
 **Definition 'hybrid'** (@Spiegelhalter2003, Section 6.5.2)
 
@@ -25,15 +25,18 @@ The terminology of 'power' is often imprecisely used @Kunzmann2022. Kunzmann et 
 
 - iid: independent and identically distributed
 - pdf: probability density function
+- $N_2$: Bivariate cumulative Gaussian distribution function
 - $\phi$: Probability density function of the standard Gaussian distribution
 - $\Phi$: Cumulative distribution function of the standard Gaussian distribution
 - $\Phi^{-1}$: Quantile function of the standard Gaussian distribution function
 
 ## 'Power' vocabulary
 
-- **Frequentist power**: Probability of rejection under the alternative hypothesis.
+In their supplement Kunzmann et al. @Kunzmann2022 provide a literature review of the terminology used in articles. We provide here a summary of this terminology:
+
+- **Frequentist power**: Probability of rejection given that the alternative hypothesis is true.
 - **Average power**: Prior averaged probability of rejection. Often also called 'probability of success', 'assurance', 'Bayesian predictive power'.
-- **Expected power**:
+- **Prior adjusted power**: Joint probability of rejection and that the treatment effect is effective.
 
 ## Some 'Bayesian' concepts
 
